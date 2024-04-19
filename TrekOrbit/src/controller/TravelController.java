@@ -35,12 +35,7 @@ public class TravelController implements ManageTravel {
 		Travel trip = null;
 		this.openConnection();
 		
-		try {
-			this.closeConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		return false;
 	}
 
