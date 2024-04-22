@@ -7,9 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.Usuario;
+import model.User;
 
-public class ControladorUser implements ManageUser {
+public class UserController implements ManageUser {
 	private Connection con;
 	private PreparedStatement stmt;
 	final String OBTENERUSUARIO = "SELECT * FROM USUARIO U, SER S WHERE U.ID_Usuario=S.ID AND nick= ? AND Passwd=?";
@@ -34,7 +34,7 @@ public class ControladorUser implements ManageUser {
 	}
 
 	@Override
-	public Usuario mostrarDatosUser(Usuario user) {
+	public User mostrarDatosUser(User user) {
 		// TODO Auto-generated method stub
 		try {
             // Llamar al procedimiento almacenado
@@ -43,8 +43,8 @@ public class ControladorUser implements ManageUser {
             ResultSet resultSet = statement.executeQuery();
             
             if (resultSet.next()) {
-                // Crear un objeto Usuario y asignar los valores obtenidos del resultado
-                Usuario usuario = new Usuario();
+                // Crear un objeto User y asignar los valores obtenidos del resultado
+                User usuario = new User();
                 usuario.setId(resultSet.getString("ID_Usuario"));
                 usuario.setNick(resultSet.getString("Nick"));
                 usuario.setRaza(resultSet.getString("Raza"));

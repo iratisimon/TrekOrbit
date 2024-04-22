@@ -1,12 +1,12 @@
 package model;
 
-public class Viaje {
+public class Travel {
 	private static int ultimoCodViaje = 003;
 	private String cod_viaje;
 	private String origen;
 	private double duracion;
 	
-	public Viaje(String cod_viaje, String origen, double duracion) {
+	public Travel(String cod_viaje, String origen, double duracion) {
 		this.cod_viaje = cod_viaje;
 		this.origen = origen;
 		this.duracion = duracion;

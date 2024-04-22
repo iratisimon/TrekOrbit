@@ -1,10 +1,10 @@
 package model;
 
-public class Usuario extends Ser {
+public class User extends Ser {
 	private String nombre;
 	private String raza;
 
-	public Usuario(String passwrd, String nick, String nombre, String raza) {
+	public User(String passwrd, String nick, String nombre, String raza) {
 		super(passwrd, nick);
 		this.nombre = nombre;
 		this.raza = raza;
@@ -12,7 +12,7 @@ public class Usuario extends Ser {
 	}
 	
 
-	public Usuario() {
+	public User() {
 		
 	}
 

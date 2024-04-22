@@ -1,10 +1,10 @@
 package model;
 
-public class Actividad {
+public class Activity {
 	private String nombre;
 	private String descripcion;
 	
-	public Actividad(String nombre, String descripcion) {
+	public Activity(String nombre, String descripcion) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 	}

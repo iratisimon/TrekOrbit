@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,19 +12,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
-public class MenuUsuario extends JFrame implements ActionListener {
+public class UserMenu extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton NuevaAventura;
-	JButton MisAventuras;
+	private JButton MisAventuras;
+	private JLabel NombreUsuario;
+	private JButton iconoPerfil;
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UserMenu frame = new UserMenu();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
 	 */
-	public MenuUsuario() {
+	public UserMenu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 720);
+		setBounds(100, 100, 1024, 680);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -33,38 +47,43 @@ public class MenuUsuario extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		
 		//label para el icono del perfil
-		JLabel iconoPerfil = new JLabel("");
+		iconoPerfil = new JButton("");
+		iconoPerfil.addActionListener(this);
         iconoPerfil.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\treky4-removebg-preview.png")); // Cambia la ruta según la ubicación de tu icono de perfil
-        iconoPerfil.setBounds(51, 23, 184, 228); // Ajusta las coordenadas y el tamaño según tus necesidades
+        iconoPerfil.setBounds(56, 29, 184, 189); // Ajusta las coordenadas y el tamaño según tus necesidades
+        iconoPerfil.setContentAreaFilled(false); // Establecer el fondo del botón como transparente
+        iconoPerfil.setBorderPainted(false);
         contentPane.add(iconoPerfil);
 		
 		//label para foto de treky
 		JLabel treky = new JLabel("");
 		treky.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\treky8-removebg-preview.png"));
-		treky.setBounds(427, 325, 391, 358);
+		treky.setBounds(291, 285, 391, 358);
 		contentPane.add(treky);
 		
 		//boton para acceder a la ventana de comprar viaje
 		NuevaAventura = new JButton("Nueva Aventura ");
+		NuevaAventura.addActionListener(this);
 		NuevaAventura.setForeground(new Color(255, 255, 255));
 		NuevaAventura.setBackground(new Color(128, 128, 255));
-		NuevaAventura.setFont(new Font("Verdana", Font.BOLD, 30));
-		NuevaAventura.setBounds(60, 375, 380, 150);
+		NuevaAventura.setFont(new Font("Verdana", Font.BOLD, 23));
+		NuevaAventura.setBounds(698, 373, 264, 122);
 		contentPane.add(NuevaAventura);
 		
 		//boton para acceder a la ventana que te muestra los viajes comprados
 		MisAventuras = new JButton("Mis Aventuras");
+		MisAventuras.addActionListener(this);
 		MisAventuras.setForeground(new Color(255, 255, 255));
 		MisAventuras.setBackground(new Color(128, 128, 255));
-		MisAventuras.setFont(new Font("Verdana", Font.BOLD, 30));
-		MisAventuras.setBounds(828, 375, 380, 150);
+		MisAventuras.setFont(new Font("Verdana", Font.BOLD, 23));
+		MisAventuras.setBounds(49, 373, 264, 122);
 		contentPane.add(MisAventuras);
 		
 		//label de titulo 
 		JLabel bienvenida = new JLabel("Bienvenid@! ");
 		bienvenida.setForeground(Color.WHITE);
-		bienvenida.setFont(new Font("Verdana", Font.BOLD, 99));
-		bienvenida.setBounds(361, 73, 764, 100);
+		bienvenida.setFont(new Font("Verdana", Font.BOLD, 80));
+		bienvenida.setBounds(294, 59, 657, 100);
 		contentPane.add(bienvenida);
 		
 		//label para el fondo
@@ -80,9 +99,17 @@ public class MenuUsuario extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o == NuevaAventura) {
-			
+			// BuyTrip buy = new BuyTrip(); Ventana de meylin -- falta enviarle el controlador y el usuario.
+			// buy.setVisible(true);
+			dispose();
 		} else if (o == MisAventuras) {
-			
+			// SeeTrip see = new SeeTrip(); Ventana de elbire -- controlador y usuario
+			// a.setVisible(true);
+			dispose();
+		} else if (o == iconoPerfil) {
+			Profile p = new Profile ();
+			p.setVisible(true);
+			dispose();
 		}
 	}
 }
