@@ -18,7 +18,6 @@ public class UserMenu extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton NuevaAventura;
 	private JButton MisAventuras;
-	private JLabel NombreUsuario;
 	private JButton iconoPerfil;
 	
 	public static void main(String[] args) {
