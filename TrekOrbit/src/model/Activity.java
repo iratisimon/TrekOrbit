@@ -1,10 +1,10 @@
 package model;
 
-public class Refactor {
+public class Activity {
 	private String nombre;
 	private String descripcion;
 	
-	public Refactor(String nombre, String descripcion) {
+	public Activity(String nombre, String descripcion) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 	}
