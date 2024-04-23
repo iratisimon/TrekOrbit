@@ -1,8 +1,11 @@
 package main;
 
 import java.time.LocalDate;
+
+import controller.AdminController;
 import model.Admin;
 import model.User;
+import view.AdminView;
 
 public class Main {
 
@@ -10,7 +13,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		//Pruebas del id autogenerado
-		 LocalDate fechaIngresoAdmin1 = LocalDate.of(2024, 4, 17);
+		 /*LocalDate fechaIngresoAdmin1 = LocalDate.of(2024, 4, 17);
 	     LocalDate fechaIngresoAdmin2 = LocalDate.of(2024, 4, 18);
 		
 		 User usuario1 = new User("contraseña123", "usuario1", "irati", "humana");
@@ -22,8 +25,11 @@ public class Main {
 		 System.out.println("ID de usuario 1: " + usuario1.getId());
 		 System.out.println("ID de usuario 2: " + usuario2.getId());
 		 System.out.println("ID de administrador 1: " + admin1.getId());
-		 System.out.println("ID de administrador 2: " + admin2.getId());
-
+		 System.out.println("ID de administrador 2: " + admin2.getId());*/
+		
+		AdminController c = new AdminController();
+		AdminView frame = new AdminView(c);
+		frame.setVisible(true);
 	}
 
 }
