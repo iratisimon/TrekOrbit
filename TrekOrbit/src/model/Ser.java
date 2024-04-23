@@ -2,14 +2,15 @@ package model;
 
 public class Ser {
 	private static int ultimoIDUsuario = 002;
-	private static int ultimoIDAdmin = 002;
 	protected String id;
 	protected String passwd;
 	protected String nick;
+	protected boolean admin;
 	
-	public Ser(String passwd, String nick) {
+	public Ser(String passwd, String nick, boolean admin) {
 		this.passwd = passwd;
 		this.nick = nick;
+		this.admin = admin;
 	}
 	public Ser() {
 		
@@ -37,6 +38,12 @@ public class Ser {
 		this.nick = nick;
 	}
 	
+	public boolean isAdmin() {
+		return admin;
+	}
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 	public static String generarIDUsuario() {
 		String letra = "S";
 		int numero = ++ultimoIDUsuario;
