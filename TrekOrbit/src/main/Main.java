@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import controller.AdminController;
 import model.Admin;
+import model.Ser;
 import model.User;
 import view.AdminView;
 
@@ -27,8 +28,9 @@ public class Main {
 		 System.out.println("ID de administrador 1: " + admin1.getId());
 		 System.out.println("ID de administrador 2: " + admin2.getId());*/
 		
+		Ser admin1= new Ser("A001","Hermes", "abcd*1234");
 		AdminController c = new AdminController();
-		AdminView frame = new AdminView(c);
+		AdminView frame = new AdminView(c,admin1);
 		frame.setVisible(true);
 	}
 

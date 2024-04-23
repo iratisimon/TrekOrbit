@@ -2,5 +2,5 @@ package model;
 
 public enum Planeta {
 
-	MERCURIO,VENUS,TIERRA,MARTE,JUPITER,SATURNO,URANO,NEPTUNO,PLUTON
+	Mercurio,Venus,Tierra,Marte,Jupiter,Saturno,Urano,Neptuno,Plutón
 }

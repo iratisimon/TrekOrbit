@@ -35,7 +35,8 @@ public class AdminView extends JFrame implements ActionListener{
 	 * Create the frame.
 	 * @param c 
 	 */
-	public AdminView(AdminController c1) {
+	public AdminView(AdminController c1,Ser administrador) {
+		this.admin=administrador;
 		this.c=c1;
 		p=c.getPlanet(admin.getNick());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

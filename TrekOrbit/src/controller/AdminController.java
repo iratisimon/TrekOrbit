@@ -47,7 +47,7 @@ public class AdminController implements ManageAdmin{
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(CAMBIARDISPLANETA);
-			stmt.setString(1, p.getNom_planeta().name());
+			//stmt.setString(1, p.getNom_planeta().name());
 			if (stmt.executeUpdate() == 1) {
 				cambiadaDisponibilidad = true;
 			}
