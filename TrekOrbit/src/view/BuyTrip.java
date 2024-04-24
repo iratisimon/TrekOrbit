@@ -3,8 +3,14 @@ package view;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.TravelController;
+
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
@@ -21,11 +27,14 @@ public class BuyTrip extends JFrame {
 	private JLabel lblUrano;
 	private JLabel lblNeptuno;
 	private JLabel lblPluton;
+	private String selectedPlanet;
+	private TravelController travelControl;
 
 	/**
 	 * Create the frame.
 	 */
-	public BuyTrip() {
+	public BuyTrip(TravelController controlador) {
+		this.travelControl = controlador;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BuyTrip.class.getResource("/images/logotipo_trekorbit.png")));
 		setBackground(new Color(0, 0, 0));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,56 +45,62 @@ public class BuyTrip extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		lblMercurio = new JLabel("");
-		lblMercurio.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/Mercurio.png")));
-		lblMercurio.setBounds(230, 208, 93, 119);
+
+		lblMercurio = createClickableLabel("/images/Mercurio.png", 230, 240, 93, 119, "Mercurio");
 		contentPane.add(lblMercurio);
-		
-		lblVenus = new JLabel("");
-		lblVenus.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/Venus.png")));
-		lblVenus.setBounds(362, 159, 186, 163);
+
+		lblVenus = createClickableLabel("/images/Venus.png", 180, 40, 129, 128, "Venus");
 		contentPane.add(lblVenus);
-		
-		lblTierra = new JLabel("");
-		lblTierra.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/Tierra.png")));
-		lblTierra.setBounds(420, 376, 162, 148);
+
+		lblTierra = createClickableLabel("/images/Tierra.png", 270, 490, 130, 119, "Tierra");
 		contentPane.add(lblTierra);
-		
-		lblMarte = new JLabel("");
-		lblMarte.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/Marte.png")));
-		lblMarte.setBounds(552, 365, 124, 138);
+
+		lblMarte = createClickableLabel("/images/Marte.png", 450, 365, 124, 138, "Marte");
 		contentPane.add(lblMarte);
-		
-		lblJupiter = new JLabel("");
-		lblJupiter.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/Jupiter.png")));
-		lblJupiter.setBounds(644, 186, 450, 554);
+
+		lblJupiter = createClickableLabel("/images/Jupiter.png", 505, 50, 200, 177, "Jupiter");
 		contentPane.add(lblJupiter);
-		
-		lblSaturno = new JLabel("");
-		lblSaturno.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/Saturno.png")));
-		lblSaturno.setBounds(750, 534, 150, 150);
+
+		lblSaturno = createClickableLabel("/images/Saturno.png", 640, 300, 160, 160, "Saturno");
 		contentPane.add(lblSaturno);
-		
-		lblUrano = new JLabel("");
-		lblUrano.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/Urano.png")));
-		lblUrano.setBounds(850, 208, 126, 133);
+
+		lblUrano = createClickableLabel("/images/Urano.png", 740, 150, 126, 133, "Urano");
 		contentPane.add(lblUrano);
-		
-		lblNeptuno = new JLabel("");
-		lblNeptuno.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/Neptuno.png")));
-		lblNeptuno.setBounds(939, 340, 217, 214);
+
+		lblNeptuno = createClickableLabel("/images/Neptuno.png", 805, 480, 110, 110, "Neptuno");
 		contentPane.add(lblNeptuno);
-		
-		lblPluton = new JLabel("");
-		lblPluton.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/Pluton.png")));
-		lblPluton.setBounds(1000, 413, 112, 136);
+
+		lblPluton = createClickableLabel("/images/Pluton.png", 940, 300, 90, 90, "Pluton");
 		contentPane.add(lblPluton);
-				
+
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/FondoOrbitas.png")));
-		lblFondo.setBounds(100, 100, 1024, 680);
+		lblFondo.setBounds(0, 0, 1008, 640);
 		contentPane.add(lblFondo);
-		
 	}
+
+	// Método para crear JLabels clicables
+	private JLabel createClickableLabel(String imagePath, int x, int y, int width, int height, String planetName) {
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(getClass().getResource(imagePath)));
+		label.setBounds(x, y, width, height);
+		label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Cambiar el cursor al pasar por encima del
+																			// JLabel
+		label.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectedPlanet = planetName;
+				openBuyTripPartTwo(selectedPlanet);
+			}
+		});
+		return label;
+	}
+
+	// Función para abrir la ventana de BuyTripPartTwo
+	private void openBuyTripPartTwo(String selectedPlanet) {
+		BuyTripPartTwo buyTrip = new BuyTripPartTwo(selectedPlanet, travelControl);
+		buyTrip.setVisible(true);
+		dispose();
+	}
+
 }

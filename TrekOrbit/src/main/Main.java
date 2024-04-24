@@ -1,5 +1,6 @@
 package main;
 
+import controller.TravelController;
 import view.BuyTrip;
 
 public class Main {
@@ -7,7 +8,8 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		BuyTrip bt = new BuyTrip();
+		TravelController controlador = new TravelController();
+		BuyTrip bt = new BuyTrip(controlador);
 		bt.setVisible(true);
 
 	}
