@@ -1,15 +1,13 @@
 package view;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
-
 import controller.AccessController;
+import controller.UserController;
 import model.User;
-
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -32,6 +30,7 @@ public class LogIn extends JFrame implements ActionListener {
 	private JLabel mensaje;
 	
 	private AccessController controladorAcceso;
+	private UserController controladorUsuario;
 	private User usuario;
 
 	/**
@@ -92,7 +91,7 @@ public class LogIn extends JFrame implements ActionListener {
 		inicio.setBounds(563, 355, 129, 25);
 		contentPane.add(inicio);
 		
-		JLabel preguntaRegristro = new JLabel("Aun no te has registrado?");
+		JLabel preguntaRegristro = new JLabel("¿Aún no te has registrado?");
 		preguntaRegristro.setForeground(new Color(255, 255, 255));
 		preguntaRegristro.setHorizontalAlignment(SwingConstants.CENTER);
 		preguntaRegristro.setFont(new Font("Verdana", Font.BOLD, 12));
@@ -131,9 +130,13 @@ public class LogIn extends JFrame implements ActionListener {
 			login2.setVisible(true);
 		}
 		if (o==inicio) {
+			
 			usuario = controladorAcceso.logIn(textFieldNick.getText(), password);
-	        if (usuario != null) {
-	            // Verificar si el usuario es un administrador o un usuario normal
+	       
+			if (usuario != null) {
+	        	
+	        	controladorUsuario = new UserController();
+	            
 	            if (usuario.isAdmin()) {
 	                dispose();
 	             //   AdminView av = new AdminView();
@@ -141,7 +144,7 @@ public class LogIn extends JFrame implements ActionListener {
 	                
 	            } else{
 	                dispose(); 
-	                UserMenu um = new UserMenu();
+	                UserMenu um = new UserMenu(controladorAcceso,controladorUsuario, usuario);
 	                um.setVisible(true);
 	            }
 	        } else {

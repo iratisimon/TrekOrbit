@@ -12,8 +12,8 @@ import model.User;
 public class UserController implements ManageUser {
 	private Connection con;
 	private PreparedStatement stmt;
-	final String OBTENERUSUARIO = "SELECT * FROM USUARIO U, SER S WHERE U.ID_Usuario=S.ID AND nick= ? AND Passwd=?";
-	final String MODIFICARUSUARIO = "UPDATE SER SET Nick=?, Passwd=? WHERE ID= ?";
+	final String OBTENERUSUARIO = "SELECT * FROM USUARIO WHERE ID_Usuario=(SELECT ID FROM SER WHERE Nick=? AND Passwd=?)";
+	final String MODIFICARUSUARIO = "UPDATE SER SET Nick=?, Passwd=? WHERE Nick=?";
 	
 	private void openConnection() {
 		try {
@@ -35,7 +35,10 @@ public class UserController implements ManageUser {
 
 	@Override
 	public User mostrarDatosUser(User user) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub 
+		User usuario = null;
+		this.openConnection();
+		
 		try {
             // Llamar al procedimiento almacenado
             CallableStatement statement = con.prepareCall("{CALL VerDatosPersonales(?)}");
@@ -44,13 +47,12 @@ public class UserController implements ManageUser {
             
             if (resultSet.next()) {
                 // Crear un objeto User y asignar los valores obtenidos del resultado
-                User usuario = new User();
+                usuario = new User();
                 usuario.setId(resultSet.getString("ID_Usuario"));
                 usuario.setNick(resultSet.getString("Nick"));
                 usuario.setRaza(resultSet.getString("Raza"));
                 usuario.setNombre(resultSet.getString("Nombre"));
                 
-                return usuario;
             } else {
                 // Si el resultado está vacío, el usuario no existe
                 System.out.println("El usuario no existe.");
@@ -58,9 +60,16 @@ public class UserController implements ManageUser {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Manejar la excepción de alguna manera apropiada
-            return null;
+        } finally {
+            try {
+                this.closeConnection();
+            } catch (SQLException e) {
+                System.out.println("Error en el cierre de la conexión");
+                e.printStackTrace();
+            }
         }
+       
+		return usuario;
 	}
 
 	@Override
@@ -72,6 +81,7 @@ public class UserController implements ManageUser {
 			stmt = con.prepareStatement(MODIFICARUSUARIO);
 			stmt.setString(1, nick);
 			stmt.setString(2, passwd);
+			stmt.setString(3, nick);
 			if (stmt.executeUpdate() == 1) {
 				modificado = true;
 			}

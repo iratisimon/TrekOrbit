@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +17,6 @@ import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import model.User;
 
-import javax.swing.JComboBox;
 
 public class SignUp extends JFrame implements ActionListener {
 
@@ -31,7 +29,6 @@ public class SignUp extends JFrame implements ActionListener {
 	private JButton registrarseBtn;
 	private JButton iniciarSesionBtn;
 	private JLabel mensaje;
-	private JButton showHidePasswd;
 	private JTextField textFieldRaza;
 	
 	private AccessController controladorAcceso;
@@ -88,14 +85,14 @@ public class SignUp extends JFrame implements ActionListener {
 		contentPane.add(textFieldNick);
 		textFieldNick.setColumns(10);
 		
-		registrarseBtn = new JButton("Registrarse:");
+		registrarseBtn = new JButton("Registrarse");
 		registrarseBtn.setBackground(new Color(255, 255, 255));
 		registrarseBtn.setForeground(new Color(0, 0, 0));
 		registrarseBtn.setFont(new Font("Verdana", Font.BOLD, 13));
 		registrarseBtn.setBounds(582, 506, 129, 25);
 		contentPane.add(registrarseBtn);
 		
-		JLabel preguntaRegistradoLbl = new JLabel("Ya estas registrado?");
+		JLabel preguntaRegistradoLbl = new JLabel("¿Ya estas registrado?");
 		preguntaRegistradoLbl.setForeground(new Color(255, 255, 255));
 		preguntaRegistradoLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		preguntaRegistradoLbl.setFont(new Font("Verdana", Font.BOLD, 12));

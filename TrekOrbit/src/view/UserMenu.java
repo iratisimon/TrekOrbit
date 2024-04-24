@@ -1,9 +1,12 @@
 package view;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.AccessController;
+import controller.UserController;
+import model.User;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,23 +23,18 @@ public class UserMenu extends JFrame implements ActionListener {
 	private JButton MisAventuras;
 	private JButton iconoPerfil;
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserMenu frame = new UserMenu();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private AccessController controladorAcceso;
+	private UserController controladorUsuario;
+	private User usuario;
 
 	/**
 	 * Create the frame.
 	 */
-	public UserMenu() {
+	public UserMenu(AccessController controladorAcceso, UserController controladorUsuario, User usuario) {
+		this.controladorAcceso = controladorAcceso;
+		this.controladorUsuario = controladorUsuario;
+		this.usuario = usuario;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 680);
 		contentPane = new JPanel();
@@ -47,7 +45,6 @@ public class UserMenu extends JFrame implements ActionListener {
 		
 		//label para el icono del perfil
 		iconoPerfil = new JButton("");
-		iconoPerfil.addActionListener(this);
         iconoPerfil.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\treky4-removebg-preview.png")); // Cambia la ruta según la ubicación de tu icono de perfil
         iconoPerfil.setBounds(56, 29, 184, 189); // Ajusta las coordenadas y el tamaño según tus necesidades
         iconoPerfil.setContentAreaFilled(false); // Establecer el fondo del botón como transparente
@@ -62,7 +59,6 @@ public class UserMenu extends JFrame implements ActionListener {
 		
 		//boton para acceder a la ventana de comprar viaje
 		NuevaAventura = new JButton("Nueva Aventura ");
-		NuevaAventura.addActionListener(this);
 		NuevaAventura.setForeground(new Color(255, 255, 255));
 		NuevaAventura.setBackground(new Color(128, 128, 255));
 		NuevaAventura.setFont(new Font("Verdana", Font.BOLD, 23));
@@ -71,7 +67,6 @@ public class UserMenu extends JFrame implements ActionListener {
 		
 		//boton para acceder a la ventana que te muestra los viajes comprados
 		MisAventuras = new JButton("Mis Aventuras");
-		MisAventuras.addActionListener(this);
 		MisAventuras.setForeground(new Color(255, 255, 255));
 		MisAventuras.setBackground(new Color(128, 128, 255));
 		MisAventuras.setFont(new Font("Verdana", Font.BOLD, 23));
@@ -91,6 +86,10 @@ public class UserMenu extends JFrame implements ActionListener {
 		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\galaxy.jpg"));
 		fondo.setBounds(0, 0, 1266, 683);
 		contentPane.add(fondo);
+		
+		iconoPerfil.addActionListener(this);
+		NuevaAventura.addActionListener(this);
+		MisAventuras.addActionListener(this);
 	}
 
 	@Override
@@ -106,7 +105,7 @@ public class UserMenu extends JFrame implements ActionListener {
 			// a.setVisible(true);
 			dispose();
 		} else if (o == iconoPerfil) {
-			Profile p = new Profile ();
+			Profile p = new Profile (controladorAcceso,controladorUsuario, usuario);
 			p.setVisible(true);
 			dispose();
 		}
