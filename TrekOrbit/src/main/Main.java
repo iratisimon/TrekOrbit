@@ -29,8 +29,9 @@ public class Main {
 		 System.out.println("ID de administrador 2: " + admin2.getId());*/
 		
 		Ser admin1= new Ser("A001","Hermes", "abcd*1234");
+		Ser admin3= new Ser("A003", "Gaia","abcd*1234");
 		AdminController c = new AdminController();
-		AdminView frame = new AdminView(c,admin1);
+		AdminView frame = new AdminView(c,admin3);
 		frame.setVisible(true);
 	}
 

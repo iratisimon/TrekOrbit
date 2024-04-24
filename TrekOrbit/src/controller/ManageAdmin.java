@@ -9,6 +9,6 @@ public interface ManageAdmin {
 
 	public Planet getPlanet(String Nick);
 	public boolean changePlanetAvailability(Planet p);
-	public ArrayList<Activity> addPlanetActivity();
+	public boolean addPlanetActivity(String planetName, String selectedActivity);
 	public ArrayList<Activity> removePlanetActivity();
 }
