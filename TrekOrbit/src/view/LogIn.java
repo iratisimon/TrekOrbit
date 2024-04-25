@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import controller.AccessController;
+import controller.AdminController;
 import controller.UserController;
 import model.Ser;
 import model.User;
@@ -31,6 +32,7 @@ public class LogIn extends JFrame implements ActionListener {
 
 	private AccessController controladorAcceso;
 	private UserController controladorUsuario;
+	private AdminController controladorAdmin;
 	private Ser ser;
 
 	/**
@@ -138,11 +140,12 @@ public class LogIn extends JFrame implements ActionListener {
 			if (ser != null) {
 	        
 	        	controladorUsuario = new UserController();
+	        	controladorAdmin = new AdminController();
 	            
 	            if (ser.isAdmin()) {
 	                dispose();
-	             //   AdminView av = new AdminView();
-	             //   av.setVisible(true);
+	                AdminView av = new AdminView(controladorAcceso, controladorAdmin, ser);
+	                av.setVisible(true);
 	                
 	            } else{
 	                dispose(); 

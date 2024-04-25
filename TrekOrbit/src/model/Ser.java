@@ -12,11 +12,15 @@ public class Ser {
 		this.nick = nick;
 		this.admin = admin;
 	}
-  public Ser(String id, String nick, String passwd) {
-		this.id=id;
-		this.passwd = passwd;
-		this.nick = nick;
-  }
+	public Ser(String id, String nick, String passwd) {
+			this.id=id;
+			this.passwd = passwd;
+			this.nick = nick;
+	}
+	
+	public Ser() {
+		
+	}
 
 	public String getId() {
 		return id;

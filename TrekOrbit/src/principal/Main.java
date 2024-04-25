@@ -1,7 +1,5 @@
 package principal;
 
-import javax.swing.SwingUtilities;
-
 import controller.AccessController;
 import model.User;
 import view.LogIn;

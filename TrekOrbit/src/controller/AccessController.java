@@ -12,7 +12,9 @@ import model.User;
 public class AccessController implements ManageAccess {
 	private Connection con;
 	private PreparedStatement stmt;
-	final String OBTENERUSUARIO = "SELECT * FROM USUARIO WHERE ID_Usuario=(SELECT ID FROM Ser WHERE Nick=?)";
+	//final String OBTENERUSUARIO = "SELECT * FROM USUARIO WHERE ID_Usuario=(SELECT ID FROM SER WHERE Nick=?)";
+	//final String OBTENERADMIN = "SELECT * FROM ADMINISTRADOR WHERE ID_Admin=(SELECT ID FROM SER WHERE Nick=?)";
+	final String OBTENERSER = "SELECT * FROM SER WHERE Nick=? AND Passwd=?";
 	final String ALTAUSUARIO = "INSERT INTO USUARIO VALUES (?,?,?,?,?)";
 	
 	private void openConnection() {
@@ -41,15 +43,16 @@ public class AccessController implements ManageAccess {
 		
 		this.openConnection();
 		try {
-			stmt = con.prepareStatement(OBTENERUSUARIO);
+			stmt = con.prepareStatement(OBTENERSER);
 			stmt.setString(1, nick);
+			stmt.setString(2, passwd);
 			rs = stmt.executeQuery();
-			// Si solo me devuelve uno, usamos if; si me devuelve mas de una linea, usamos
-			// while
+			
 			if (rs.next()) {
 				ser = new Ser();
 				ser.setNick(nick);
 				ser.setPasswd(passwd);
+				ser.setAdmin(rs.getBoolean("Administrador"));
 			} else {
 				ser = new Ser();
 				ser.setNick("");
