@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.AccessController;
 import controller.UserController;
+import model.Ser;
 import model.User;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -32,16 +33,16 @@ public class Profile extends JFrame implements ActionListener {
 	
 	private AccessController controladorAcceso;
 	private UserController controladorUsuario;
-	private User usuario;
+	private Ser ser;
 
 	/**
 	 * Create the frame.
 	 */
 	
-	public Profile(AccessController controladorAcceso, UserController controladorUsuario, User usuario) {
+	public Profile(AccessController controladorAcceso, UserController controladorUsuario, Ser ser) {
 		this.controladorAcceso = controladorAcceso;
 		this.controladorUsuario = controladorUsuario;
-		this.usuario = usuario;
+		this.ser = ser;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 680);
@@ -137,12 +138,12 @@ public class Profile extends JFrame implements ActionListener {
 		
 	public void cargarDatosUsuario() {
 	    // Obtener los datos del usuario utilizando el controlador de usuario
-	    User datosUsuario = controladorUsuario.mostrarDatosUser(usuario);
+	    User datosUsuario = controladorUsuario.mostrarDatosUser(ser);
 	
 	    if (datosUsuario != null) {
 	        // Establecer los valores en los campos de texto
-	        txtNick.setText(usuario.getNick());
-	        txtPasswd.setText(usuario.getPasswd());
+	        txtNick.setText(ser.getNick());
+	        txtPasswd.setText(ser.getPasswd());
 	        txtRaza.setText(datosUsuario.getRaza());
             txtNombre.setText(datosUsuario.getNombre());
 	    } else {
@@ -156,7 +157,7 @@ public class Profile extends JFrame implements ActionListener {
 		Object o =e.getSource();
 		String nick = txtNick.getText();
 	    String passwd = new String (txtPasswd.getPassword());
-	    boolean modificado;
+	    boolean modificado = false;
 		
 	    if (o == btnModificar) {
 	        // Si se presionó el botón "Modificar", habilita la edición de los campos

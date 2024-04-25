@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.Ser;
 import model.User;
 
 public class UserController implements ManageUser {
@@ -32,14 +33,14 @@ public class UserController implements ManageUser {
 		System.out.println("--------------------");
 	}
 
-	public User mostrarDatosUser(User user) {
+	public User mostrarDatosUser(Ser ser) {
 	    User usuario = null;
 	    this.openConnection();
 	    
 	    try {
 	        stmt = con.prepareStatement(OBTENERUSUARIO);
-	        stmt.setString(1, user.getNick());
-	        stmt.setString(2, user.getPasswd());
+	        stmt.setString(1, ser.getNick());
+	        stmt.setString(2, ser.getPasswd());
 	        ResultSet resultSet = stmt.executeQuery();
 	        
 	        if (resultSet.next()) {
@@ -68,8 +69,6 @@ public class UserController implements ManageUser {
 	   
 	    return usuario;
 	}
-
-
 
 	@Override
 	public boolean modificarDatosUser(String nick, String passwd) {

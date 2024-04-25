@@ -7,7 +7,7 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import controller.UserController;
-import model.User;
+import model.Ser;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -31,14 +31,14 @@ public class LogIn extends JFrame implements ActionListener {
 	
 	private AccessController controladorAcceso;
 	private UserController controladorUsuario;
-	private User usuario;
+	private Ser ser;
 
 	/**
 	 * Create the frame.
 	 */
-	public LogIn(AccessController controladorAcesso, User usuario) {
+	public LogIn(AccessController controladorAcesso, Ser usuario) {
 		this.controladorAcceso = new AccessController();
-		this.usuario = usuario;
+		this.ser = usuario;
 		
 		setBackground(new Color(240, 240, 240));
 		setForeground(new Color(240, 240, 240));
@@ -131,20 +131,20 @@ public class LogIn extends JFrame implements ActionListener {
 		}
 		if (o==inicio) {
 			
-			usuario = controladorAcceso.logIn(textFieldNick.getText(), password);
+			ser = controladorAcceso.logIn(textFieldNick.getText(), password);
 	       
-			if (usuario != null) {
+			if (ser != null) {
 	        	
 	        	controladorUsuario = new UserController();
 	            
-	            if (usuario.isAdmin()) {
+	            if (ser.isAdmin()) {
 	                dispose();
 	             //   AdminView av = new AdminView();
 	             //   av.setVisible(true);
 	                
 	            } else{
 	                dispose(); 
-	                UserMenu um = new UserMenu(controladorAcceso,controladorUsuario, usuario);
+	                UserMenu um = new UserMenu(controladorAcceso,controladorUsuario, ser);
 	                um.setVisible(true);
 	            }
 	        } else {

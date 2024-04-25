@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.Ser;
 import model.User;
 
 public class AccessController implements ManageAccess {
@@ -33,10 +34,10 @@ public class AccessController implements ManageAccess {
 	}
 
 	@Override
-	public User logIn(String nick, String passwd) {
+	public Ser logIn(String nick, String passwd) {
 		// TODO Auto-generated method stub
 		ResultSet rs = null;
-		User usuario = null;
+		Ser ser = null;
 		
 		this.openConnection();
 		try {
@@ -46,12 +47,12 @@ public class AccessController implements ManageAccess {
 			// Si solo me devuelve uno, usamos if; si me devuelve mas de una linea, usamos
 			// while
 			if (rs.next()) {
-				usuario = new User();
-				usuario.setNick(nick);
-				usuario.setPasswd(passwd);
+				ser = new User();
+				ser.setNick(nick);
+				ser.setPasswd(passwd);
 			} else {
-				usuario = new User();
-				usuario.setNick("");
+				ser = new User();
+				ser.setNick("");
 			}
 
 		} catch (SQLException e) {
@@ -65,7 +66,7 @@ public class AccessController implements ManageAccess {
 			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
 		}
-		return usuario;
+		return ser;
 	}
 
 	@Override

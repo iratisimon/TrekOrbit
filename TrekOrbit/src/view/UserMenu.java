@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.AccessController;
 import controller.UserController;
+import model.Ser;
 import model.User;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -25,15 +26,15 @@ public class UserMenu extends JFrame implements ActionListener {
 	
 	private AccessController controladorAcceso;
 	private UserController controladorUsuario;
-	private User usuario;
+	private Ser ser;
 
 	/**
 	 * Create the frame.
 	 */
-	public UserMenu(AccessController controladorAcceso, UserController controladorUsuario, User usuario) {
+	public UserMenu(AccessController controladorAcceso, UserController controladorUsuario, Ser ser) {
 		this.controladorAcceso = controladorAcceso;
 		this.controladorUsuario = controladorUsuario;
-		this.usuario = usuario;
+		this.ser = ser;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 680);
@@ -105,7 +106,7 @@ public class UserMenu extends JFrame implements ActionListener {
 			// a.setVisible(true);
 			dispose();
 		} else if (o == iconoPerfil) {
-			Profile p = new Profile (controladorAcceso,controladorUsuario, usuario);
+			Profile p = new Profile (controladorAcceso,controladorUsuario, ser);
 			p.setVisible(true);
 			dispose();
 		}
