@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.Ser;
 import model.User;
 
 public class AccessController implements ManageAccess {
@@ -33,10 +34,10 @@ public class AccessController implements ManageAccess {
 	}
 
 	@Override
-	public User logIn(String nick, String passwd) {
+	public Ser logIn(String nick, String passwd) {
 		// TODO Auto-generated method stub
 		ResultSet rs = null;
-		User usuario = null;
+		Ser ser = null;
 		
 		this.openConnection();
 		try {
@@ -46,12 +47,12 @@ public class AccessController implements ManageAccess {
 			// Si solo me devuelve uno, usamos if; si me devuelve mas de una linea, usamos
 			// while
 			if (rs.next()) {
-				usuario = new User();
-				usuario.setNick(nick);
-				usuario.setPasswd(passwd);
+				ser = new Ser();
+				ser.setNick(nick);
+				ser.setPasswd(passwd);
 			} else {
-				usuario = new User();
-				usuario.setNick("");
+				ser = new Ser();
+				ser.setNick("");
 			}
 
 		} catch (SQLException e) {
@@ -65,46 +66,10 @@ public class AccessController implements ManageAccess {
 			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
 		}
-		return usuario;
+		return ser;
 	}
 	
-	@Override
-	public boolean singUp(String nick, String nombre, String passwd, String raza) {
-	    boolean modificado = false;
-	    this.openConnection();
-	    try {
-	        
-	            // El usuario no existe, se puede registrar
-	            stmt = con.prepareStatement(ALTAUSUARIO);
-	            stmt.setString(1, nick);
-	            stmt.setString(2, passwd);
-	            stmt.setString(3, nombre);
-	            stmt.setString(4, raza);
-	            
-	            if (stmt.executeUpdate() == 1) {
-	                modificado = true;
-	            }
-	        
-	    
-
-	    } catch (SQLException e) {
-	        System.out.println("Error de SQL");
-	        e.printStackTrace();
-	    } finally {
-	        try {
-	            if (stmt != null) {
-	                stmt.close();
-	            }
-	            this.closeConnection();
-	        } catch (SQLException e) {
-	            System.out.println("Error en el cierre de la Base de Datos");
-	            e.printStackTrace();
-	        }
-	    }
-	    return modificado;
-	}
-	
-	
+	//Metodo de pablo
 	public boolean existeNick(String nick) {
 	    boolean encontrado = false;
 	    this.openConnection();
@@ -130,8 +95,32 @@ public class AccessController implements ManageAccess {
 	    }
 	    return encontrado;
 	}
+  
+	@Override
+	public boolean singUp(String nick, String nombre, String passwd, String raza) {
+		// TODO Auto-generated method stub
+		boolean modificado = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(ALTAUSUARIO);
+			stmt.setString(1, nick);
+			stmt.setString(2, passwd);
+			stmt.setString(3, nombre);
+			stmt.setString(4, raza);
+			if (stmt.executeUpdate() == 1) {
+				modificado = true;
+			}
 
-
-
-
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		}
+		try {
+			this.closeConnection();
+		} catch (SQLException e) {
+			System.out.println("Error en el cierre de la Base de Datos");
+			e.printStackTrace();
+		}
+		return modificado;
+	}
 }

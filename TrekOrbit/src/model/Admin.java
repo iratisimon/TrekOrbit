@@ -4,11 +4,10 @@ import java.time.LocalDate;
 
 public class Admin extends Ser{
 	private LocalDate fechaIngreso;
-	
-	public Admin(String passwrd, String nom_user, LocalDate fechaIngreso, boolean admin) {
-		super(passwrd, nom_user, admin);
+
+	public Admin(String passwd, String nick, boolean admin, LocalDate fechaIngreso) {
+		super(passwd, nick, admin);
 		this.fechaIngreso = fechaIngreso;
-		
 	}
 
 	public LocalDate getFechaIngreso() {
@@ -19,3 +18,4 @@ public class Admin extends Ser{
 		this.fechaIngreso = fechaIngreso;
 	}
 }
+

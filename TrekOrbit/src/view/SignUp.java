@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,7 +13,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
 import controller.AccessController;
 import model.User;
 
@@ -31,7 +29,6 @@ public class SignUp extends JFrame implements ActionListener {
 	private JButton iniciarSesionBtn;
 	private JLabel mensaje;
 	private JTextField textFieldRaza;
-
 	
 	private AccessController controladorAcceso;
 	private User usuario;
@@ -127,6 +124,7 @@ public class SignUp extends JFrame implements ActionListener {
 		textFieldRepiteNewpasswd.setBounds(652, 439, 231, 25);
 		contentPane.add(textFieldRepiteNewpasswd);
 		
+    
 		textFieldIntroducirNewPasswd = new JPasswordField();
 		textFieldIntroducirNewPasswd.setColumns(10);
 		textFieldIntroducirNewPasswd.setBounds(642, 387, 241, 25);
@@ -154,9 +152,15 @@ public class SignUp extends JFrame implements ActionListener {
 		contentPane.add(textFieldRaza);
 		textFieldRaza.setColumns(10);
 		
-		JLabel fondo = new JLabel("Las contraseñas no coinciden");
+ //pablo
+		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
 		fondo.setIcon(new ImageIcon("C:\\\\Users\\\\pablo\\\\OneDrive\\\\Escritorio\\\\Repositorio\\\\TrekOrbit\\\\TrekOrbit\\\\src\\\\Imagenes\\\\stars_space_galaxy_117958_1280x720.jpg"));
+
+    //irati
+		JLabel fondo = new JLabel("");
+		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
+		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\galaxy.jpg"));
 		fondo.setBounds(10, 10, 1246, 673);
 		contentPane.add(fondo);
 		
@@ -165,7 +169,6 @@ public class SignUp extends JFrame implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		
 	    Object o = e.getSource();
 	    if (o == iniciarSesionBtn) {
 	        dispose();
@@ -207,8 +210,14 @@ public class SignUp extends JFrame implements ActionListener {
 	        }
 	    }
 	}
-	        
-	    
 
-	
+  //pruebas 
+	    	if (controladorAcceso.singUp(textFieldNick.getText(), textFieldNombre.getText(), textFieldIntroducirNewPasswd.getText(), textFieldRaza.getText())) {
+	    		mensaje.setText("Se ha agregado un nuevo usuario correctamente");
+	    		dispose();
+	    	} else {
+	    		mensaje.setText("Error.No se ha podido agregar al nuevo usuario");
+	    	}
+	    }
+	}
 }

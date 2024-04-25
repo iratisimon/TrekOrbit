@@ -1,8 +1,8 @@
 package controller;
 
-import model.User;
+import model.Ser;
 
 public interface ManageAccess {
-	public User logIn(String nick,String passwd);
+	public Ser logIn(String nick,String passwd);
 	public boolean singUp(String nick,String nombre,String passwd,String raza);
 }

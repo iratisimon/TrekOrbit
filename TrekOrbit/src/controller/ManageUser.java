@@ -1,8 +1,8 @@
 package controller;
 
-import model.User;
+import model.Ser;
 
 public interface ManageUser {
-	public User mostrarDatosUser(User user); //pide un usuario para mostrar sus datos
+	public Ser mostrarDatosUser(Ser ser); //pide un usuario para mostrar sus datos
 	public boolean modificarDatosUser(String nick, String passwd);//depende de lo que quieras modificar
 }

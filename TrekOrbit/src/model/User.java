@@ -10,7 +10,6 @@ public class User extends Ser {
 		this.raza = raza;
 		this.id = generarIDUsuario();
 	}
-	
 
 	public User() {
 		

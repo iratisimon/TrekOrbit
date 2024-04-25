@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import model.Ser;
 
-import model.User;
 
 public class UserController implements ManageUser {
 	private Connection con;
@@ -17,7 +17,7 @@ public class UserController implements ManageUser {
 	private void openConnection() {
 		try {
 			String url = "jdbc:mysql://localhost:3306/TREKORBIT?serverTimezone=Europe/Madrid&useSSL=false";
-			con = DriverManager.getConnection(url, "root", "contraseña");
+			con = DriverManager.getConnection(url, "root", "abcd*1234");
 		} catch (SQLException e) {
 			System.out.println("Error al intentar abrir la BD");
 		}
@@ -32,14 +32,14 @@ public class UserController implements ManageUser {
 		System.out.println("--------------------");
 	}
 
-	public User mostrarDatosUser(User user) {
-	    User usuario = null;
+	public User mostrarDatosUser(Ser ser) {
+	    Ser ser = null;
 	    this.openConnection();
 	    
 	    try {
 	        stmt = con.prepareStatement(OBTENERUSUARIO);
-	        stmt.setString(1, user.getNick());
-	        stmt.setString(2, user.getPasswd());
+	        stmt.setString(1, ser.getNick());
+	        stmt.setString(2, ser.getPasswd());
 	        ResultSet resultSet = stmt.executeQuery();
 	        
 	        if (resultSet.next()) {
@@ -68,9 +68,7 @@ public class UserController implements ManageUser {
 	   
 	    return usuario;
 	}
-
-
-
+  
 	@Override
 	public boolean modificarDatosUser(String nick, String passwd) {
 		// TODO Auto-generated method stub

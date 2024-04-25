@@ -36,10 +36,11 @@ public class LogIn extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public LogIn(AccessController controladorAcesso, User usuario) {
-		this.controladorAcceso = new AccessController();
-		this.ser = usuario;
 
+	public LogIn(AccessController controladorAcesso, Ser ser) {
+		this.controladorAcceso = new AccessController();
+		this.ser = ser;
+		
 		setBackground(new Color(240, 240, 240));
 		setForeground(new Color(240, 240, 240));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +52,7 @@ public class LogIn extends JFrame implements ActionListener {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+    
 		JLabel titulo = new JLabel("TREKORBIT");
 		titulo.setBackground(new Color(0, 0, 0));
 		titulo.setForeground(new Color(255, 255, 255));
@@ -105,6 +106,7 @@ public class LogIn extends JFrame implements ActionListener {
 		contentPane.add(registro);
 		registro.addActionListener(this);
 
+    //pablo
 		mensaje = new JLabel("No existe ninguna cuenta con ese usuario");
 		mensaje.setFont(new Font("Verdana", Font.BOLD, 13));
 		mensaje.setHorizontalAlignment(SwingConstants.CENTER);
@@ -124,6 +126,22 @@ public class LogIn extends JFrame implements ActionListener {
 		registro.addActionListener(this);
 	}
 
+		//irati
+		mensaje = new JLabel("No existe ninguna cuenta con ese usuario");
+		mensaje.setForeground(new Color(255, 255, 255));
+		mensaje.setBounds(435, 464, 364, 30);
+		contentPane.add(mensaje);
+		
+		JLabel fondo = new JLabel("");
+		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
+		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\galaxy.jpg"));
+		fondo.setBounds(10, 10, 1246, 673);
+		contentPane.add(fondo);
+		
+		inicio.addActionListener(this);
+		registro.addActionListener(this);
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		Object o =e.getSource();
 		String password = new String (passwd.getPassword());
@@ -133,32 +151,27 @@ public class LogIn extends JFrame implements ActionListener {
 			SignUp login2 = new SignUp(controladorAcceso);
 			login2.setVisible(true);
 		}
+    
 		if (o==inicio) {
-			
-			ser=controladorAcceso.logIn(textFieldNick.getText(), password);
-	       
+			ser = controladorAcceso.logIn(textFieldNick.getText(), password);
+      
 			if (ser != null) {
-	        	
+	        
 	        	controladorUsuario = new UserController();
 	            
 	            if (ser.isAdmin()) {
 	                dispose();
-//	                AdminView av = new AdminView();
-//	                av.setVisible(true);
+	             //   AdminView av = new AdminView();
+	             //   av.setVisible(true);
 	                
 	            } else{
 	                dispose(); 
-	                //UserMenu um = new UserMenu(controladorAcceso,controladorUsuario, ser);
-	                //um.setVisible(true);
+	                UserMenu um = new UserMenu(controladorAcceso,controladorUsuario, ser);
+	                um.setVisible(true);
 	            }
 	        } else {
 	            mensaje.setText("Usuario o contraseña incorrectos");
 	        }
-		
-		
 		}
-		
-		
-		
 	}
 }
