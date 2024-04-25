@@ -18,4 +18,3 @@ public class Admin extends Ser{
 		this.fechaIngreso = fechaIngreso;
 	}
 }
-

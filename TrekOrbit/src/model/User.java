@@ -15,7 +15,6 @@ public class User extends Ser {
 		
 	}
 
-
 	public String getNombre() {
 		return nombre;
 	}

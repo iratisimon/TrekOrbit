@@ -1,14 +1,17 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Planet {
-	private String nom_planeta;
+	private Planeta nom_planeta;
 	private double superficie;
 	private int habitantes;
 	private String clima;
 	private boolean disponibilidad;
+	private Admin administrador;
+	private ArrayList<Activity> activities;
 	
-	public Planet(String nom_planeta, double superficie, int habitantes, String clima, boolean disponibilidad) {
-		super();
+	public Planet(Planeta nom_planeta, double superficie, int habitantes, String clima, boolean disponibilidad) {
 		this.nom_planeta = nom_planeta;
 		this.superficie = superficie;
 		this.habitantes = habitantes;
@@ -16,11 +19,11 @@ public class Planet {
 		this.disponibilidad = disponibilidad;
 	}
 
-	public String getNom_planeta() {
+	public Planeta getNom_planeta() {
 		return nom_planeta;
 	}
 
-	public void setNom_planeta(String nom_planeta) {
+	public void setNom_planeta(Planeta nom_planeta) {
 		this.nom_planeta = nom_planeta;
 	}
 
@@ -54,5 +57,13 @@ public class Planet {
 
 	public void setDisponibilidad(boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
+	}
+  
+	public ArrayList<Activity> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(ArrayList<Activity> activities) {
+		this.activities = activities;
 	}
 }

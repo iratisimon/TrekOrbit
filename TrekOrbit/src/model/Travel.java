@@ -5,13 +5,21 @@ public class Travel {
 	private String cod_viaje;
 	private String origen;
 	private double duracion;
+  private Planeta nom_destino;
 	
-	public Travel(String cod_viaje, String origen, double duracion) {
+	public Travel(String cod_viaje, String origen, double duracion, Planeta destino) {
 		this.cod_viaje = cod_viaje;
 		this.origen = origen;
 		this.duracion = duracion;
 	}
 
+	public Travel() {
+		this.cod_viaje = null;
+		this.origen = null;
+		this.duracion = 0;
+		this.nom_destino=null;
+	}
+  
 	public String getCod_viaje() {
 		return cod_viaje;
 	}
@@ -35,8 +43,16 @@ public class Travel {
 	public void setDuracion(double duracion) {
 		this.duracion = duracion;
 	}
+
+	public Planeta getNom_destino() {
+		return nom_destino;
+	}
+
+	public void setNom_destino(Planeta nom_destino) {
+		this.nom_destino = nom_destino;
+	}
 	
-	public static String generarIDUsuario() {
+	public static String generarIDViaje() {
 		String letra = "V";
 		int numero = ++ultimoCodViaje;
 		String numeroMenor="00";

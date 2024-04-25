@@ -12,9 +12,11 @@ public class Ser {
 		this.nick = nick;
 		this.admin = admin;
 	}
-	public Ser() {
-		
-	}
+  public Ser(String id, String nick, String passwd) {
+		this.id=id;
+		this.passwd = passwd;
+		this.nick = nick;
+  }
 
 	public String getId() {
 		return id;
@@ -37,7 +39,7 @@ public class Ser {
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
-	
+  
 	public boolean isAdmin() {
 		return admin;
 	}
@@ -59,4 +61,3 @@ public class Ser {
 		}
 	}
 }
-
