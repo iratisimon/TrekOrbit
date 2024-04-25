@@ -2,11 +2,11 @@ package model;
 
 import java.time.LocalDate;
 
-public class Administrador extends Ser{
+public class Admin extends Ser{
 	private LocalDate fechaIngreso;
 	
-	public Administrador(String passwrd, String nom_user, LocalDate fechaIngreso) {
-		super(passwrd, nom_user);
+	public Admin(String passwrd, String nom_user, LocalDate fechaIngreso, boolean admin) {
+		super(passwrd, nom_user, admin);
 		this.fechaIngreso = fechaIngreso;
 		
 	}

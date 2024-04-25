@@ -1,13 +1,13 @@
 package model;
 
-public class Planeta {
+public class Planet {
 	private String nom_planeta;
 	private double superficie;
 	private int habitantes;
 	private String clima;
 	private boolean disponibilidad;
 	
-	public Planeta(String nom_planeta, double superficie, int habitantes, String clima, boolean disponibilidad) {
+	public Planet(String nom_planeta, double superficie, int habitantes, String clima, boolean disponibilidad) {
 		super();
 		this.nom_planeta = nom_planeta;
 		this.superficie = superficie;
