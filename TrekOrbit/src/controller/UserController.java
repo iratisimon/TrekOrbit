@@ -5,9 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import model.Ser;
-import model.User;
+
 
 public class UserController implements ManageUser {
 	private Connection con;
@@ -34,7 +33,7 @@ public class UserController implements ManageUser {
 	}
 
 	public User mostrarDatosUser(Ser ser) {
-	    User usuario = null;
+	    Ser ser = null;
 	    this.openConnection();
 	    
 	    try {
@@ -69,7 +68,7 @@ public class UserController implements ManageUser {
 	   
 	    return usuario;
 	}
-
+  
 	@Override
 	public boolean modificarDatosUser(String nick, String passwd) {
 		// TODO Auto-generated method stub

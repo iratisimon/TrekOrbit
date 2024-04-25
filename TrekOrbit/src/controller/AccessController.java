@@ -47,11 +47,11 @@ public class AccessController implements ManageAccess {
 			// Si solo me devuelve uno, usamos if; si me devuelve mas de una linea, usamos
 			// while
 			if (rs.next()) {
-				ser = new User();
+				ser = new Ser();
 				ser.setNick(nick);
 				ser.setPasswd(passwd);
 			} else {
-				ser = new User();
+				ser = new Ser();
 				ser.setNick("");
 			}
 
@@ -68,7 +68,34 @@ public class AccessController implements ManageAccess {
 		}
 		return ser;
 	}
-
+	
+	//Metodo de pablo
+	public boolean existeNick(String nick) {
+	    boolean encontrado = false;
+	    this.openConnection();
+	    try {
+	        PreparedStatement checkStmt = con.prepareStatement("SELECT * FROM USUARIO WHERE Nick = ?");
+	        checkStmt.setString(1, nick);
+	        ResultSet rs = checkStmt.executeQuery();
+	        
+	        // Si encuentra al menos una fila en el resultado, significa que el nick ya existe
+	        if (rs.next()) {
+	            encontrado = true;
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error de SQL");
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            this.closeConnection();
+	        } catch (SQLException e) {
+	            System.out.println("Error en el cierre de la Base de Datos");
+	            e.printStackTrace();
+	        }
+	    }
+	    return encontrado;
+	}
+  
 	@Override
 	public boolean singUp(String nick, String nombre, String passwd, String raza) {
 		// TODO Auto-generated method stub
@@ -96,5 +123,4 @@ public class AccessController implements ManageAccess {
 		}
 		return modificado;
 	}
-
 }

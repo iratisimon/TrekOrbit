@@ -4,16 +4,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
 import controller.AccessController;
 import model.User;
 
@@ -24,8 +23,8 @@ public class SignUp extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JTextField textFieldNombre;
 	private JTextField textFieldNick;
-	private JTextField textFieldRepiteNewpasswd;
-	private JTextField textFieldIntroducirNewPasswd;
+	private JPasswordField textFieldRepiteNewpasswd;
+	private JPasswordField textFieldIntroducirNewPasswd;
 	private JButton registrarseBtn;
 	private JButton iniciarSesionBtn;
 	private JLabel mensaje;
@@ -120,12 +119,13 @@ public class SignUp extends JFrame implements ActionListener {
 		nombreLbl.setBounds(426, 223, 117, 42);
 		contentPane.add(nombreLbl);
 		
-		textFieldRepiteNewpasswd = new JTextField();
+		textFieldRepiteNewpasswd = new JPasswordField();
 		textFieldRepiteNewpasswd.setColumns(10);
 		textFieldRepiteNewpasswd.setBounds(652, 439, 231, 25);
 		contentPane.add(textFieldRepiteNewpasswd);
 		
-		textFieldIntroducirNewPasswd = new JTextField();
+    
+		textFieldIntroducirNewPasswd = new JPasswordField();
 		textFieldIntroducirNewPasswd.setColumns(10);
 		textFieldIntroducirNewPasswd.setBounds(642, 387, 241, 25);
 		contentPane.add(textFieldIntroducirNewPasswd);
@@ -139,10 +139,10 @@ public class SignUp extends JFrame implements ActionListener {
 		contentPane.add(nuevaContraseñaLbl);
 		
 		
-		mensaje = new JLabel("");
+		mensaje = new JLabel("Las contraseñas no coinciden");
 		mensaje.setHorizontalAlignment(SwingConstants.CENTER);
 		mensaje.setFont(new Font("Verdana", Font.BOLD, 14));
-		mensaje.setForeground(new Color(255, 255, 255));
+		mensaje.setForeground(new Color(255, 0, 0));
 		mensaje.setBounds(481, 602, 276, 35);
 		mensaje.setVisible(false);
 		contentPane.add(mensaje);
@@ -152,6 +152,12 @@ public class SignUp extends JFrame implements ActionListener {
 		contentPane.add(textFieldRaza);
 		textFieldRaza.setColumns(10);
 		
+ //pablo
+		JLabel fondo = new JLabel("");
+		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
+		fondo.setIcon(new ImageIcon("C:\\\\Users\\\\pablo\\\\OneDrive\\\\Escritorio\\\\Repositorio\\\\TrekOrbit\\\\TrekOrbit\\\\src\\\\Imagenes\\\\stars_space_galaxy_117958_1280x720.jpg"));
+
+    //irati
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
 		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\galaxy.jpg"));
@@ -170,6 +176,42 @@ public class SignUp extends JFrame implements ActionListener {
 	        login1.setVisible(true);
 	    }
 	    if (o == registrarseBtn) {
+	        String passwd1 = textFieldIntroducirNewPasswd.getText();
+	        String passwd2 = textFieldRepiteNewpasswd.getText();
+	        String nick = textFieldNick.getText();
+	        String raza= textFieldRaza.getText();
+	        String nombre=textFieldNombre.getText();
+	        
+	  
+	        
+	        // Verificar si el usuario existe
+	        boolean usuarioExiste = controladorAcceso.existeNick(nick);
+	        if (usuarioExiste) {
+	        	mensaje.setText("Ya existe una cuenta con ese nombre de usuario");
+                mensaje.setForeground(Color.RED);
+                mensaje.setVisible(true);
+            
+	        }
+	        else {
+	        	if (!passwd1.equals(passwd2)) {
+	        		mensaje.setText("Las contraseñas no coinciden");
+	                mensaje.setForeground(Color.RED);
+	                mensaje.setVisible(true);
+	        	}
+	        	else {
+	        		boolean modificado= controladorAcceso.singUp(nick, nombre, passwd1, raza);
+	        		if (modificado) {
+	        			mensaje.setText("Usuario creado correctamente");
+		                mensaje.setForeground(Color.RED);
+		                mensaje.setVisible(true);
+	        		}
+	        		
+	        	}
+	        }
+	    }
+	}
+
+  //pruebas 
 	    	if (controladorAcceso.singUp(textFieldNick.getText(), textFieldNombre.getText(), textFieldIntroducirNewPasswd.getText(), textFieldRaza.getText())) {
 	    		mensaje.setText("Se ha agregado un nuevo usuario correctamente");
 	    		dispose();
