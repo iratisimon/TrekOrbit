@@ -1,6 +1,5 @@
 package controller;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,7 +11,7 @@ import model.User;
 public class UserController implements ManageUser {
 	private Connection con;
 	private PreparedStatement stmt;
-	final String OBTENERUSUARIO = "SELECT * FROM USUARIO WHERE ID_Usuario=(SELECT ID FROM SER WHERE Nick=? AND Passwd=?)";
+	final String OBTENERUSUARIO = "SELECT S.Nick, S.Passwd, U.Nombre, U.Raza FROM SER S, USUARIO U WHERE S.ID = U.ID_Usuario AND S.Nick=? AND S.Passwd=?";
 	final String MODIFICARUSUARIO = "UPDATE SER SET Nick=?, Passwd=? WHERE Nick=?";
 	
 	private void openConnection() {
@@ -33,44 +32,44 @@ public class UserController implements ManageUser {
 		System.out.println("--------------------");
 	}
 
-	@Override
 	public User mostrarDatosUser(User user) {
-		// TODO Auto-generated method stub 
-		User usuario = null;
-		this.openConnection();
-		
-		try {
-            // Llamar al procedimiento almacenado
-            CallableStatement statement = con.prepareCall("{CALL VerDatosPersonales(?)}");
-            statement.setString(1, user.getNick()); // Pasar el nombre de usuario como parámetro
-            ResultSet resultSet = statement.executeQuery();
-            
-            if (resultSet.next()) {
-                // Crear un objeto User y asignar los valores obtenidos del resultado
-                usuario = new User();
-                usuario.setId(resultSet.getString("ID_Usuario"));
-                usuario.setNick(resultSet.getString("Nick"));
-                usuario.setRaza(resultSet.getString("Raza"));
-                usuario.setNombre(resultSet.getString("Nombre"));
-                
-            } else {
-                // Si el resultado está vacío, el usuario no existe
-                System.out.println("El usuario no existe.");
-                return null;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                this.closeConnection();
-            } catch (SQLException e) {
-                System.out.println("Error en el cierre de la conexión");
-                e.printStackTrace();
-            }
-        }
-       
-		return usuario;
+	    User usuario = null;
+	    this.openConnection();
+	    
+	    try {
+	        stmt = con.prepareStatement(OBTENERUSUARIO);
+	        stmt.setString(1, user.getNick());
+	        stmt.setString(2, user.getPasswd());
+	        ResultSet resultSet = stmt.executeQuery();
+	        
+	        if (resultSet.next()) {
+	            // Crear un objeto User y asignar los valores obtenidos del resultado
+	            usuario = new User();
+	            usuario.setNick(resultSet.getString("Nick"));
+	            usuario.setPasswd(resultSet.getString("Passwd"));
+	            usuario.setNombre(resultSet.getString("Nombre"));
+	            usuario.setRaza(resultSet.getString("Raza"));
+	            // Asignar otros campos según sea necesario
+	        } else {
+	            // Si el resultado está vacío, el usuario no existe
+	            System.out.println("El usuario no existe.");
+	            return null;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            this.closeConnection();
+	        } catch (SQLException e) {
+	            System.out.println("Error en el cierre de la conexión");
+	            e.printStackTrace();
+	        }
+	    }
+	   
+	    return usuario;
 	}
+
+
 
 	@Override
 	public boolean modificarDatosUser(String nick, String passwd) {

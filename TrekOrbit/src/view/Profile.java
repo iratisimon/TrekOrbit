@@ -82,6 +82,7 @@ public class Profile extends JFrame implements ActionListener {
 		contentPane.add(lblRaza);
 		
 		txtRaza = new JTextField();
+		txtRaza.setEditable(false);
 		txtRaza.setBounds(329, 463, 164, 28);
 		contentPane.add(txtRaza);
 		txtRaza.setColumns(10);
@@ -118,6 +119,7 @@ public class Profile extends JFrame implements ActionListener {
 		contentPane.add(lblNombre);
 		
 		txtNombre = new JTextField();
+		txtNombre.setEditable(false);
 		txtNombre.setBounds(329, 522, 164, 28);
 		contentPane.add(txtNombre);
 		txtNombre.setColumns(10);
@@ -129,8 +131,24 @@ public class Profile extends JFrame implements ActionListener {
 		
 		btnGuardar.addActionListener(this);
 		btnModificar.addActionListener(this);
+		
+		cargarDatosUsuario();
     }
-
+		
+	public void cargarDatosUsuario() {
+	    // Obtener los datos del usuario utilizando el controlador de usuario
+	    User datosUsuario = controladorUsuario.mostrarDatosUser(usuario);
+	
+	    if (datosUsuario != null) {
+	        // Establecer los valores en los campos de texto
+	        txtNick.setText(usuario.getNick());
+	        txtPasswd.setText(usuario.getPasswd());
+	        txtRaza.setText(datosUsuario.getRaza());
+            txtNombre.setText(datosUsuario.getNombre());
+	    } else {
+	        System.out.println("No se pudieron obtener los datos del usuario.");
+	    }
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -139,26 +157,16 @@ public class Profile extends JFrame implements ActionListener {
 		String nick = txtNick.getText();
 	    String passwd = new String (txtPasswd.getPassword());
 	    boolean modificado;
-	    User datosUsuario = controladorUsuario.mostrarDatosUser(usuario);
-	    
-	    if (datosUsuario != null) {
-            // Establecer los valores en los campos de texto
-            txtNick.setText(usuario.getNick());
-            txtPasswd.setText(usuario.getPasswd());
-            txtRaza.setText(usuario.getRaza());
-            txtNombre.setText(usuario.getNombre());
-        } else {
-        	System.out.println("No se pudieron obtener los datos del usuario.");
-        }
 		
 	    if (o == btnModificar) {
 	        // Si se presionó el botón "Modificar", habilita la edición de los campos
 	        txtNick.setEditable(true);
 	        txtPasswd.setEditable(true);
-	    } else if (o == btnGuardar) {
+	    }
+	    if (o == btnGuardar) {
 	        // Si se presionó el botón "Guardar", intenta guardar los cambios en la base de datos
 	        modificado = controladorUsuario.modificarDatosUser(nick, passwd);
-	        if (modificado) {
+	        if (modificado == true) {
 	            // Si se modificaron los datos con éxito
 	            // Deshabilita la edición de los campos
 	            txtNick.setEditable(false);
@@ -170,6 +178,6 @@ public class Profile extends JFrame implements ActionListener {
 	            lblMensaje.setForeground(new Color(204, 0, 51));
 	            lblMensaje.setText("No se pudo modificar los datos");
 	        }
-	    }
+	    }	
 	}
 }
