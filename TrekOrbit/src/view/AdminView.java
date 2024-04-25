@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 public class AdminView extends JFrame implements ActionListener{
 	
@@ -53,15 +54,15 @@ public class AdminView extends JFrame implements ActionListener{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		changePlanet = new JButton("CHANGE AVAILABILITY");
+		changePlanet = new JButton("CAMBIA LA DISPONIBILIDAD");
 		changePlanet.setFont(new Font("Verdana", Font.PLAIN, 15));
-		changePlanet.setBounds(373, 604, 211, 29);
+		changePlanet.setBounds(373, 604, 262, 29);
 		contentPane.add(changePlanet);
 		
 		if(p.isDisponibilidad()) {
-			availabilities = new JLabel("Planet available");
+			availabilities = new JLabel("Planet disponible");
 		}else {
-			availabilities = new JLabel("Planet NOT available");
+			availabilities = new JLabel("Planeta NO disponible");
 		}
 		availabilities.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		availabilities.setBounds(390, 568, 183, 13);
@@ -70,7 +71,7 @@ public class AdminView extends JFrame implements ActionListener{
 		changePlanet.addActionListener(this);
 		
 		// Mostrar lista de actividades
-        JLabel activityLabel = new JLabel("Activities:");
+        JLabel activityLabel = new JLabel("Actividades:");
         activityLabel.setBounds(20, 50, 100, 20);
         contentPane.add(activityLabel);
 
@@ -87,12 +88,12 @@ public class AdminView extends JFrame implements ActionListener{
         }
 
         // Botones para añadir y quitar actividades
-        addButton = new JButton("Add Activity");
+        addButton = new JButton("Añadir actividades");
         addButton.setBounds(20, 500, 120, 30);
         addButton.addActionListener(this);
         contentPane.add(addButton);
 
-        removeButton = new JButton("Remove Activity");
+        removeButton = new JButton("Quitar actividades");
         removeButton.setBounds(160, 500, 150, 30);
         removeButton.addActionListener(this);
         contentPane.add(removeButton);
@@ -112,14 +113,34 @@ public class AdminView extends JFrame implements ActionListener{
 		if(e.getSource()==addButton) {
 			AddActivityView NewActivities = new AddActivityView(this, c, p.getNom_planeta().name());
 		}
+
+		
 		if(e.getSource()==changePlanet) {
-			c.changePlanetAvailability(p);
-			if(p.isDisponibilidad()) {
-				availabilities.setText("Planet NOT available");
-			}else {
-				availabilities.setText("Planet available");
-			}
+			p=c.changePlanetAvailability(p,admin.getNick());
+			//p = c.getPlanet(admin.getNick());
+				if(!p.isDisponibilidad()) {
+					availabilities.setText("Planeta NO disponible");
+				}else {
+					availabilities.setText("Planeta disponible");
+				}
 			
 		}
+		if (e.getSource() == removeButton) {
+            String selectedActivity = activityList.getSelectedValue();
+            if (selectedActivity != null) {
+                int confirm = JOptionPane.showConfirmDialog(this, "Seguro que quieres borrar la actividad seleccionada?", "Confirm", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    boolean removed = c.removePlanetActivity(p.getNom_planeta().name(), selectedActivity);
+                    if (removed) {
+                        JOptionPane.showMessageDialog(this, "Se ha borrado la actividad", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        updatePlanetActivities(p.getNom_planeta().name());
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error borrando la actividad", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecciona una actividad para removerla", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
 	}
 }

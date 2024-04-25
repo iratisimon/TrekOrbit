@@ -39,7 +39,7 @@ public class AddActivityView extends JDialog implements ActionListener{
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JLabel label = new JLabel("Select activity to add:");
+        JLabel label = new JLabel("Selecciona la actividad que quieras añadir:");
         panel.add(label);
 
         ArrayList<Activity> availableActivities = c.getAvailableActivities(planetName);
@@ -53,11 +53,11 @@ public class AddActivityView extends JDialog implements ActionListener{
                 panel.add(radioButton);
             }
 
-            addButton = new JButton("Add");
+            addButton = new JButton("Añadir");
             addButton.addActionListener(this);
             panel.add(addButton);
         } else {
-            panel.add(new JLabel("No more activities available."));
+            panel.add(new JLabel("No hay más actividades disponibles."));
         }
 
         add(panel);
@@ -71,17 +71,17 @@ public class AddActivityView extends JDialog implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
     	if (e.getSource() == addButton) {
-            String selectedActivityName = group.getSelection().getActionCommand(); // Obtener el nombre de la actividad seleccionada
-            if (selectedActivityName != null && !selectedActivityName.isEmpty()) {
-                boolean added = c.addPlanetActivity(planetName, selectedActivityName);
+            String activity = group.getSelection().getActionCommand(); // Obtener el nombre de la actividad seleccionada
+            if (activity != null && !activity.isEmpty()) {
+                boolean added = c.addPlanetActivity(planetName, activity);
                 if (added) {
-                    JOptionPane.showMessageDialog(this, "Activity added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    parent.updatePlanetActivities(selectedActivityName);
+                    JOptionPane.showMessageDialog(this, "La actividad ha sido añadida", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    parent.updatePlanetActivities(planetName);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Error adding activity", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Error añadiendo la actividad", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Select an activity to add", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Selecciona una actividad para añadirla", "Error", JOptionPane.ERROR_MESSAGE);
             }
             dispose(); // Cerrar el diálogo después de añadir la actividad
         }
