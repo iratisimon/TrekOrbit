@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import controller.AccessController;
 import controller.AdminController;
 import model.Planet;
 import model.Ser;
@@ -24,7 +25,7 @@ import javax.swing.JOptionPane;
 
 public class AdminView extends JFrame implements ActionListener{
 	
-	
+	private AccessController controladorAcceso;
 	private Ser admin;
 	private AdminController c;
 	private JButton changePlanet;
@@ -42,9 +43,10 @@ public class AdminView extends JFrame implements ActionListener{
 	 * Create the frame.
 	 * @param c 
 	 */
-	public AdminView(AdminController c1,Ser administrador) {
+	public AdminView(AccessController controladorAcceso,AdminController c1,Ser administrador) {
 		this.admin=administrador;
 		this.c=c1;
+		this.controladorAcceso=controladorAcceso;
 		p=c.getPlanet(admin.getNick());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 680);
