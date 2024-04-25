@@ -33,6 +33,7 @@ public class LogIn extends JFrame implements ActionListener {
 	private AccessController controladorAcceso;
 	private AdminController controladorAdmin;
 	private UserController controladorUsuario;
+	private AdminController controladorAdmin;
 	private Ser ser;
 
 	/**
@@ -140,10 +141,13 @@ public class LogIn extends JFrame implements ActionListener {
 			if (ser != null) {
 	        
 	        	controladorUsuario = new UserController();
+	        	controladorAdmin = new AdminController();
 	            
 	            if (ser.isAdmin()) {
 	                dispose();
-	                AdminView av = new AdminView(controladorAcceso,controladorAdmin,ser);
+
+	                AdminView av = new AdminView(controladorAcceso, controladorAdmin, ser);
+
 	                av.setVisible(true);
 	                
 	            } else{

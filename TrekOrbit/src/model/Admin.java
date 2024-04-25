@@ -9,6 +9,9 @@ public class Admin extends Ser{
 		super(passwd, nick, admin);
 		this.fechaIngreso = fechaIngreso;
 	}
+	public Admin() {
+		
+	}
 
 	public LocalDate getFechaIngreso() {
 		return fechaIngreso;

@@ -24,29 +24,31 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 public class AdminView extends JFrame implements ActionListener{
-	
-	private AccessController controladorAcceso;
-	private Ser admin;
-	private AdminController c;
 	private JButton changePlanet;
 	private Planet p;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel availabilities;
 	private JList<String> activityList;
-    private DefaultListModel<String> activityListModel;
-    private JButton addButton;
-    private JButton removeButton;
+  private DefaultListModel<String> activityListModel;
+  private JButton addButton;
+  private JButton removeButton;
+    
+  private AccessController controladorAcceso;
+  private Ser admin;
+	private AdminController c;
 
 
 	/**
 	 * Create the frame.
 	 * @param c 
 	 */
-	public AdminView(AccessController controladorAcceso,AdminController c1,Ser administrador) {
+
+	public AdminView(AccessController controladorAcceso, AdminController c1,Ser administrador) {
+		this.controladorAcceso = controladorAcceso;
 		this.admin=administrador;
 		this.c=c1;
-		this.controladorAcceso=controladorAcceso;
+		
 		p=c.getPlanet(admin.getNick());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 680);
