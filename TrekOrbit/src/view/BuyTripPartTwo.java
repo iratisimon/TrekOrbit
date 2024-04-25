@@ -3,22 +3,19 @@ package view;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import com.toedter.calendar.JCalendar;
-import com.toedter.calendar.JDateChooser;
-
 import controller.TravelController;
-
+import model.Planeta;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
 
 public class BuyTripPartTwo extends JFrame {
 
@@ -30,6 +27,7 @@ public class BuyTripPartTwo extends JFrame {
 	private JLabel lblVolver;
 	private JLabel lblReservar;
 	private JCalendar calendar;
+	private JComboBox<String> comboBoxPlanetasOrigen;
 
 	/**
 	 * Create the frame.
@@ -53,25 +51,29 @@ public class BuyTripPartTwo extends JFrame {
 
 		lblVolver = createClickableLabel("/images/VolverBlanco.png", 10, 11, 134, 75);
 		contentPane.add(lblVolver);
-        
-        calendar = new JCalendar();
-        calendar.getYearChooser().getSpinner().setForeground(new Color(255, 255, 255));
-        calendar.getYearChooser().getSpinner().setBackground(new Color(23, 17, 39));
-        calendar.getMonthChooser().getComboBox().setForeground(new Color(255, 255, 255));
-        calendar.getMonthChooser().getComboBox().setBackground(new Color(23, 17, 39));
-		calendar.getDayChooser().setBackground(Color.WHITE);
-		calendar.getDayChooser().setWeekdayForeground(Color.WHITE);
-		calendar.setBackground(new Color(0,0,0,0));
-		calendar.setWeekdayForeground(Color.WHITE);
-		calendar.setWeekOfYearVisible(false);
-		calendar.setDecorationBackgroundColor(new Color(0,0,0,0));
-		calendar.setFont(new Font("OCR A Extended", Font.BOLD, 12));
-		// Ubicar y agregar al panel
-		calendar.setBounds(660, 340, 300, 200);
-        getContentPane().add(calendar);
-        
+
+		calendar = new JCalendar();
+		calendar.getDayChooser().setWeekdayForeground(new Color(255, 255, 255));
+		calendar.getDayChooser().setSundayForeground(new Color(255, 255, 255));
+		calendar.setBounds(660, 346, 300, 200);
+		contentPane.add(calendar);
+		customizeCalendar();
+
+		comboBoxPlanetasOrigen = new JComboBox<String>();
+		comboBoxPlanetasOrigen.setFont(new Font("OCR A Extended", Font.PLAIN, 25));
+		for (Planeta p : Planeta.values()) {
+			String planet = p.name();
+			if (!planet.equalsIgnoreCase(planetName)) {
+				comboBoxPlanetasOrigen.addItem(planet);
+			}
+		}
+		comboBoxPlanetasOrigen.setBackground(new Color(23, 17, 39));
+		comboBoxPlanetasOrigen.setForeground(new Color(255, 255, 255));
+		comboBoxPlanetasOrigen.setBounds(153, 124, 221, 41);
+		contentPane.add(comboBoxPlanetasOrigen);
+
 		JLabel lblPlaneta = new JLabel("");
-		lblPlaneta.setBounds(660, 50, 300, 300);
+		lblPlaneta.setBounds(660, 67, 300, 270);
 		lblPlaneta.setIcon(new ImageIcon(getClass().getResource(imagePath)));
 		contentPane.add(lblPlaneta);
 
@@ -81,6 +83,12 @@ public class BuyTripPartTwo extends JFrame {
 		lblPlanetName.setForeground(new Color(255, 255, 255));
 		lblPlanetName.setBounds(611, 15, 400, 50);
 		contentPane.add(lblPlanetName);
+
+		JLabel lblOrigen = new JLabel("Origen:");
+		lblOrigen.setForeground(new Color(255, 255, 255));
+		lblOrigen.setBounds(10, 124, 145, 41);
+		lblOrigen.setFont(new Font("Magneto", Font.PLAIN, 33));
+		contentPane.add(lblOrigen);
 
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/galaxy.jpg")));
@@ -112,5 +120,41 @@ public class BuyTripPartTwo extends JFrame {
 			}
 		});
 		return label;
+	}
+
+	private void customizeCalendar() {
+		// Configuración del color de fondo del calendario
+		calendar.setBackground(new Color(23, 17, 39));
+
+		// Configuración del color de la letra del calendario
+		calendar.setForeground(Color.WHITE);
+
+		// Configuración del color de fondo del área de título
+		calendar.setDecorationBackgroundColor(new Color(23, 17, 39));
+
+		// Configuración del color de la letra del selector de año
+		calendar.getYearChooser().getSpinner().setForeground(Color.WHITE);
+
+		// Configuración del color de fondo del selector de año
+		calendar.getYearChooser().getSpinner().setBackground(new Color(23, 17, 39));
+
+		// Configuración del color de la letra del selector de mes
+		calendar.getMonthChooser().getComboBox().setForeground(Color.WHITE);
+
+		// Configuración del color de fondo del selector de mes
+		calendar.getMonthChooser().getComboBox().setBackground(new Color(23, 17, 39));
+
+		// Configuración del color de fondo del selector de día
+		calendar.getDayChooser().setBackground(new Color(23, 17, 39));
+		calendar.getDayChooser().getDayPanel().setBackground(new Color(23, 17, 39));
+
+		// Configuración del color de la letra del selector de día
+		calendar.getDayChooser().setForeground(Color.BLACK);
+
+		// Ocultar el número de la semana
+		calendar.setWeekOfYearVisible(false);
+
+		// Configuración de la fuente y tamaño de la letra del calendario
+		calendar.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 	}
 }

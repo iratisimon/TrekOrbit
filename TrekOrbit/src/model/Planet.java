@@ -55,5 +55,4 @@ public class Planet {
 	public void setDisponibilidad(boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
-	
 }
