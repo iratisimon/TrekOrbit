@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Ser;
+import model.User;
 
 
 public class UserController implements ManageUser {
@@ -33,7 +34,7 @@ public class UserController implements ManageUser {
 	}
 
 	public User mostrarDatosUser(Ser ser) {
-	    Ser ser = null;
+	    User usuario = null;
 	    this.openConnection();
 	    
 	    try {

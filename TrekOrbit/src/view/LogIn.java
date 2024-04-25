@@ -106,27 +106,7 @@ public class LogIn extends JFrame implements ActionListener {
 		contentPane.add(registro);
 		registro.addActionListener(this);
 
-    //pablo
-		mensaje = new JLabel("No existe ninguna cuenta con ese usuario");
-		mensaje.setFont(new Font("Verdana", Font.BOLD, 13));
-		mensaje.setHorizontalAlignment(SwingConstants.CENTER);
-		mensaje.setForeground(new Color(255, 0, 0));
-		mensaje.setBounds(435, 464, 364, 30);
-		contentPane.add(mensaje);
-		mensaje.setVisible(false);
 
-		JLabel fondo = new JLabel("");
-		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
-		fondo.setIcon(new ImageIcon(
-				"C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\stars_space_galaxy_117958_1280x720.jpg"));
-		fondo.setBounds(10, 10, 1246, 673);
-		contentPane.add(fondo);
-
-		inicio.addActionListener(this);
-		registro.addActionListener(this);
-	}
-
-		//irati
 		mensaje = new JLabel("No existe ninguna cuenta con ese usuario");
 		mensaje.setForeground(new Color(255, 255, 255));
 		mensaje.setBounds(435, 464, 364, 30);

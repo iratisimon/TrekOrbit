@@ -152,12 +152,7 @@ public class SignUp extends JFrame implements ActionListener {
 		contentPane.add(textFieldRaza);
 		textFieldRaza.setColumns(10);
 		
- //pablo
-		JLabel fondo = new JLabel("");
-		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
-		fondo.setIcon(new ImageIcon("C:\\\\Users\\\\pablo\\\\OneDrive\\\\Escritorio\\\\Repositorio\\\\TrekOrbit\\\\TrekOrbit\\\\src\\\\Imagenes\\\\stars_space_galaxy_117958_1280x720.jpg"));
-
-    //irati
+		
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
 		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\galaxy.jpg"));
@@ -169,55 +164,51 @@ public class SignUp extends JFrame implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-	    Object o = e.getSource();
-	    if (o == iniciarSesionBtn) {
-	        dispose();
-	        LogIn login1 = new LogIn(controladorAcceso, usuario);
-	        login1.setVisible(true);
-	    }
-	    if (o == registrarseBtn) {
-	        String passwd1 = textFieldIntroducirNewPasswd.getText();
-	        String passwd2 = textFieldRepiteNewpasswd.getText();
-	        String nick = textFieldNick.getText();
-	        String raza= textFieldRaza.getText();
-	        String nombre=textFieldNombre.getText();
-	        
-	  
-	        
-	        // Verificar si el usuario existe
-	        boolean usuarioExiste = controladorAcceso.existeNick(nick);
-	        if (usuarioExiste) {
-	        	mensaje.setText("Ya existe una cuenta con ese nombre de usuario");
-                mensaje.setForeground(Color.RED);
-                mensaje.setVisible(true);
-            
-	        }
-	        else {
-	        	if (!passwd1.equals(passwd2)) {
-	        		mensaje.setText("Las contraseñas no coinciden");
-	                mensaje.setForeground(Color.RED);
-	                mensaje.setVisible(true);
-	        	}
-	        	else {
-	        		boolean modificado= controladorAcceso.singUp(nick, nombre, passwd1, raza);
-	        		if (modificado) {
-	        			mensaje.setText("Usuario creado correctamente");
-		                mensaje.setForeground(Color.RED);
-		                mensaje.setVisible(true);
-	        		}
-	        		
-	        	}
-	        }
-	    }
-	}
+		Object o = e.getSource();
+		if (o == iniciarSesionBtn) {
+			dispose();
+			LogIn login1 = new LogIn(controladorAcceso, usuario);
+			login1.setVisible(true);
+		}
+		
+		if (o == registrarseBtn) {
+			String passwd1 = textFieldIntroducirNewPasswd.getText();
+			String passwd2 = textFieldRepiteNewpasswd.getText();
+			String nick = textFieldNick.getText();
+			String raza = textFieldRaza.getText();
+			String nombre = textFieldNombre.getText();
 
-  //pruebas 
-	    	if (controladorAcceso.singUp(textFieldNick.getText(), textFieldNombre.getText(), textFieldIntroducirNewPasswd.getText(), textFieldRaza.getText())) {
-	    		mensaje.setText("Se ha agregado un nuevo usuario correctamente");
-	    		dispose();
-	    	} else {
-	    		mensaje.setText("Error.No se ha podido agregar al nuevo usuario");
-	    	}
-	    }
+			// Verificar si el usuario existe
+			boolean usuarioExiste = controladorAcceso.existeNick(nick);
+			if (usuarioExiste) {
+				mensaje.setText("Ya existe una cuenta con ese nombre de usuario");
+				mensaje.setForeground(Color.RED);
+				mensaje.setVisible(true);
+
+			} else {
+				if (!passwd1.equals(passwd2)) {
+					mensaje.setText("Las contraseñas no coinciden");
+					mensaje.setForeground(Color.RED);
+					mensaje.setVisible(true);
+				} else {
+					boolean modificado = controladorAcceso.singUp(nick, nombre, passwd1, raza);
+					if (modificado) {
+						mensaje.setText("Usuario creado correctamente");
+						mensaje.setForeground(Color.RED);
+						mensaje.setVisible(true);
+					}
+
+				}
+			}
+		}
+
+		// pruebas
+		if (controladorAcceso.singUp(textFieldNick.getText(), textFieldNombre.getText(),
+				textFieldIntroducirNewPasswd.getText(), textFieldRaza.getText())) {
+			mensaje.setText("Se ha agregado un nuevo usuario correctamente");
+			dispose();
+		} else {
+			mensaje.setText("Error.No se ha podido agregar al nuevo usuario");
+		}
 	}
 }
