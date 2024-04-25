@@ -20,7 +20,7 @@ public class AccessController implements ManageAccess {
 	private void openConnection() {
 		try {
 			String url = "jdbc:mysql://localhost:3306/TREKORBIT?serverTimezone=Europe/Madrid&useSSL=false";
-			con = DriverManager.getConnection(url, "root", "abcd*1234");
+			con = DriverManager.getConnection(url, "root", "contraseña");
 		} catch (SQLException e) {
 			System.out.println("Error al intentar abrir la BD");
 		}
@@ -52,7 +52,7 @@ public class AccessController implements ManageAccess {
 				ser = new Ser();
 				ser.setNick(nick);
 				ser.setPasswd(passwd);
-				ser.setAdmin(rs.getBoolean("Administrador"));
+				ser.setAdmin(rs.getBoolean("EsAdmin"));
 			} else {
 				ser = new Ser();
 				ser.setNick("");

@@ -33,7 +33,6 @@ public class LogIn extends JFrame implements ActionListener {
 	private AccessController controladorAcceso;
 	private AdminController controladorAdmin;
 	private UserController controladorUsuario;
-	private AdminController controladorAdmin;
 	private Ser ser;
 
 	/**
