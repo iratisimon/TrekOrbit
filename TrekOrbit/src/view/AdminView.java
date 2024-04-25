@@ -30,12 +30,12 @@ public class AdminView extends JFrame implements ActionListener{
 	private JPanel contentPane;
 	private JLabel availabilities;
 	private JList<String> activityList;
-    private DefaultListModel<String> activityListModel;
-    private JButton addButton;
-    private JButton removeButton;
+  private DefaultListModel<String> activityListModel;
+  private JButton addButton;
+  private JButton removeButton;
     
-    private AccessController controladorAcceso;
-    private Ser admin;
+  private AccessController controladorAcceso;
+  private Ser admin;
 	private AdminController c;
 
 
@@ -43,6 +43,7 @@ public class AdminView extends JFrame implements ActionListener{
 	 * Create the frame.
 	 * @param c 
 	 */
+
 	public AdminView(AccessController controladorAcceso, AdminController c1,Ser administrador) {
 		this.controladorAcceso = controladorAcceso;
 		this.admin=administrador;

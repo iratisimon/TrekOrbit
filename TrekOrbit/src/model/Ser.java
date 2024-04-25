@@ -7,6 +7,10 @@ public class Ser {
 	protected String nick;
 	protected boolean admin;
 	
+	public Ser() {
+		
+	}
+	
 	public Ser(String passwd, String nick, boolean admin) {
 		this.passwd = passwd;
 		this.nick = nick;
