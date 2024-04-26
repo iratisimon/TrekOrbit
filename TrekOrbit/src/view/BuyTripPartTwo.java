@@ -3,14 +3,22 @@ package view;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JCalendar;
 import controller.TravelController;
+import model.Planet;
 import model.Planeta;
+import model.Travel;
+
 import javax.swing.JLabel;
+import javax.swing.JList;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -28,6 +36,10 @@ public class BuyTripPartTwo extends JFrame {
 	private JLabel lblReservar;
 	private JCalendar calendar;
 	private JComboBox<String> comboBoxPlanetasOrigen;
+	private ArrayList<String> actividades;
+	private JList<String> actividadesList;
+	private JScrollPane actividadesScrollPane;
+	private Planet planeta;
 
 	/**
 	 * Create the frame.
@@ -36,7 +48,8 @@ public class BuyTripPartTwo extends JFrame {
 
 		this.travelControl = controlador;
 		String imagePath = path + planetName + 400 + png;
-
+		//planeta = travelControl.
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BuyTrip.class.getResource("/images/logotipo_trekorbit.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 680);
@@ -72,10 +85,23 @@ public class BuyTripPartTwo extends JFrame {
 		comboBoxPlanetasOrigen.setBounds(153, 124, 221, 41);
 		contentPane.add(comboBoxPlanetasOrigen);
 
+		actividadesList = new JList<>(actividades.toArray(new String[0]));
+		actividadesScrollPane = new JScrollPane(actividadesList);
+		actividadesScrollPane.setBounds(20, 350, 200, 200);
+
+		getContentPane().add(actividadesScrollPane);
+
 		JLabel lblPlaneta = new JLabel("");
 		lblPlaneta.setBounds(660, 67, 300, 270);
 		lblPlaneta.setIcon(new ImageIcon(getClass().getResource(imagePath)));
 		contentPane.add(lblPlaneta);
+
+		JLabel lblActividades = new JLabel("¿Qué actividades deseas realizar?");
+		lblActividades.setForeground(new Color(255, 255, 255));
+		lblActividades.setHorizontalAlignment(SwingConstants.CENTER);
+		lblActividades.setFont(new Font("Magneto", Font.PLAIN, 30));
+		lblActividades.setBounds(36, 240, 591, 41);
+		contentPane.add(lblActividades);
 
 		JLabel lblPlanetName = new JLabel(planetName);
 		lblPlanetName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -113,7 +139,8 @@ public class BuyTripPartTwo extends JFrame {
 					volver.setVisible(true);
 					dispose();
 				} else if (label == lblReservar) {
-					ConfirmReservation reserva = new ConfirmReservation(travelControl);
+					Travel travel = new Travel();
+					ConfirmReservation reserva = new ConfirmReservation(travelControl, travel);
 					reserva.setVisible(true);
 					dispose();
 				}

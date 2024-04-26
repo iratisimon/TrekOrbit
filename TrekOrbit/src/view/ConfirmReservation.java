@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.TravelController;
+import model.Travel;
 
 import java.awt.Cursor;
 import java.awt.Toolkit;
@@ -20,15 +21,16 @@ public class ConfirmReservation extends JFrame {
 	private JLabel lblVolver;
 	private JLabel lblReservar;
 	private TravelController travelControl;
+	private Travel travel;
 
 	/**
 	 * Create the frame.
 	 * 
 	 * @param travelControl
 	 */
-	public ConfirmReservation(TravelController travelControl) {
+	public ConfirmReservation(TravelController travelControl, Travel trip) {
 		this.travelControl = travelControl;
-
+		this.travel = trip;
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(ConfirmReservation.class.getResource("/images/logotipo_trekorbit.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,13 +66,12 @@ public class ConfirmReservation extends JFrame {
 				// Verificar qué etiqueta fue clicada
 				if (label == lblVolver) {
 					// Si fue la etiqueta "Volver", volver a la ventana anterior
-					BuyTrip volver = new BuyTrip(travelControl);
+					String planetName = travel.getNom_destino().name();
+					BuyTripPartTwo volver = new BuyTripPartTwo(planetName,travelControl);
 					volver.setVisible(true);
 					dispose();
 				} else if (label == lblReservar) {
-					ConfirmReservation reserva = new ConfirmReservation(travelControl);
-					reserva.setVisible(true);
-					dispose();
+					
 				}
 			}
 		});
