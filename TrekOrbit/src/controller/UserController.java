@@ -13,7 +13,7 @@ public class UserController implements ManageUser {
 	private Connection con;
 	private PreparedStatement stmt;
 	final String OBTENERUSUARIO = "SELECT S.Nick, S.Passwd, U.Nombre, U.Raza FROM SER S, USUARIO U WHERE S.ID = U.ID_Usuario AND S.Nick=? AND S.Passwd=?";
-	final String MODIFICARUSUARIO = "UPDATE SER SET Nick=?, Passwd=? WHERE Nick=?";
+	final String MODIFICARUSUARIO = "UPDATE SER SET Nick=?, Passwd=? WHERE Nick=? AND Passwd=?";
 	
 	private void openConnection() {
 		try {
@@ -69,33 +69,41 @@ public class UserController implements ManageUser {
 	   
 	    return usuario;
 	}
-  
+  	
 	@Override
-	public boolean modificarDatosUser(String nick, String passwd) {
-		// TODO Auto-generated method stub
-		boolean modificado = false;
-		this.openConnection();
-		try {
-			stmt = con.prepareStatement(MODIFICARUSUARIO);
-			stmt.setString(1, nick);
-			stmt.setString(2, passwd);
-			stmt.setString(3, nick);
-			if (stmt.executeUpdate() == 1) {
-				modificado = true;
-			}
+	public boolean modificarDatosUser(String nickOriginal, String passwdOriginal, String nickNew, String passwd) {
+	    boolean modificado = false;
+	    this.openConnection();
+	    Ser ser = new Ser();
+	    
+	    try {
+	        PreparedStatement stmt = con.prepareStatement(MODIFICARUSUARIO);
+	        stmt.setString(1, nickNew);
+	        stmt.setString(2, passwd);
+	        stmt.setString(3, nickOriginal);
+	        stmt.setString(4, passwdOriginal); // Agregar la contraseña original como parámetro
+	        int rowsAffected = stmt.executeUpdate();
+	        
+	        if (rowsAffected > 0) {
+	            modificado = true;
+	            // Actualizar la referencia al usuario con el nuevo nombre de usuario y contraseña
+	            ser.setNick(nickNew);
+	            ser.setPasswd(passwd);
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error al intentar modificar el usuario.");
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            this.closeConnection();
+	        } catch (SQLException e) {
+	            System.out.println("Error en el cierre de la conexión.");
+	            e.printStackTrace();
+	        }
+	    }
 
-		} catch (SQLException e) {
-			System.out.println("Error de SQL");
-			e.printStackTrace();
-		}
-
-		try {
-			this.closeConnection();
-		} catch (SQLException e) {
-			System.out.println("Error en el cierre de la Base de Datos");
-			e.printStackTrace();
-		}
-
-		return modificado;
+	    return modificado;
 	}
+
+
 }

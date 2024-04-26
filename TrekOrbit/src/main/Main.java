@@ -1,6 +1,5 @@
 package main;
 
-import model.Ser;
 import controller.AccessController;
 import view.LogIn;
 
