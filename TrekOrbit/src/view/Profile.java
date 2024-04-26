@@ -126,7 +126,7 @@ public class Profile extends JFrame implements ActionListener {
 		txtNombre.setColumns(10);
 		
 		JLabel fondo = new JLabel("");
-		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\galaxy.jpg"));
+		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\galaxy.jpg"));
 		fondo.setBounds(10, 0, 1021, 657);
 		contentPane.add(fondo);
 		

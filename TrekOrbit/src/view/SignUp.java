@@ -136,11 +136,11 @@ public class SignUp extends JFrame implements ActionListener {
 		nuevaContraseñaLbl.setBounds(223, 314, 276, 42);
 		contentPane.add(nuevaContraseñaLbl);
 
-		mensaje = new JLabel("Las contraseñas no coinciden");
+		mensaje = new JLabel("");
 		mensaje.setHorizontalAlignment(SwingConstants.CENTER);
 		mensaje.setFont(new Font("Verdana", Font.BOLD, 14));
 		mensaje.setForeground(new Color(255, 0, 0));
-		mensaje.setBounds(481, 602, 276, 35);
+		mensaje.setBounds(624, 442, 276, 35);
 		mensaje.setVisible(false);
 		contentPane.add(mensaje);
 
