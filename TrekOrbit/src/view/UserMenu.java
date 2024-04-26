@@ -112,8 +112,6 @@ public class UserMenu extends JFrame implements ActionListener {
 			TravelController controladorViaje= new TravelController();
 			BuyTrip buy = new BuyTrip(controladorViaje,ser);
 			buy.setVisible(true);
-			// BuyTrip buy = new BuyTrip(); Ventana de meylin -- falta enviarle el controlador y el usuario.
-			// buy.setVisible(true);
 			dispose();
 		} else if (o == MisAventuras) {
 			// SeeTrip see = new SeeTrip(); Ventana de elbire -- controlador y usuario
