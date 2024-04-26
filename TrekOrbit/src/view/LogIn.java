@@ -30,6 +30,7 @@ public class LogIn extends JFrame implements ActionListener {
 	private JLabel mensaje;
 
 	private AccessController controladorAcceso;
+	private AdminController controladorAdmin;
 	private UserController controladorUsuario;
 	private Ser ser;
 
@@ -107,7 +108,7 @@ public class LogIn extends JFrame implements ActionListener {
 		registro.addActionListener(this);
 
 
-		mensaje = new JLabel("No existe ninguna cuenta con ese usuario");
+		mensaje = new JLabel("");
 		mensaje.setForeground(new Color(255, 255, 255));
 		mensaje.setBounds(435, 464, 364, 30);
 		contentPane.add(mensaje);

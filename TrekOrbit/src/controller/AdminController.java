@@ -27,7 +27,7 @@ public class AdminController implements ManageAdmin{
 	private void openConnection() {
 		try {
 			String url = "jdbc:mysql://localhost:3306/TREKORBIT?serverTimezone=Europe/Madrid&useSSL=false";
-			con = DriverManager.getConnection(url, "root", "contraseña");
+			con = DriverManager.getConnection(url, "root", "abcd*1234");
 		} catch (SQLException e) {
 			System.out.println("Error al intentar abrir la BD");
 		}

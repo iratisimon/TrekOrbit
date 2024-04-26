@@ -110,7 +110,7 @@ public class Profile extends JFrame implements ActionListener {
 		lblMensaje = new JLabel("");
 		lblMensaje.setForeground(new Color(204, 0, 51));
 		lblMensaje.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 20));
-		lblMensaje.setBounds(577, 399, 364, 28);
+		lblMensaje.setBounds(541, 399, 400, 28);
 		contentPane.add(lblMensaje);
 		
 		lblNombre = new JLabel("Mi nombre es:");
