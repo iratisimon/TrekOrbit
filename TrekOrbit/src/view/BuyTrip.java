@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.TravelController;
+import model.Ser;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -29,12 +30,14 @@ public class BuyTrip extends JFrame {
 	private JLabel lblPluton;
 	private String selectedPlanet;
 	private TravelController travelControl;
+	private Ser ser;
 
 	/**
 	 * Create the frame.
 	 */
-	public BuyTrip(TravelController controlador) {
+	public BuyTrip(TravelController controlador,Ser ser) {
 		this.travelControl = controlador;
+		this.ser=ser;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BuyTrip.class.getResource("/images/logotipo_trekorbit.png")));
 		setBackground(new Color(0, 0, 0));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,7 +101,7 @@ public class BuyTrip extends JFrame {
 
 	// Función para abrir la ventana de BuyTripPartTwo
 	private void openBuyTripPartTwo(String selectedPlanet) {
-		BuyTripPartTwo buyTrip = new BuyTripPartTwo(selectedPlanet, travelControl);
+		BuyTripPartTwo buyTrip = new BuyTripPartTwo(selectedPlanet, travelControl,ser);
 		buyTrip.setVisible(true);
 		dispose();
 	}

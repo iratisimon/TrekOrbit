@@ -4,7 +4,6 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,12 +13,12 @@ import com.toedter.calendar.JCalendar;
 import controller.TravelController;
 import model.Planet;
 import model.Planeta;
+import model.Ser;
 import model.Travel;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
-
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -40,16 +39,18 @@ public class BuyTripPartTwo extends JFrame {
 	private JList<String> actividadesList;
 	private JScrollPane actividadesScrollPane;
 	private Planet planeta;
+	private Ser ser;
 
 	/**
 	 * Create the frame.
 	 */
-	public BuyTripPartTwo(String planetName, TravelController controlador) {
+	public BuyTripPartTwo(String planetName, TravelController controlador,Ser ser) {
 
 		this.travelControl = controlador;
+		this.ser = ser;
 		String imagePath = path + planetName + 400 + png;
-		//planeta = travelControl.
-		
+		// planeta = travelControl.
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BuyTrip.class.getResource("/images/logotipo_trekorbit.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 680);
@@ -65,13 +66,6 @@ public class BuyTripPartTwo extends JFrame {
 		lblVolver = createClickableLabel("/images/VolverBlanco.png", 10, 11, 134, 75);
 		contentPane.add(lblVolver);
 
-		calendar = new JCalendar();
-		calendar.getDayChooser().setWeekdayForeground(new Color(255, 255, 255));
-		calendar.getDayChooser().setSundayForeground(new Color(255, 255, 255));
-		calendar.setBounds(660, 346, 300, 200);
-		contentPane.add(calendar);
-		customizeCalendar();
-
 		comboBoxPlanetasOrigen = new JComboBox<String>();
 		comboBoxPlanetasOrigen.setFont(new Font("OCR A Extended", Font.PLAIN, 25));
 		for (Planeta p : Planeta.values()) {
@@ -85,11 +79,19 @@ public class BuyTripPartTwo extends JFrame {
 		comboBoxPlanetasOrigen.setBounds(153, 124, 221, 41);
 		contentPane.add(comboBoxPlanetasOrigen);
 
-		actividadesList = new JList<>(actividades.toArray(new String[0]));
-		actividadesScrollPane = new JScrollPane(actividadesList);
-		actividadesScrollPane.setBounds(20, 350, 200, 200);
+		/*
+		 * actividadesList = new JList<>(actividades.toArray(new String[0]));
+		 * actividadesScrollPane = new JScrollPane(actividadesList);
+		 * actividadesScrollPane.setBounds(20, 350, 200, 200);
+		 * getContentPane().add(actividadesScrollPane);
+		 */
 
-		getContentPane().add(actividadesScrollPane);
+		calendar = new JCalendar();
+		calendar.getDayChooser().setWeekdayForeground(new Color(255, 255, 255));
+		calendar.getDayChooser().setSundayForeground(new Color(255, 255, 255));
+		calendar.setBounds(660, 346, 300, 200);
+		contentPane.add(calendar);
+		customizeCalendar();
 
 		JLabel lblPlaneta = new JLabel("");
 		lblPlaneta.setBounds(660, 67, 300, 270);
@@ -135,12 +137,12 @@ public class BuyTripPartTwo extends JFrame {
 				// Verificar qué etiqueta fue clicada
 				if (label == lblVolver) {
 					// Si fue la etiqueta "Volver", volver a la ventana anterior
-					BuyTrip volver = new BuyTrip(travelControl);
+					BuyTrip volver = new BuyTrip(travelControl,ser);
 					volver.setVisible(true);
 					dispose();
 				} else if (label == lblReservar) {
 					Travel travel = new Travel();
-					ConfirmReservation reserva = new ConfirmReservation(travelControl, travel);
+					ConfirmReservation reserva = new ConfirmReservation(travelControl, travel,ser);
 					reserva.setVisible(true);
 					dispose();
 				}
