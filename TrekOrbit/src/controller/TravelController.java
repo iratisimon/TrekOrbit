@@ -62,7 +62,7 @@ public class TravelController implements ManageTravel {
 		CallableStatement cstmt;
 		ResultSet rs = null;
 		Travel trip = null;
-		ArrayList<Travel>trips=null;
+		ArrayList<Travel> trips = null;
 		this.openConnection();
 		try {
 			cstmt = con.prepareCall(VERVIAJES);
@@ -72,12 +72,14 @@ public class TravelController implements ManageTravel {
 			while (rs.next()) {
 				trip = new Travel();
 				trip.setCod_viaje(rs.getString("cod_viaje"));
-				trip.setOrigen(rs.getString("Origen"));
+				String originPlanet = rs.getString("Origen");
+				Planeta oriPlanet = convertToPlanetEnum(originPlanet);
+				trip.setOrigen(oriPlanet);
 				trip.setDuracion(rs.getDouble("Duracion"));
 				String planetName = rs.getString("Nombre_Planeta");
-	            Planeta destinationPlanet = convertToPlanetEnum(planetName);
-	            trip.setNom_destino(destinationPlanet);
-	            trips.add(trip);
+				Planeta destinationPlanet = convertToPlanetEnum(planetName);
+				trip.setNom_destino(destinationPlanet);
+				trips.add(trip);
 			}
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
@@ -139,8 +141,9 @@ public class TravelController implements ManageTravel {
 		}
 		return nextCode;
 	}
+
 	// Método para convertir el nombre del planeta de String a enum
-    private Planeta convertToPlanetEnum(String planetName) {
-        return Planeta.valueOf(planetName.toUpperCase());
-    }
+	private Planeta convertToPlanetEnum(String planetName) {
+		return Planeta.valueOf(planetName.toUpperCase());
+	}
 }
