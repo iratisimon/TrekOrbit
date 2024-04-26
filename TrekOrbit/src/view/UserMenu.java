@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.AccessController;
+import controller.TravelController;
 import controller.UserController;
 import model.Ser;
 import model.User;
@@ -15,6 +16,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
+
+import controller.TravelController;
 
 public class UserMenu extends JFrame implements ActionListener {
 
@@ -98,6 +101,9 @@ public class UserMenu extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o == NuevaAventura) {
+			TravelController controladorViaje= new TravelController();
+			BuyTrip buy = new BuyTrip(controladorViaje,ser);
+			buy.setVisible(true);
 			// BuyTrip buy = new BuyTrip(); Ventana de meylin -- falta enviarle el controlador y el usuario.
 			// buy.setVisible(true);
 			dispose();

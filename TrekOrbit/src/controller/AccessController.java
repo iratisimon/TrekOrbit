@@ -54,6 +54,7 @@ public class AccessController implements ManageAccess {
 				ser.setNick(nick);
 				ser.setPasswd(passwd);
 				ser.setAdmin(rs.getBoolean("EsAdmin"));
+
 			} 
 
 		} catch (SQLException e) {

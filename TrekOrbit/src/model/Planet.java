@@ -58,7 +58,7 @@ public class Planet {
 	public void setDisponibilidad(boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
-  
+
 	public ArrayList<Activity> getActivities() {
 		return activities;
 	}
@@ -66,4 +66,5 @@ public class Planet {
 	public void setActivities(ArrayList<Activity> activities) {
 		this.activities = activities;
 	}
+
 }
