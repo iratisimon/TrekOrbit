@@ -18,7 +18,6 @@ import model.Travel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -44,10 +43,11 @@ public class BuyTripPartTwo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BuyTripPartTwo(String planetName, TravelController controlador,Ser ser) {
+	public BuyTripPartTwo(String planetName, TravelController controlador, Ser ser, Planet planet) {
 
 		this.travelControl = controlador;
 		this.ser = ser;
+		this.planeta = planet;
 		String imagePath = path + planetName + 400 + png;
 		// planeta = travelControl.
 
@@ -69,9 +69,9 @@ public class BuyTripPartTwo extends JFrame {
 		comboBoxPlanetasOrigen = new JComboBox<String>();
 		comboBoxPlanetasOrigen.setFont(new Font("OCR A Extended", Font.PLAIN, 25));
 		for (Planeta p : Planeta.values()) {
-			String planet = p.name();
-			if (!planet.equalsIgnoreCase(planetName)) {
-				comboBoxPlanetasOrigen.addItem(planet);
+			String planetas = p.name();
+			if (!planetas.equalsIgnoreCase(planetName)) {
+				comboBoxPlanetasOrigen.addItem(planetas);
 			}
 		}
 		comboBoxPlanetasOrigen.setBackground(new Color(23, 17, 39));
@@ -137,12 +137,12 @@ public class BuyTripPartTwo extends JFrame {
 				// Verificar qué etiqueta fue clicada
 				if (label == lblVolver) {
 					// Si fue la etiqueta "Volver", volver a la ventana anterior
-					BuyTrip volver = new BuyTrip(travelControl,ser);
+					BuyTrip volver = new BuyTrip(travelControl, ser);
 					volver.setVisible(true);
 					dispose();
 				} else if (label == lblReservar) {
 					Travel travel = new Travel();
-					ConfirmReservation reserva = new ConfirmReservation(travelControl, travel,ser);
+					ConfirmReservation reserva = new ConfirmReservation(travelControl, travel, ser, planeta);
 					reserva.setVisible(true);
 					dispose();
 				}

@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.TravelController;
+import model.Planet;
 import model.Ser;
 
 import java.awt.Color;
@@ -30,6 +31,7 @@ public class BuyTrip extends JFrame {
 	private JLabel lblPluton;
 	private String selectedPlanet;
 	private TravelController travelControl;
+	private Planet planet;
 	private Ser ser;
 
 	/**
@@ -101,7 +103,8 @@ public class BuyTrip extends JFrame {
 
 	// Función para abrir la ventana de BuyTripPartTwo
 	private void openBuyTripPartTwo(String selectedPlanet) {
-		BuyTripPartTwo buyTrip = new BuyTripPartTwo(selectedPlanet, travelControl,ser);
+		planet=travelControl.getPlanet(selectedPlanet);
+		BuyTripPartTwo buyTrip = new BuyTripPartTwo(selectedPlanet, travelControl,ser,planet);
 		buyTrip.setVisible(true);
 		dispose();
 	}

@@ -2,6 +2,7 @@ package controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import model.Planet;
 import model.Planeta;
 import model.Travel;
 
@@ -11,6 +12,7 @@ public class TravelController implements ManageTravel {
 	final String COMPRARVIAJE = "INSERT INTO VIAJE VALUES (?,?,?,?,?)";
 	final String CANCELARVIAJE = "DELETE FROM VIAJE WHERE Cod_Viaje=?";
 	final String VERVIAJES = "CALL  VerViajesComprados(?)";
+	final String OBTENERPLANETA = "SELECT * FROM PLANETA WHERE Nombre = ?";
 
 	private void openConnection() {
 		try {
@@ -75,7 +77,7 @@ public class TravelController implements ManageTravel {
 				String originPlanet = rs.getString("Origen");
 				Planeta oriPlanet = convertToPlanetEnum(originPlanet);
 				trip.setOrigen(oriPlanet);
-				trip.setDuracion(rs.getDouble("Duracion"));
+				trip.setFechaViaje(rs.getDate("FechaViaje").toLocalDate());
 				String planetName = rs.getString("Nombre_Planeta");
 				Planeta destinationPlanet = convertToPlanetEnum(planetName);
 				trip.setNom_destino(destinationPlanet);
@@ -83,6 +85,12 @@ public class TravelController implements ManageTravel {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
+			e.printStackTrace();
+		}
+		try {
+			this.closeConnection();
+		} catch (SQLException e) {
+			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
 		}
 
@@ -142,8 +150,42 @@ public class TravelController implements ManageTravel {
 		return nextCode;
 	}
 
+	@Override
+	public Planet getPlanet(String planetName) {
+		Planet planet = null;
+		AdminController help = new AdminController();
+		ArrayList<String> actividades = help.getPlanetActivities(planetName);
+		ResultSet rs = null;
+		PreparedStatement stmt;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(OBTENERPLANETA);
+			stmt.setString(1, planetName);
+			rs = stmt.executeQuery();
+			planet = new Planet();
+			String name = rs.getString("Nombre");
+			Planeta nomPla = convertToPlanetEnum(name);
+			planet.setNom_planeta(nomPla);
+			planet.setSuperficie(rs.getDouble("Superficie"));
+			planet.setHabitantes(rs.getInt("Habitantes"));
+			planet.setClima(rs.getString("Clima"));
+			planet.setActivities(actividades);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			this.closeConnection();
+		} catch (SQLException e) {
+			System.out.println("Error en el cierre de la Base de Datos");
+			e.printStackTrace();
+		}
+		return planet;
+	}
+
 	// Método para convertir el nombre del planeta de String a enum
 	private Planeta convertToPlanetEnum(String planetName) {
 		return Planeta.valueOf(planetName.toUpperCase());
 	}
+
 }
