@@ -10,10 +10,13 @@ import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import controller.AdminController;
 import model.Planet;
+import model.Planeta;
 import model.Ser;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +25,8 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class AdminView extends JFrame implements ActionListener{
 	private JButton changePlanet;
@@ -33,16 +38,15 @@ public class AdminView extends JFrame implements ActionListener{
   private DefaultListModel<String> activityListModel;
   private JButton addButton;
   private JButton removeButton;
+  
+  private String path = "/images/";
+	private String png = ".png";
     
   private AccessController controladorAcceso;
   private Ser admin;
 	private AdminController c;
+	private JLabel lblNewLabel;
 
-
-	/**
-	 * Create the frame.
-	 * @param c 
-	 */
 
 	public AdminView(AccessController controladorAcceso, AdminController c1,Ser administrador) {
 		this.controladorAcceso = controladorAcceso;
@@ -54,13 +58,15 @@ public class AdminView extends JFrame implements ActionListener{
 		setBounds(100, 100, 1024, 680);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		String imagePath = path + p.getNom_planeta().name() + 400 + png;
+		
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		changePlanet = new JButton("CAMBIA LA DISPONIBILIDAD");
-		changePlanet.setFont(new Font("Verdana", Font.PLAIN, 15));
+		changePlanet = new JButton("Cambia la disponibilidad");
 		changePlanet.setBounds(373, 604, 262, 29);
+		changePlanet.setFont(new Font("Magneto", Font.PLAIN, 17));
 		contentPane.add(changePlanet);
 		
 		if(p.isDisponibilidad()) {
@@ -76,7 +82,9 @@ public class AdminView extends JFrame implements ActionListener{
 		
 		// Mostrar lista de actividades
         JLabel activityLabel = new JLabel("Actividades:");
-        activityLabel.setBounds(20, 50, 100, 20);
+        activityLabel.setBounds(70, 50, 300, 40);
+        activityLabel.setForeground(new Color(255, 255, 255));
+        activityLabel.setFont(new Font("Magneto", Font.PLAIN, 30));
         contentPane.add(activityLabel);
 
         activityListModel = new DefaultListModel<>();
@@ -90,17 +98,35 @@ public class AdminView extends JFrame implements ActionListener{
         for (String activity : planetActivities) {
             activityListModel.addElement(activity);
         }
+        
+        JLabel lblPlaneta = new JLabel("");
+		lblPlaneta.setBounds(660, 67, 300, 270);
+		lblPlaneta.setIcon(new ImageIcon(getClass().getResource(imagePath)));
+		contentPane.add(lblPlaneta);
+        
 
         // Botones para añadir y quitar actividades
         addButton = new JButton("Añadir actividades");
         addButton.setBounds(20, 500, 120, 30);
+        addButton.setFont(new Font("Magneto", Font.PLAIN, 12));
         addButton.addActionListener(this);
         contentPane.add(addButton);
 
         removeButton = new JButton("Quitar actividades");
         removeButton.setBounds(160, 500, 150, 30);
+        removeButton.setForeground(new Color(0, 0, 0));
+        removeButton.setFont(new Font("Magneto", Font.PLAIN, 12));
         removeButton.addActionListener(this);
         contentPane.add(removeButton);
+        
+        JLabel lblFondo = new JLabel("New label");
+        lblFondo.setBounds(0, 0, 1010, 633);
+        lblFondo.setIcon(new ImageIcon(AdminView.class.getResource("/images/galaxy.jpg")));
+        contentPane.add(lblFondo);
+        
+        lblNewLabel = new JLabel("New label");
+        lblNewLabel.setBounds(667, 208, 45, 13);
+        contentPane.add(lblNewLabel);
 	}
 	
 	public void updatePlanetActivities(String planetName) {
@@ -121,7 +147,6 @@ public class AdminView extends JFrame implements ActionListener{
 		
 		if(e.getSource()==changePlanet) {
 			p=c.changePlanetAvailability(p,admin.getNick());
-			//p = c.getPlanet(admin.getNick());
 				if(!p.isDisponibilidad()) {
 					availabilities.setText("Planeta NO disponible");
 				}else {

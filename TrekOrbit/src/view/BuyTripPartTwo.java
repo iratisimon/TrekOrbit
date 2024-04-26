@@ -10,10 +10,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+
 import com.toedter.calendar.JCalendar;
+
 import controller.TravelController;
 import model.Planet;
 import model.Planeta;
+import model.Ser;
 import model.Travel;
 
 import javax.swing.JLabel;
@@ -34,19 +37,22 @@ public class BuyTripPartTwo extends JFrame {
 	private TravelController travelControl;
 	private JLabel lblVolver;
 	private JLabel lblReservar;
-	private JCalendar calendar;
 	private JComboBox<String> comboBoxPlanetasOrigen;
 	private ArrayList<String> actividades;
 	private JList<String> actividadesList;
 	private JScrollPane actividadesScrollPane;
 	private Planet planeta;
+	private Ser ser;
+	private String planetName;
+	private JCalendar calendar;
 
 	/**
 	 * Create the frame.
 	 */
-	public BuyTripPartTwo(String planetName, TravelController controlador) {
-
+	public BuyTripPartTwo(String planetName, TravelController controlador, Ser ser) {
+		this.ser=ser;
 		this.travelControl = controlador;
+		this.planetName=planetName;
 		String imagePath = path + planetName + 400 + png;
 		//planeta = travelControl.
 		
@@ -85,11 +91,13 @@ public class BuyTripPartTwo extends JFrame {
 		comboBoxPlanetasOrigen.setBounds(153, 124, 221, 41);
 		contentPane.add(comboBoxPlanetasOrigen);
 
-		actividadesList = new JList<>(actividades.toArray(new String[0]));
-		actividadesScrollPane = new JScrollPane(actividadesList);
-		actividadesScrollPane.setBounds(20, 350, 200, 200);
-
-		getContentPane().add(actividadesScrollPane);
+		/*
+		 * actividadesList = new JList<>(actividades.toArray(new String[0]));
+		 * actividadesScrollPane = new JScrollPane(actividadesList);
+		 * actividadesScrollPane.setBounds(20, 350, 200, 200);
+		 * 
+		 * getContentPane().add(actividadesScrollPane);
+		 */
 
 		JLabel lblPlaneta = new JLabel("");
 		lblPlaneta.setBounds(660, 67, 300, 270);
@@ -135,12 +143,12 @@ public class BuyTripPartTwo extends JFrame {
 				// Verificar qué etiqueta fue clicada
 				if (label == lblVolver) {
 					// Si fue la etiqueta "Volver", volver a la ventana anterior
-					BuyTrip volver = new BuyTrip(travelControl);
+					BuyTrip volver = new BuyTrip(travelControl,ser);
 					volver.setVisible(true);
 					dispose();
 				} else if (label == lblReservar) {
 					Travel travel = new Travel();
-					ConfirmReservation reserva = new ConfirmReservation(travelControl, travel);
+					ConfirmReservation reserva = new ConfirmReservation(travelControl,travel,ser,planetName);
 					reserva.setVisible(true);
 					dispose();
 				}
