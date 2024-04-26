@@ -52,7 +52,7 @@ public class AccessController implements ManageAccess {
 				ser = new Ser();
 				ser.setNick(nick);
 				ser.setPasswd(passwd);
-				ser.setAdmin(rs.getBoolean("Administrador"));
+				ser.setAdmin(rs.getBoolean("EsAdmin"));
 			} else {
 				ser = new Ser();
 				ser.setNick("");

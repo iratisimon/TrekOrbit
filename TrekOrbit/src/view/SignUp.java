@@ -167,7 +167,7 @@ public class SignUp extends JFrame implements ActionListener {
 		Object o = e.getSource();
 		if (o == iniciarSesionBtn) {
 			dispose();
-			LogIn login1 = new LogIn(controladorAcceso, usuario);
+			LogIn login1 = new LogIn(controladorAcceso);
 			login1.setVisible(true);
 		}
 		

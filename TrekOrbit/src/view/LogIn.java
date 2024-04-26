@@ -33,17 +33,15 @@ public class LogIn extends JFrame implements ActionListener {
 	private AccessController controladorAcceso;
 	private AdminController controladorAdmin;
 	private UserController controladorUsuario;
-	private AdminController controladorAdmin;
 	private Ser ser;
 
 	/**
 	 * Create the frame.
 	 */
 
-	public LogIn(AccessController controladorAcesso, Ser ser) {
+	public LogIn(AccessController controladorAcesso) {
 		this.controladorAcceso = new AccessController();
-		this.ser = ser;
-		
+		this.ser=new Ser();
 		setBackground(new Color(240, 240, 240));
 		setForeground(new Color(240, 240, 240));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -137,7 +135,7 @@ public class LogIn extends JFrame implements ActionListener {
     
 		if (o==inicio) {
 			ser = controladorAcceso.logIn(textFieldNick.getText(), password);
-      
+			System.out.println(ser.isAdmin());
 			if (ser != null) {
 	        
 	        	controladorUsuario = new UserController();
