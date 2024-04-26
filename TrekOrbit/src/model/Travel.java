@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Travel {
+	private static int ultimoCodViaje = 003;
 	private String cod_viaje;
 	private Planeta origen;
 	private double duracion;
@@ -10,6 +11,7 @@ public class Travel {
 	private ArrayList<Activity> actividades;
 
 	public Travel(String cod_viaje, Planeta origen, double duracion, Planeta destino) {
+
 		this.cod_viaje = cod_viaje;
 		this.origen = origen;
 		this.duracion = duracion;
@@ -24,7 +26,7 @@ public class Travel {
 		this.actividades = new ArrayList<Activity>();
 
 	}
-
+  
 	public String getCod_viaje() {
 		return cod_viaje;
 	}
@@ -63,6 +65,22 @@ public class Travel {
 
 	public void setActividades(ArrayList<Activity> actividades) {
 		this.actividades = actividades;
+	}
+
+	
+	public static String generarIDViaje() {
+		String letra = "V";
+		int numero = ++ultimoCodViaje;
+		String numeroMenor="00";
+		String numeroMayor="0";
+		
+		if (ultimoCodViaje <10) {
+			String id_usuario = letra + numeroMenor + numero;
+			return id_usuario;
+		} else {
+			String id_usuario = letra + numeroMayor + numero;
+			return id_usuario;
+		}
 	}
 
 }
