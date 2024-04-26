@@ -12,8 +12,6 @@ import model.User;
 public class AccessController implements ManageAccess {
 	private Connection con;
 	private PreparedStatement stmt;
-	//final String OBTENERUSUARIO = "SELECT * FROM USUARIO WHERE ID_Usuario=(SELECT ID FROM SER WHERE Nick=?)";
-	//final String OBTENERADMIN = "SELECT * FROM ADMINISTRADOR WHERE ID_Admin=(SELECT ID FROM SER WHERE Nick=?)";
 	final String OBTENERSER = "SELECT * FROM SER WHERE Nick=? AND Passwd=?";
 	final String ALTAUSUARIO = "INSERT INTO USUARIO VALUES (?,?,?,?,?)";
 	

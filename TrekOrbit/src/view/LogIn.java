@@ -8,7 +8,6 @@ import controller.AccessController;
 import controller.AdminController;
 import controller.UserController;
 import model.Ser;
-import model.User;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -31,7 +30,6 @@ public class LogIn extends JFrame implements ActionListener {
 	private JLabel mensaje;
 
 	private AccessController controladorAcceso;
-	private AdminController controladorAdmin;
 	private UserController controladorUsuario;
 	private AdminController controladorAdmin;
 	private Ser ser;
