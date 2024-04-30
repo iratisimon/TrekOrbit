@@ -3,11 +3,16 @@ package view;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JCalendar;
 import controller.TravelController;
@@ -16,8 +21,8 @@ import model.Planeta;
 import model.Ser;
 import model.Travel;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -34,11 +39,9 @@ public class BuyTripPartTwo extends JFrame {
 	private JLabel lblReservar;
 	private JCalendar calendar;
 	private JComboBox<String> comboBoxPlanetasOrigen;
-	private ArrayList<String> actividades;
-	private JList<String> actividadesList;
-	private JScrollPane actividadesScrollPane;
 	private Planet planeta;
 	private Ser ser;
+	private LocalDate selectedDate;
 
 	/**
 	 * Create the frame.
@@ -49,7 +52,6 @@ public class BuyTripPartTwo extends JFrame {
 		this.ser = ser;
 		this.planeta = planet;
 		String imagePath = path + planetName + 400 + png;
-		// planeta = travelControl.
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BuyTrip.class.getResource("/images/logotipo_trekorbit.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,12 +81,20 @@ public class BuyTripPartTwo extends JFrame {
 		comboBoxPlanetasOrigen.setBounds(153, 124, 221, 41);
 		contentPane.add(comboBoxPlanetasOrigen);
 
-		/*
-		 * actividadesList = new JList<>(actividades.toArray(new String[0]));
-		 * actividadesScrollPane = new JScrollPane(actividadesList);
-		 * actividadesScrollPane.setBounds(20, 350, 200, 200);
-		 * getContentPane().add(actividadesScrollPane);
-		 */
+		// Obtener la lista de actividades del planeta
+		ArrayList<String> actividades = travelControl.getPlanetActivities(planetName);
+
+		// Crear checkboxes para cada actividad
+		int yCoord = 300; // Coordenada Y inicial
+		for (String actividad : actividades) {
+			JCheckBox checkBox = new JCheckBox(actividad);
+			checkBox.setFont(new Font("OCR A Extended", Font.PLAIN, 20));
+			checkBox.setForeground(Color.WHITE);
+			checkBox.setBackground(new Color(23, 17, 39));
+			checkBox.setBounds(36, yCoord, 300, 30); // Ajusta las coordenadas X e Y según tu diseño
+			contentPane.add(checkBox);
+			yCoord += 40; // Incrementa la coordenada Y para la próxima checkbox
+		}
 
 		calendar = new JCalendar();
 		calendar.getDayChooser().setWeekdayForeground(new Color(255, 255, 255));
@@ -92,7 +102,17 @@ public class BuyTripPartTwo extends JFrame {
 		calendar.setBounds(660, 346, 300, 200);
 		contentPane.add(calendar);
 		customizeCalendar();
-
+		
+		calendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
+	        @Override
+	        public void propertyChange(PropertyChangeEvent evt) {
+	            // Obtener la fecha seleccionada del JCalendar
+	            java.util.Date selectedUtilDate = calendar.getDate();
+	            Instant instant = selectedUtilDate.toInstant();
+	            selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+	        }
+	    });
+		
 		JLabel lblPlaneta = new JLabel("");
 		lblPlaneta.setBounds(660, 67, 300, 270);
 		lblPlaneta.setIcon(new ImageIcon(getClass().getResource(imagePath)));
@@ -141,7 +161,22 @@ public class BuyTripPartTwo extends JFrame {
 					volver.setVisible(true);
 					dispose();
 				} else if (label == lblReservar) {
+					ArrayList<String> actividadesSeleccionadas = new ArrayList<>();
+					for (Component component : contentPane.getComponents()) {
+						if (component instanceof JCheckBox) {
+							JCheckBox checkBox = (JCheckBox) component;
+							if (checkBox.isSelected()) {
+								// Si el checkbox está seleccionado, añadir la actividad a la lista
+								actividadesSeleccionadas.add(checkBox.getText());
+							}
+						}
+					}
 					Travel travel = new Travel();
+					String planetaOrigen = (String)comboBoxPlanetasOrigen.getSelectedItem();
+					travel.setOrigen(Planeta.valueOf(planetaOrigen));
+					travel.setNom_destino(planeta.getNom_planeta());
+					travel.setFechaViaje(selectedDate); 
+					travel.setActividades(actividadesSeleccionadas);
 					ConfirmReservation reserva = new ConfirmReservation(travelControl, travel, ser, planeta);
 					reserva.setVisible(true);
 					dispose();

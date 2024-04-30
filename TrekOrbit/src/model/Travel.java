@@ -9,14 +9,14 @@ public class Travel {
 	private Planeta origen;
 	private LocalDate fechaViaje;
 	private Planeta nom_destino;
-	private ArrayList<Activity> actividades;
+	private ArrayList<String> actividades;
 
 	public Travel(String cod_viaje, Planeta origen, LocalDate fecha, Planeta destino) {
 
 		this.cod_viaje = cod_viaje;
 		this.origen = origen;
 		this.fechaViaje = fecha;
-		this.actividades = new ArrayList<Activity>();
+		this.actividades = new ArrayList<String>();
 	}
 
 	public Travel() {
@@ -24,7 +24,7 @@ public class Travel {
 		this.origen = null;
 		this.fechaViaje = null;
 		this.nom_destino = null;
-		this.actividades = new ArrayList<Activity>();
+		this.actividades = new ArrayList<String>();
 
 	}
 
@@ -60,11 +60,11 @@ public class Travel {
 		this.nom_destino = nom_destino;
 	}
 
-	public ArrayList<Activity> getActividades() {
+	public ArrayList<String> getActividades() {
 		return actividades;
 	}
 
-	public void setActividades(ArrayList<Activity> actividades) {
+	public void setActividades(ArrayList<String> actividades) {
 		this.actividades = actividades;
 	}
 

@@ -13,6 +13,7 @@ public class TravelController implements ManageTravel {
 	final String CANCELARVIAJE = "DELETE FROM VIAJE WHERE Cod_Viaje=?";
 	final String VERVIAJES = "CALL  VerViajesComprados(?)";
 	final String OBTENERPLANETA = "SELECT * FROM PLANETA WHERE Nombre = ?";
+	final String EXISTEACTIVIDAD = "SELECT Nombre_Act FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ?";
 
 	private void openConnection() {
 		try {
@@ -33,14 +34,14 @@ public class TravelController implements ManageTravel {
 	}
 
 	@Override
-	public boolean buyTrip(String origen, Double duracion, String nombrePlaneta, String idUsuarios) {
+	public boolean buyTrip(String origen, Date fechaViaje, String nombrePlaneta, String idUsuarios) {
 		boolean compraRealizada = false;
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(COMPRARVIAJE);
 			stmt.setString(1, getNextTravelCode());
 			stmt.setString(2, origen);
-			stmt.setDouble(3, duracion);
+			stmt.setDate(3, fechaViaje);
 			stmt.setString(4, nombrePlaneta);
 			stmt.setString(5, idUsuarios);
 			if (stmt.executeUpdate() == 1) {
@@ -121,7 +122,7 @@ public class TravelController implements ManageTravel {
 	}
 
 	// Método para obtener el próximo código de viaje disponible en el formato VNNN
-	private String getNextTravelCode() {
+	public String getNextTravelCode() {
 		String nextCode = null;
 		String query = "SELECT MAX(Cod_Viaje) FROM VIAJE";
 		PreparedStatement stmt;
@@ -153,8 +154,7 @@ public class TravelController implements ManageTravel {
 	@Override
 	public Planet getPlanet(String planetName) {
 		Planet planet = null;
-		AdminController help = new AdminController();
-		ArrayList<String> actividades = help.getPlanetActivities(planetName);
+		ArrayList<String> actividades = getPlanetActivities(planetName);
 		ResultSet rs = null;
 		PreparedStatement stmt;
 		this.openConnection();
@@ -162,14 +162,17 @@ public class TravelController implements ManageTravel {
 			stmt = con.prepareStatement(OBTENERPLANETA);
 			stmt.setString(1, planetName);
 			rs = stmt.executeQuery();
-			planet = new Planet();
-			String name = rs.getString("Nombre");
-			Planeta nomPla = convertToPlanetEnum(name);
-			planet.setNom_planeta(nomPla);
-			planet.setSuperficie(rs.getDouble("Superficie"));
-			planet.setHabitantes(rs.getInt("Habitantes"));
-			planet.setClima(rs.getString("Clima"));
-			planet.setActivities(actividades);
+			if (rs.next()) {
+				planet = new Planet();
+				String name = rs.getString("Nombre");
+				Planeta nomPla = convertToPlanetEnum(name);
+				planet.setNom_planeta(nomPla);
+				planet.setSuperficie(rs.getDouble("Superficie"));
+				planet.setHabitantes(rs.getInt("Habitantes"));
+				planet.setClima(rs.getString("Clima"));
+				planet.setActivities(actividades);
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -183,9 +186,34 @@ public class TravelController implements ManageTravel {
 		return planet;
 	}
 
+	public ArrayList<String> getPlanetActivities(String nombrePlaneta) {
+		ArrayList<String> activities = new ArrayList<>();
+		this.openConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement(EXISTEACTIVIDAD);
+			stmt.setString(1, nombrePlaneta);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				activities.add(rs.getString("Nombre_Act"));
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error al obtener actividades del planeta: " + e.getMessage());
+		}
+		try {
+			this.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return activities;
+	}
+
 	// Método para convertir el nombre del planeta de String a enum
 	private Planeta convertToPlanetEnum(String planetName) {
-		return Planeta.valueOf(planetName.toUpperCase());
+	    return Planeta.valueOf(planetName.toUpperCase());
 	}
 
 }

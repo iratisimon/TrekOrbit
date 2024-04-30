@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 import controller.TravelController;
@@ -15,6 +16,10 @@ import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.Color;
 
@@ -31,6 +36,7 @@ public class ConfirmReservation extends JFrame {
 	private JLabel fecha;
 	private JLabel destino;
 	private Planet planet;
+	private JTextArea actividadesTextArea;
 
 	/**
 	 * Create the frame.
@@ -74,29 +80,40 @@ public class ConfirmReservation extends JFrame {
 		lblActividades.setForeground(Color.WHITE);
 		lblActividades.setFont(new Font("Magneto", Font.PLAIN, 30));
 		lblActividades.setBounds(240, 211, 238, 33);
+		contentPane.add(lblActividades);
 
-		origen = new JLabel("");
+		origen = new JLabel(travel.getOrigen().toString());
 		origen.setForeground(Color.WHITE);
-		origen.setFont(new Font("Magneto", Font.PLAIN, 30));
-		origen.setBounds(411, 60, 134, 33);
+		origen.setFont(new Font("OCR A Extended", Font.PLAIN, 30));
+		origen.setBounds(411, 60, 287, 33);
 		origen.setText(trip.getOrigen().name());
 		contentPane.add(origen);
 
-		destino = new JLabel("");
+		destino = new JLabel(travel.getNom_destino().toString());
 		destino.setForeground(Color.WHITE);
-		destino.setFont(new Font("Magneto", Font.PLAIN, 30));
-		destino.setBounds(413, 111, 163, 33);
+		destino.setFont(new Font("OCR A Extended", Font.PLAIN, 30));
+		destino.setBounds(411, 111, 287, 33);
 		destino.setText(trip.getNom_destino().name());
 		contentPane.add(destino);
 
-		fecha = new JLabel("");
+		fecha = new JLabel(travel.getFechaViaje().toString());
 		fecha.setForeground(Color.WHITE);
-		fecha.setFont(new Font("Magneto", Font.PLAIN, 30));
-		fecha.setBounds(411, 167, 134, 33);
+		fecha.setFont(new Font("OCR A Extended", Font.PLAIN, 30));
+		fecha.setBounds(411, 167, 287, 33);
 		fecha.setText(trip.getFechaViaje().toString());
 		contentPane.add(fecha);
 
-		contentPane.add(lblActividades);
+		ArrayList<String> actividades = travel.getActividades();
+		actividadesTextArea = new JTextArea();
+		actividadesTextArea.setFont(new Font("OCR A Extended", Font.PLAIN, 30));
+		actividadesTextArea.setForeground(Color.WHITE);
+		actividadesTextArea.setOpaque(false); // Hacer el JTextArea transparente
+		actividadesTextArea.setEditable(false); // No permitir edición del JTextArea
+		actividadesTextArea.setBounds(237, 255, 500, 150); // Establecer posición y tamaño
+		contentPane.add(actividadesTextArea);
+		for (String actividad : actividades) {
+			actividadesTextArea.append(actividad + "\n"); // Agregar cada actividad seguida de un salto de línea
+		}
 		lblReservar = createClickableLabel("/images/ReservarBlanco.png", 880, 555, 134, 75);
 		contentPane.add(lblReservar);
 
@@ -127,7 +144,10 @@ public class ConfirmReservation extends JFrame {
 					volver.setVisible(true);
 					dispose();
 				} else if (label == lblReservar) {
-
+					LocalDate fecha = travel.getFechaViaje();
+					java.sql.Date date = java.sql.Date.valueOf(fecha);
+			        
+					travelControl.buyTrip(travel.getOrigen().name(), date, travel.getNom_destino().name(), ser.getId());
 				}
 			}
 		});
