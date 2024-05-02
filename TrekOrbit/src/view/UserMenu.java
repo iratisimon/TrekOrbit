@@ -50,7 +50,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		
 		//label para el icono del perfil
 		iconoPerfil = new JButton("");
-        iconoPerfil.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\treky4-removebg-preview.png")); // Cambia la ruta según la ubicación de tu icono de perfil
+        iconoPerfil.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\treky4-removebg-preview.png")); // Cambia la ruta según la ubicación de tu icono de perfil
         iconoPerfil.setBounds(56, 29, 184, 189); // Ajusta las coordenadas y el tamaño según tus necesidades
         iconoPerfil.setContentAreaFilled(false); // Establecer el fondo del botón como transparente
         iconoPerfil.setBorderPainted(false);
@@ -58,7 +58,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		
 		//label para foto de treky
 		JLabel treky = new JLabel("");
-		treky.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\treky8-removebg-preview.png"));
+		treky.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\treky8-removebg-preview.png"));
 		treky.setBounds(291, 285, 391, 358);
 		contentPane.add(treky);
 		
@@ -95,7 +95,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Magneto", Font.PLAIN, 25));
 		fondo.setForeground(Color.WHITE);
-		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\galaxy.jpg"));
+		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
 		fondo.setBounds(0, 0, 1266, 683);
 		contentPane.add(fondo);
 		

@@ -10,8 +10,6 @@ public class Main {
 		/*TravelController controlador = new TravelController();
 		BuyTrip bt = new BuyTrip(controlador);
 		bt.setVisible(true);*/
-
-		//prueba -irati
 		
 		AccessController controladorAcceso = new AccessController();
 		LogIn login = new LogIn(controladorAcceso);
