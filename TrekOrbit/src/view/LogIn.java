@@ -28,6 +28,7 @@ public class LogIn extends JFrame implements ActionListener {
 	private JButton inicio;
 	private JButton registro;
 	private JLabel mensaje;
+	private boolean contraseñaVisible = false;
 
 	private AccessController controladorAcceso;
 	private AdminController controladorAdmin;
@@ -108,56 +109,61 @@ public class LogIn extends JFrame implements ActionListener {
 
 
 		mensaje = new JLabel("");
-		mensaje.setForeground(new Color(255, 255, 255));
+		mensaje.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		mensaje.setBackground(new Color(255, 0, 0));
+		mensaje.setForeground(new Color(255, 0, 0));
 		mensaje.setBounds(435, 464, 364, 30);
 		contentPane.add(mensaje);
 		
+		inicio.addActionListener(this);
+		registro.addActionListener(this);
 	
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
-		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\galaxy.jpg"));
+		fondo.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
 		fondo.setBounds(10, 0, 984, 593);
 		contentPane.add(fondo);
 		
-		inicio.addActionListener(this);
-		registro.addActionListener(this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		Object o =e.getSource();
-		String password = new String (passwd.getPassword());
-		
-		if (o==registro) {
-			dispose();
-			SignUp login2 = new SignUp(controladorAcceso);
-			login2.setVisible(true);
-		}
-    
-		if (o==inicio) {
-			ser = controladorAcceso.logIn(textFieldNick.getText(), password);
-			System.out.println(ser.isAdmin());
-			if (ser != null) {
+	    Object o = e.getSource();
+	    
+	    if (o == registro) {
+	        dispose();
+	        SignUp login2 = new SignUp(controladorAcceso);
+	        login2.setVisible(true);
+	    }
+
+	    if (o == inicio) {
+	        String password = passwd.getText();
+	        String nick = textFieldNick.getText();
+	        ser = controladorAcceso.logIn(nick, password);
 	        
-	        	controladorUsuario = new UserController();
-	        	controladorAdmin = new AdminController();
-	            
+	        if (nick.isEmpty()||password.isEmpty()) {
+	        	mensaje.setText("Campos vacios");
+	        }
+	        else {
+
+	        if (ser != null) {
+	            controladorUsuario = new UserController();
+	            controladorAdmin = new AdminController();
+
 	            if (ser.isAdmin()) {
 	                dispose();
 	                AdminView av = new AdminView(controladorAcceso, controladorAdmin, ser);
 	                av.setVisible(true);
-	                
-	            } else if (!ser.isAdmin()){
-	                dispose(); 
-	                UserMenu um = new UserMenu(controladorAcceso,controladorUsuario, ser);
-	                um.setVisible(true);
-	                
-	            } else {
-	            	 mensaje.setText("Usuario o contraseña incorrectos");
-	            }
-	            
+
+	            } else if(!ser.isAdmin()) {
+	                dispose();
+	                UserMenu um = new UserMenu(controladorAcceso, controladorUsuario, ser);
+	                um.setVisible(true);	            } 
+
 	        } else {
-	            mensaje.setText("Usuario o contraseña incorrectos");
+	            mensaje.setText("Usuario incorrecto");
 	        }
-		}
+	    }
+	    }
 	}
+
 }

@@ -79,7 +79,13 @@ public class AccessController implements ManageAccess {
 	     
 		 try {   
 			 this.openConnection();
-		        // Insertar en la tabla SER
+			 
+			// Verificar si ya existe un usuario con el mismo nick
+		        if (existeUsuarioConNick(nick)) {
+		        	modificado=false;
+		        }
+		         
+		        else{// Insertar en la tabla SER
 		        stmt = con.prepareStatement(ALTASER);
 		        stmt.setString(1, nuevoID);
 		        stmt.setString(2, passwd);
@@ -99,6 +105,7 @@ public class AccessController implements ManageAccess {
 		                modificado = true;
 		            }
 		        }
+		        }  
 
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
@@ -111,6 +118,33 @@ public class AccessController implements ManageAccess {
 			e.printStackTrace();
 		}
 		return modificado;
+	}
+
+	private boolean existeUsuarioConNick(String nick) throws SQLException {
+	    boolean existe = false;
+	    ResultSet rs = null;
+	    try {
+	        
+	        stmt = con.prepareStatement(OBTENERUSUARIO);
+	        stmt.setString(1, nick);
+	        rs = stmt.executeQuery();
+	      
+	        if (rs.next()) {
+	        	existe=true;
+	        	
+	        }
+	        // Verificar si se encontró algún resultado
+	        
+	    } finally {
+	        // Cerrar el ResultSet y el Statement
+	        if (rs != null) {
+	            rs.close();
+	        }
+	        if (stmt != null) {
+	            stmt.close();
+	        }
+	    }
+	    return existe;
 	}
 
 	@Override

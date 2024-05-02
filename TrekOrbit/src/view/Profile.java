@@ -103,7 +103,7 @@ public class Profile extends JFrame implements ActionListener {
 		contentPane.add(btnGuardar);
 		
 		JLabel fotoPerfil = new JLabel("");
-		fotoPerfil.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Treky12.png"));
+		fotoPerfil.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\Treky12.png"));
 		fotoPerfil.setBounds(92, 92, 316, 322);
 		contentPane.add(fotoPerfil);
 		
@@ -126,7 +126,7 @@ public class Profile extends JFrame implements ActionListener {
 		txtNombre.setColumns(10);
 		
 		JLabel fondo = new JLabel("");
-		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\galaxy.jpg"));
+		fondo.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
 		fondo.setBounds(10, 0, 1021, 657);
 		contentPane.add(fondo);
 		
