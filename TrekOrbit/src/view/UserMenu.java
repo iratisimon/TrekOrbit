@@ -51,7 +51,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		//label para el icono del perfil
 		iconoPerfil = new JButton("");
         iconoPerfil.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\treky4-removebg-preview.png")); // Cambia la ruta según la ubicación de tu icono de perfil
-        iconoPerfil.setBounds(56, 29, 184, 189); // Ajusta las coordenadas y el tamaño según tus necesidades
+        iconoPerfil.setBounds(93, 48, 184, 189); // Ajusta las coordenadas y el tamaño según tus necesidades
         iconoPerfil.setContentAreaFilled(false); // Establecer el fondo del botón como transparente
         iconoPerfil.setBorderPainted(false);
         contentPane.add(iconoPerfil);
@@ -66,7 +66,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		NuevaAventura = new JButton("Nueva Aventura ");
 		NuevaAventura.setForeground(new Color(255, 255, 255));
 		NuevaAventura.setBackground(new Color(128, 128, 255));
-		NuevaAventura.setFont(new Font("Verdana", Font.BOLD, 23));
+		NuevaAventura.setFont(new Font("Magneto", Font.BOLD, 23));
 		NuevaAventura.setBounds(698, 373, 264, 122);
 		contentPane.add(NuevaAventura);
 		
@@ -74,21 +74,14 @@ public class UserMenu extends JFrame implements ActionListener {
 		MisAventuras = new JButton("Mis Aventuras");
 		MisAventuras.setForeground(new Color(255, 255, 255));
 		MisAventuras.setBackground(new Color(128, 128, 255));
-		MisAventuras.setFont(new Font("Verdana", Font.BOLD, 23));
+		MisAventuras.setFont(new Font("Magneto", Font.BOLD, 23));
 		MisAventuras.setBounds(49, 373, 264, 122);
 		contentPane.add(MisAventuras);
-		
-		//label de titulo 
-		JLabel bienvenida = new JLabel("Bienvenid@! ");
-		bienvenida.setForeground(Color.WHITE);
-		bienvenida.setFont(new Font("Verdana", Font.BOLD, 80));
-		bienvenida.setBounds(294, 59, 657, 100);
-		contentPane.add(bienvenida);
 		
 		lblUsuario = new JLabel("@"+ser.getNick());
 		lblUsuario.setFont(new Font("Magneto", Font.BOLD, 25));
 		lblUsuario.setForeground(new Color(51, 255, 102));
-		lblUsuario.setBounds(467, 176, 244, 42);
+		lblUsuario.setBounds(103, 233, 244, 42);
 		contentPane.add(lblUsuario);
 		
 		//label para el fondo

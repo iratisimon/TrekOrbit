@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import controller.AccessController;
-import model.User;
 
 public class SignUp extends JFrame implements ActionListener {
 
@@ -30,7 +29,6 @@ public class SignUp extends JFrame implements ActionListener {
 	private JTextField textFieldRaza;
 
 	private AccessController controladorAcceso;
-	private User usuario;
 
 	/**
 	 * Create the frame.
@@ -151,7 +149,8 @@ public class SignUp extends JFrame implements ActionListener {
 
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
-		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
+		fondo.setIcon(
+				new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
 		fondo.setBounds(10, 10, 984, 582);
 		contentPane.add(fondo);
 
@@ -161,6 +160,7 @@ public class SignUp extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+
 		if (o == iniciarSesionBtn) {
 			dispose();
 			LogIn login1 = new LogIn(controladorAcceso);
@@ -174,21 +174,31 @@ public class SignUp extends JFrame implements ActionListener {
 			String raza = textFieldRaza.getText();
 			String nombre = textFieldNombre.getText();
 
-			if (!passwd1.equals(passwd2)) {
-				mensaje.setText("Las contraseñas no coinciden");
-				mensaje.setForeground(Color.RED);
+			// Verificar que ningún campo esté vacío
+			if (passwd1.isEmpty() || passwd2.isEmpty() || nick.isEmpty() || raza.isEmpty() || nombre.isEmpty()) {
+				mensaje.setText("Complete todos los campos.");
 				mensaje.setVisible(true);
 			} else {
-				boolean modificado = controladorAcceso.singUp(nombre, nick, raza, passwd1);
-				if (modificado) {
-					mensaje.setText("Usuario creado correctamente");
-					mensaje.setForeground(Color.RED);
+				if (!passwd1.equals(passwd2)) {
+					mensaje.setText("Las contraseñas no coinciden");
 					mensaje.setVisible(true);
-					dispose(); // Cerramos la ventana después de crear el usuario
 				} else {
-					mensaje.setText("Error.No se ha podido agregar al nuevo usuario");
-					mensaje.setForeground(Color.RED);
-					mensaje.setVisible(true);
+					boolean modificado = controladorAcceso.singUp(nombre, nick, raza, passwd1);
+					if (modificado) {
+						double segundos = 0.7;
+						try {
+							Thread.sleep((long) (segundos * 1000));
+						} catch (InterruptedException ex) {
+							Thread.currentThread().interrupt();
+						}
+
+						dispose();
+						LogIn login1 = new LogIn(controladorAcceso);
+						login1.setVisible(true);
+					} else {
+						mensaje.setText("Nombre de usuario existente");
+						mensaje.setVisible(true);
+					}
 				}
 			}
 		}

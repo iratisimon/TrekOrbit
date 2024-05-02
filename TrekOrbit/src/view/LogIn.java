@@ -28,6 +28,7 @@ public class LogIn extends JFrame implements ActionListener {
 	private JButton inicio;
 	private JButton registro;
 	private JLabel mensaje;
+	private JButton mostrar;
 
 	private AccessController controladorAcceso;
 	private AdminController controladorAdmin;
@@ -52,7 +53,7 @@ public class LogIn extends JFrame implements ActionListener {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-    
+
 		JLabel titulo = new JLabel("TREKORBIT");
 		titulo.setBackground(new Color(0, 0, 0));
 		titulo.setForeground(new Color(255, 255, 255));
@@ -106,53 +107,66 @@ public class LogIn extends JFrame implements ActionListener {
 		contentPane.add(registro);
 		registro.addActionListener(this);
 
-
 		mensaje = new JLabel("");
 		mensaje.setForeground(Color.RED);
 		mensaje.setBounds(430, 482, 364, 30);
 		contentPane.add(mensaje);
-		
-	
+
+		mostrar = new JButton("Mostrar");
+		mostrar.setBounds(730, 283, 85, 21);
+		contentPane.add(mostrar);
+		mostrar.addActionListener(this);
+
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
-		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
+		fondo.setIcon(
+				new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
 		fondo.setBounds(10, 0, 984, 593);
 		contentPane.add(fondo);
-		
+
 		inicio.addActionListener(this);
 		registro.addActionListener(this);
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
-	    Object o = e.getSource();
-	    String password = new String(passwd.getPassword());
+		Object o = e.getSource();
 
-	    if (o == registro) {
-	        dispose();
-	        SignUp login2 = new SignUp(controladorAcceso);
-	        login2.setVisible(true);
-	    }
+		if (o == mostrar) {
 
-	    if (o == inicio) {
-	        ser = controladorAcceso.logIn(textFieldNick.getText(), password);
-	        if (ser != null) {
-	            controladorUsuario = new UserController();
-	            controladorAdmin = new AdminController();
+		}
 
-	            if (ser.isAdmin()) {
-	                dispose();
-	                AdminView av = new AdminView(controladorAcceso, controladorAdmin, ser);
-	                av.setVisible(true);
-	            } else if (!ser.isAdmin()){
-	                dispose();
-	                UserMenu um = new UserMenu(controladorAcceso, controladorUsuario, ser);
-	                um.setVisible(true);
-	            }
-	        } else {
-	            // Mostrar mensaje de error si el inicio de sesión falla
-	            mensaje.setText("El usuario o la contraseña es incorrecto");
-	        }
-	    }
+		if (o == registro) {
+			dispose();
+			SignUp login2 = new SignUp(controladorAcceso);
+			login2.setVisible(true);
+		}
+
+		if (o == inicio) {
+			String password = new String(passwd.getPassword());
+			String nick = textFieldNick.getText();
+			ser = controladorAcceso.logIn(nick, password);
+
+			if (nick.isEmpty() || password.isEmpty()) {
+				mensaje.setText("Campos vacios");
+			} else {
+				if (ser != null) {
+					controladorUsuario = new UserController();
+					controladorAdmin = new AdminController();
+
+					if (ser.isAdmin()) {
+						dispose();
+						AdminView av = new AdminView(controladorAcceso, controladorAdmin, ser);
+						av.setVisible(true);
+					} else if (!ser.isAdmin()) {
+						dispose();
+						UserMenu um = new UserMenu(controladorAcceso, controladorUsuario, ser);
+						um.setVisible(true);
+					}
+				} else {
+					// Mostrar mensaje de error si el inicio de sesión falla
+					mensaje.setText("El usuario o la contraseña es incorrecto");
+				}
+			}
+		}
 	}
-
 }
