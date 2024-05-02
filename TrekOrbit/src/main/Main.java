@@ -11,6 +11,8 @@ public class Main {
 		BuyTrip bt = new BuyTrip(controlador);
 		bt.setVisible(true);*/
 
+		//prueba -irati
+		
 		AccessController controladorAcceso = new AccessController();
 		LogIn login = new LogIn(controladorAcceso);
 		login.setVisible(true);
