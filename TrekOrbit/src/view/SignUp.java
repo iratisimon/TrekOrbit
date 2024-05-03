@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -25,7 +26,7 @@ public class SignUp extends JFrame implements ActionListener {
 	private JPasswordField textFieldIntroducirNewPasswd;
 	private JButton registrarseBtn;
 	private JButton iniciarSesionBtn;
-	private JLabel mensaje;
+	//private JLabel mensaje;
 	private JTextField textFieldRaza;
 
 	private AccessController controladorAcceso;
@@ -134,13 +135,13 @@ public class SignUp extends JFrame implements ActionListener {
 		nuevaContraseñaLbl.setBounds(223, 314, 276, 42);
 		contentPane.add(nuevaContraseñaLbl);
 
-		mensaje = new JLabel("");
-		mensaje.setHorizontalAlignment(SwingConstants.CENTER);
-		mensaje.setFont(new Font("Verdana", Font.BOLD, 14));
-		mensaje.setForeground(new Color(255, 0, 0));
-		mensaje.setBounds(624, 442, 276, 35);
-		mensaje.setVisible(false);
-		contentPane.add(mensaje);
+		/*
+		 * mensaje = new JLabel("");
+		 * mensaje.setHorizontalAlignment(SwingConstants.CENTER); mensaje.setFont(new
+		 * Font("Verdana", Font.BOLD, 14)); mensaje.setForeground(new Color(255, 0, 0));
+		 * mensaje.setBounds(624, 442, 276, 35); mensaje.setVisible(false);
+		 * contentPane.add(mensaje);
+		 */
 
 		textFieldRaza = new JTextField();
 		textFieldRaza.setBounds(420, 272, 276, 25);
@@ -168,23 +169,22 @@ public class SignUp extends JFrame implements ActionListener {
 		}
 
 		if (o == registrarseBtn) {
-			String passwd1 = textFieldIntroducirNewPasswd.getText();
-			String passwd2 = textFieldRepiteNewpasswd.getText();
+			String passwd1 = new String (textFieldIntroducirNewPasswd.getPassword());
+			String passwd2 = new String (textFieldRepiteNewpasswd.getPassword());
 			String nick = textFieldNick.getText();
 			String raza = textFieldRaza.getText();
 			String nombre = textFieldNombre.getText();
 
 			// Verificar que ningún campo esté vacío
 			if (passwd1.isEmpty() || passwd2.isEmpty() || nick.isEmpty() || raza.isEmpty() || nombre.isEmpty()) {
-				mensaje.setText("Complete todos los campos.");
-				mensaje.setVisible(true);
+				JOptionPane.showMessageDialog(this, "Complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
 				if (!passwd1.equals(passwd2)) {
-					mensaje.setText("Las contraseñas no coinciden");
-					mensaje.setVisible(true);
+					JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					boolean modificado = controladorAcceso.singUp(nombre, nick, raza, passwd1);
 					if (modificado) {
+						JOptionPane.showMessageDialog(this, "Se ha registrado correctamente", "Success", JOptionPane.INFORMATION_MESSAGE);
 						double segundos = 0.7;
 						try {
 							Thread.sleep((long) (segundos * 1000));
@@ -192,12 +192,11 @@ public class SignUp extends JFrame implements ActionListener {
 							Thread.currentThread().interrupt();
 						}
 
-						dispose();
+						dispose(); //esto no lo esta haciendo???
 						LogIn login1 = new LogIn(controladorAcceso);
 						login1.setVisible(true);
 					} else {
-						mensaje.setText("Nombre de usuario existente");
-						mensaje.setVisible(true);
+						JOptionPane.showMessageDialog(this, "Nombre de usuario existente", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}

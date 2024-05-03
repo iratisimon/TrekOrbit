@@ -9,6 +9,8 @@ import controller.AdminController;
 import controller.UserController;
 import model.Ser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -27,7 +29,7 @@ public class LogIn extends JFrame implements ActionListener {
 	private JPasswordField passwd;
 	private JButton inicio;
 	private JButton registro;
-	private JLabel mensaje;
+	//private JLabel mensaje;
 	private JButton mostrar;
 
 	private AccessController controladorAcceso;
@@ -106,11 +108,10 @@ public class LogIn extends JFrame implements ActionListener {
 		registro.setBounds(560, 441, 124, 23);
 		contentPane.add(registro);
 		registro.addActionListener(this);
-
-		mensaje = new JLabel("");
-		mensaje.setForeground(Color.RED);
-		mensaje.setBounds(430, 482, 364, 30);
-		contentPane.add(mensaje);
+		/*
+		 * mensaje = new JLabel(""); mensaje.setForeground(Color.RED);
+		 * mensaje.setBounds(430, 482, 364, 30); contentPane.add(mensaje);
+		 */
 
 		mostrar = new JButton("Mostrar");
 		mostrar.setBounds(730, 283, 85, 21);
@@ -119,8 +120,7 @@ public class LogIn extends JFrame implements ActionListener {
 
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
-		fondo.setIcon(
-				new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
+		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
 		fondo.setBounds(10, 0, 984, 593);
 		contentPane.add(fondo);
 
@@ -147,7 +147,8 @@ public class LogIn extends JFrame implements ActionListener {
 			ser = controladorAcceso.logIn(nick, password);
 
 			if (nick.isEmpty() || password.isEmpty()) {
-				mensaje.setText("Campos vacios");
+				JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+                
 			} else {
 				if (ser != null) {
 					controladorUsuario = new UserController();
@@ -164,7 +165,8 @@ public class LogIn extends JFrame implements ActionListener {
 					}
 				} else {
 					// Mostrar mensaje de error si el inicio de sesión falla
-					mensaje.setText("El usuario o la contraseña es incorrecto");
+					JOptionPane.showMessageDialog(this, "El usuario o la contraseña son incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+	                   
 				}
 			}
 		}
