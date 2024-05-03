@@ -10,9 +10,14 @@ import controller.UserController;
 import model.Ser;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,11 +34,15 @@ public class LogIn extends JFrame implements ActionListener {
 	private JButton registro;
 	private JLabel mensaje;
 	private boolean contraseñaVisible = false;
-
+	
 	private AccessController controladorAcceso;
 	private AdminController controladorAdmin;
 	private UserController controladorUsuario;
 	private Ser ser;
+	private JButton show;
+	private JButton hide;
+	
+	
 
 	/**
 	 * Create the frame.
@@ -117,18 +126,78 @@ public class LogIn extends JFrame implements ActionListener {
 		
 		inicio.addActionListener(this);
 		registro.addActionListener(this);
-	
+
+		show = new JButton("New button") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                if (!isOpaque() && getBackground().getAlpha() < 255) {
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setComposite(AlphaComposite.Src);
+                    g2.setColor(getBackground());
+                    g2.fillRect(0, 0, getWidth(), getHeight());
+                    g2.dispose();
+                }
+                super.paintComponent(g);
+            }
+        };
+        show.setForeground(Color.BLACK);
+        show.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
+        show.setBounds(730, 280, 52, 27);
+        show.setBorderPainted(false); // Oculta el borde del botón
+        show.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
+        show.addActionListener(this);
+
+        add(show);
+		
+        hide = new JButton("New button") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                if (!isOpaque() && getBackground().getAlpha() < 255) {
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setComposite(AlphaComposite.Src);
+                    g2.setColor(getBackground());
+                    g2.fillRect(0, 0, getWidth(), getHeight());
+                    g2.dispose();
+                }
+                super.paintComponent(g);
+            }
+        };
+        hide.setForeground(Color.BLACK);
+        hide.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
+        hide.setBounds(730, 280, 52, 27);
+        hide.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
+        hide.setBorderPainted(false); // Oculta el borde del botó
+        hide.addActionListener(this);
+
+        add(hide);
+        
+		
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
 		fondo.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
 		fondo.setBounds(10, 0, 984, 593);
 		contentPane.add(fondo);
 		
+		
+		
+		
+		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 	    Object o = e.getSource();
-	    
+	    boolean passwordVisible = true;
+		Object source = e.getSource();
+		if (o == show) {
+			passwd.setEchoChar((char) 0);
+			hide.setVisible(true);
+			show.setVisible(false);
+		}else if (o == hide) {
+			passwd.setEchoChar('\u2022');
+			hide.setVisible(false);
+			show.setVisible(true);
+		}
+
 	    if (o == registro) {
 	        dispose();
 	        SignUp login2 = new SignUp(controladorAcceso);
@@ -165,5 +234,4 @@ public class LogIn extends JFrame implements ActionListener {
 	    }
 	    }
 	}
-
 }
