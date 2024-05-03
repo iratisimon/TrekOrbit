@@ -11,8 +11,6 @@ public class Main {
 		BuyTrip bt = new BuyTrip(controlador);
 		bt.setVisible(true);*/
 		
-		//Comentario prueba push
-
 		AccessController controladorAcceso = new AccessController();
 		LogIn login = new LogIn(controladorAcceso);
 		login.setVisible(true);

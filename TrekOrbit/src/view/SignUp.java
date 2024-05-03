@@ -11,13 +11,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import controller.AccessController;
-import model.User;
 
 public class SignUp extends JFrame implements ActionListener {
 
@@ -29,7 +29,7 @@ public class SignUp extends JFrame implements ActionListener {
 	private JPasswordField textFieldIntroducirNewPasswd;
 	private JButton registrarseBtn;
 	private JButton iniciarSesionBtn;
-	private JLabel mensaje;
+	//private JLabel mensaje;
 	private JTextField textFieldRaza;
 	private JButton show;
 	private JButton hide;
@@ -37,7 +37,6 @@ public class SignUp extends JFrame implements ActionListener {
 	private JButton hide2;
 	
 	private AccessController controladorAcceso;
-	private User usuario;
 
 	/**
 	 * Create the frame.
@@ -143,13 +142,13 @@ public class SignUp extends JFrame implements ActionListener {
 		nuevaContraseñaLbl.setBounds(223, 314, 276, 42);
 		contentPane.add(nuevaContraseñaLbl);
 
-		mensaje = new JLabel("");
-		mensaje.setHorizontalAlignment(SwingConstants.CENTER);
-		mensaje.setFont(new Font("Verdana", Font.BOLD, 14));
-		mensaje.setForeground(new Color(255, 0, 0));
-		mensaje.setBounds(624, 442, 276, 35);
-		mensaje.setVisible(false);
-		contentPane.add(mensaje);
+		/*
+		 * mensaje = new JLabel("");
+		 * mensaje.setHorizontalAlignment(SwingConstants.CENTER); mensaje.setFont(new
+		 * Font("Verdana", Font.BOLD, 14)); mensaje.setForeground(new Color(255, 0, 0));
+		 * mensaje.setBounds(624, 442, 276, 35); mensaje.setVisible(false);
+		 * contentPane.add(mensaje);
+		 */
 
 		textFieldRaza = new JTextField();
 		textFieldRaza.setBounds(420, 272, 276, 25);
@@ -250,7 +249,13 @@ public class SignUp extends JFrame implements ActionListener {
 
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
+
+  //pablo
 		fondo.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
+
+  //irati
+		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
+
 		fondo.setBounds(10, 10, 984, 582);
 		contentPane.add(fondo);
 
@@ -259,72 +264,67 @@ public class SignUp extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-	    Object o = e.getSource();
-	    boolean passwordVisible = true;
-		Object source = e.getSource();
-		if (o == show) {
+		Object o = e.getSource();
+    
+    if (o == show) {
 			textFieldIntroducirNewPasswd.setEchoChar((char) 0);
 			hide.setVisible(true);
 			show.setVisible(false);
-		}else if (o == hide) {
+		} else if (o == hide) {
 			textFieldIntroducirNewPasswd.setEchoChar('\u2022');
 			hide.setVisible(false);
 			show.setVisible(true);
 		}    
 		
 		//BOTON 2
-		
-		
 		if (o == show2) {
 			textFieldRepiteNewpasswd.setEchoChar((char) 0);
 			hide2.setVisible(true);
 			show2.setVisible(false);
-		}else if (o == hide2) {
+		} else if (o == hide2) {
 			textFieldRepiteNewpasswd.setEchoChar('\u2022');
 			hide2.setVisible(false);
 			show2.setVisible(true);
 		}    
-	    if (o == iniciarSesionBtn) {
-	        dispose();
-	        LogIn login1 = new LogIn(controladorAcceso);
-	        login1.setVisible(true);
-	    }
+    
+		if (o == iniciarSesionBtn) {
+			dispose();
+			LogIn login1 = new LogIn(controladorAcceso);
+			login1.setVisible(true);
+		}
 
-	    if (o == registrarseBtn) {
-	        String passwd1 = textFieldIntroducirNewPasswd.getText();
-	        String passwd2 = textFieldRepiteNewpasswd.getText();
-	        String nick = textFieldNick.getText();
-	        String raza = textFieldRaza.getText();
-	        String nombre = textFieldNombre.getText();
+		if (o == registrarseBtn) {
+			String passwd1 = new String (textFieldIntroducirNewPasswd.getPassword());
+			String passwd2 = new String (textFieldRepiteNewpasswd.getPassword());
+			String nick = textFieldNick.getText();
+			String raza = textFieldRaza.getText();
+			String nombre = textFieldNombre.getText();
 
-	        // Verificar que ningún campo esté vacío
-	        if (passwd1.isEmpty() || passwd2.isEmpty() || nick.isEmpty() || raza.isEmpty() || nombre.isEmpty()) {
-	            mensaje.setText("Complete todos los campos.");
-	            mensaje.setVisible(true);
-	        } else {
-	            if (!passwd1.equals(passwd2)) {
-	                mensaje.setText("Las contraseñas no coinciden");	                
-	                mensaje.setVisible(true);
-	            } else {
-	                boolean modificado = controladorAcceso.singUp(nombre, nick, raza, passwd1);
-	                if (modificado) {
-	                	double segundos = 0.7; 
-	                    try {
-	                        Thread.sleep((long) (segundos * 1000)); 
-	                    } catch (InterruptedException ex) {
-	                        Thread.currentThread().interrupt();
-	                    }
+			// Verificar que ningún campo esté vacío
+			if (passwd1.isEmpty() || passwd2.isEmpty() || nick.isEmpty() || raza.isEmpty() || nombre.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+			} else {
+				if (!passwd1.equals(passwd2)) {
+					JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					boolean modificado = controladorAcceso.singUp(nombre, nick, raza, passwd1);
+					if (modificado) {
+						JOptionPane.showMessageDialog(this, "Se ha registrado correctamente", "Success", JOptionPane.INFORMATION_MESSAGE);
+						double segundos = 0.7;
+						try {
+							Thread.sleep((long) (segundos * 1000));
+						} catch (InterruptedException ex) {
+							Thread.currentThread().interrupt();
+						}
 
-	                    dispose(); 
-	                    LogIn login1 = new LogIn(controladorAcceso);
-	        	        login1.setVisible(true);
-	                } else {
-	                    mensaje.setText("Nombre de usuario existente");	                    
-	                    mensaje.setVisible(true);
-	                }
-	            }
-	        }
-	    }
+						dispose(); //esto no lo esta haciendo???
+						LogIn login1 = new LogIn(controladorAcceso);
+						login1.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(this, "Nombre de usuario existente", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		}
 	}
-
 }
