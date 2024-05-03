@@ -29,7 +29,6 @@ public class SignUp extends JFrame implements ActionListener {
 	private JPasswordField textFieldIntroducirNewPasswd;
 	private JButton registrarseBtn;
 	private JButton iniciarSesionBtn;
-	//private JLabel mensaje;
 	private JTextField textFieldRaza;
 	private JButton show;
 	private JButton hide;
@@ -142,20 +141,12 @@ public class SignUp extends JFrame implements ActionListener {
 		nuevaContraseñaLbl.setBounds(223, 314, 276, 42);
 		contentPane.add(nuevaContraseñaLbl);
 
-		/*
-		 * mensaje = new JLabel("");
-		 * mensaje.setHorizontalAlignment(SwingConstants.CENTER); mensaje.setFont(new
-		 * Font("Verdana", Font.BOLD, 14)); mensaje.setForeground(new Color(255, 0, 0));
-		 * mensaje.setBounds(624, 442, 276, 35); mensaje.setVisible(false);
-		 * contentPane.add(mensaje);
-		 */
-
 		textFieldRaza = new JTextField();
 		textFieldRaza.setBounds(420, 272, 276, 25);
 		contentPane.add(textFieldRaza);
 		textFieldRaza.setColumns(10);
 		
-		show = new JButton("New button") {
+		show = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 if (!isOpaque() && getBackground().getAlpha() < 255) {
@@ -169,7 +160,7 @@ public class SignUp extends JFrame implements ActionListener {
             }
         };
         show.setForeground(Color.BLACK);
-        show.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
+        show.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
         show.setBounds(763, 326, 52, 27);
         show.setBorderPainted(false); // Oculta el borde del botón
         show.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
@@ -177,7 +168,7 @@ public class SignUp extends JFrame implements ActionListener {
 
         getContentPane().add(show);
 		
-        hide = new JButton("New button") {
+        hide = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 if (!isOpaque() && getBackground().getAlpha() < 255) {
@@ -191,7 +182,7 @@ public class SignUp extends JFrame implements ActionListener {
             }
         };
         hide.setForeground(Color.BLACK);
-        hide.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
+        hide.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
         hide.setBounds(763, 324, 52, 27);
         hide.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
         hide.setBorderPainted(false); // Oculta el borde del botó
@@ -202,7 +193,7 @@ public class SignUp extends JFrame implements ActionListener {
         
         //BOTON 2 
         
-        show2 = new JButton("New button") {
+        show2 = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 if (!isOpaque() && getBackground().getAlpha() < 255) {
@@ -216,7 +207,7 @@ public class SignUp extends JFrame implements ActionListener {
             }
         };
         show2.setForeground(Color.BLACK);
-        show2.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
+        show2.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
         show2.setBounds(763, 381, 52, 27);
         show2.setBorderPainted(false); // Oculta el borde del botón
         show2.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
@@ -238,24 +229,16 @@ public class SignUp extends JFrame implements ActionListener {
             }
         };
         hide2.setForeground(Color.BLACK);
-        hide2.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
+        hide2.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
         hide2.setBounds(763, 381, 52, 27);
         hide2.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
         hide2.setBorderPainted(false); // Oculta el borde del botó
         hide2.addActionListener(this);
-
         getContentPane().add(hide2);
-        
 
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
-
-  //pablo
-		fondo.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
-
-  //irati
 		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
-
 		fondo.setBounds(10, 10, 984, 582);
 		contentPane.add(fondo);
 

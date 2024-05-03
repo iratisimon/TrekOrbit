@@ -30,7 +30,6 @@ public class LogIn extends JFrame implements ActionListener {
 	private JPasswordField passwd;
 	private JButton inicio;
 	private JButton registro;
-	private boolean contraseñaVisible = false;
 	private AccessController controladorAcceso;
 	private AdminController controladorAdmin;
 	private UserController controladorUsuario;
@@ -110,7 +109,7 @@ public class LogIn extends JFrame implements ActionListener {
 		contentPane.add(registro);
 		registro.addActionListener(this);
 
-		show = new JButton("New button") {
+		show = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 if (!isOpaque() && getBackground().getAlpha() < 255) {
@@ -124,15 +123,15 @@ public class LogIn extends JFrame implements ActionListener {
             }
         };
         show.setForeground(Color.BLACK);
-        show.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
+        show.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
         show.setBounds(730, 280, 52, 27);
         show.setBorderPainted(false); // Oculta el borde del botón
         show.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
         show.addActionListener(this);
 
-        add(show);
+        getContentPane().add(show);
 		
-        hide = new JButton("New button") {
+        hide = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 if (!isOpaque() && getBackground().getAlpha() < 255) {
@@ -146,22 +145,13 @@ public class LogIn extends JFrame implements ActionListener {
             }
         };
         hide.setForeground(Color.BLACK);
-        hide.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
+        hide.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
         hide.setBounds(730, 280, 52, 27);
         hide.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
         hide.setBorderPainted(false); // Oculta el borde del botó
         hide.addActionListener(this);
-
-        add(hide);
+        getContentPane().add(hide);
         
-		//pablo
-		JLabel fondo = new JLabel("");
-		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
-		fondo.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
-		fondo.setBounds(10, 0, 984, 593);
-		contentPane.add(fondo);
-		
-  //irati
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
 		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
@@ -180,6 +170,7 @@ public class LogIn extends JFrame implements ActionListener {
 			passwd.setEchoChar((char) 0);
 			hide.setVisible(true);
 			show.setVisible(false);
+			
 		} else if (o == hide) {
 			passwd.setEchoChar('\u2022');
 			hide.setVisible(false);

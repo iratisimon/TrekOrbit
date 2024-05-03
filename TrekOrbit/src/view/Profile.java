@@ -197,6 +197,9 @@ public class Profile extends JFrame implements ActionListener {
 		
 	    if (o == btnModificar) {
 	        // Si se presionó el botón "Modificar", habilita la edición de los campos
+	    	ser.setNick(nickNew);
+	    	System.out.println(ser.getNick());
+	    	
 	        txtNick.setEditable(true);
 	        txtPasswd.setEditable(true);
 	    }

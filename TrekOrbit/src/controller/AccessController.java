@@ -144,33 +144,6 @@ public class AccessController implements ManageAccess {
 	    return existe;
 	}
 
-	private boolean existeUsuarioConNick(String nick) throws SQLException {
-	    boolean existe = false;
-	    ResultSet rs = null;
-	    try {
-	        
-	        stmt = con.prepareStatement(OBTENERUSUARIO);
-	        stmt.setString(1, nick);
-	        rs = stmt.executeQuery();
-	      
-	        if (rs.next()) {
-	        	existe=true;
-	        	
-	        }
-	        // Verificar si se encontró algún resultado
-	        
-	    } finally {
-	        // Cerrar el ResultSet y el Statement
-	        if (rs != null) {
-	            rs.close();
-	        }
-	        if (stmt != null) {
-	            stmt.close();
-	        }
-	    }
-	    return existe;
-	}
-
 	@Override
 	public String generarIdUsuario() {
 		// TODO Auto-generated method stub
