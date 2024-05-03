@@ -106,8 +106,15 @@ public class Profile extends JFrame implements ActionListener {
 		contentPane.add(btnGuardar);
 		
 		JLabel fotoPerfil = new JLabel("");
+
+  //pablo
+		fotoPerfil.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\Treky12.png"));
+		fotoPerfil.setBounds(93, 173, 316, 322);
+
+  //irati
 		fotoPerfil.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Treky12.png"));
 		fotoPerfil.setBounds(93, 173, 316, 322);
+
 		contentPane.add(fotoPerfil);
 		
 		lblNombre = new JLabel("Mi nombre:");
@@ -126,7 +133,13 @@ public class Profile extends JFrame implements ActionListener {
 		txtNombre.setColumns(10);
 		
 		JLabel fondo = new JLabel("");
+
+  //pablo
+		fondo.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
+
+  //irati
 		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
+
 		fondo.setBounds(10, 0, 1021, 657);
 		contentPane.add(fondo);
 		

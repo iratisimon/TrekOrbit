@@ -50,16 +50,30 @@ public class UserMenu extends JFrame implements ActionListener {
 		
 		//label para el icono del perfil
 		iconoPerfil = new JButton("");
+
+  //pablo
+        iconoPerfil.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\treky4-removebg-preview.png")); // Cambia la ruta según la ubicación de tu icono de perfil
+        iconoPerfil.setBounds(845, 31, 116, 106); // Ajusta las coordenadas y el tamaño según tus necesidades
+
+  //irati
         iconoPerfil.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\treky4-removebg-preview.png")); // Cambia la ruta según la ubicación de tu icono de perfil
         iconoPerfil.setBounds(845, 31, 116, 106); 
+
         iconoPerfil.setContentAreaFilled(false); // Establecer el fondo del botón como transparente
         iconoPerfil.setBorderPainted(false);
         contentPane.add(iconoPerfil);
 		
 		//label para foto de treky
 		JLabel treky = new JLabel("");
+
+  //pablo
+		treky.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\treky8-removebg-preview.png"));
+		treky.setBounds(292, 285, 391, 358);
+
+  //irati
 		treky.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\treky8-removebg-preview.png"));
 		treky.setBounds(292, 285, 391, 358);
+
 		contentPane.add(treky);
 		
 		//boton para acceder a la ventana de comprar viaje
@@ -86,13 +100,20 @@ public class UserMenu extends JFrame implements ActionListener {
 		
 		lblCerrarSesion = createClickableLabel("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\CERRARSESION.png",80, 479, 156, 131);
 		contentPane.add(lblCerrarSesion);
-		
+
 		//label para el fondo
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Magneto", Font.PLAIN, 25));
 		fondo.setForeground(Color.WHITE);
+
+  //pablo
+		fondo.setIcon(new ImageIcon("C:\\Users\\pablo\\OneDrive\\Escritorio\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
+		fondo.setBounds(0, 0, 1010, 643);
+
+  //irati
 		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\galaxy.jpg"));
 		fondo.setBounds(0, 0, 1010, 643);
+
 		contentPane.add(fondo);
 		
 		iconoPerfil.addActionListener(this);
