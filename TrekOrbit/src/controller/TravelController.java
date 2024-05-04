@@ -1,7 +1,8 @@
 package controller;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
+
 
 import model.Planet;
 import model.Planeta;
@@ -13,7 +14,10 @@ public class TravelController implements ManageTravel {
 	final String COMPRARVIAJE = "INSERT INTO VIAJE VALUES (?,?,?,?,?)";
 	final String CANCELARVIAJE = "DELETE FROM VIAJE WHERE Cod_Viaje=?";
 	final String VERVIAJES = "CALL  VerViajesComprados(?)";
-	final String OBTENERPLANETA= "SELECT * FROM PLANETA WHERE Nombre = ?";
+	final String OBTENERPLANETA = "SELECT * FROM PLANETA WHERE Nombre = ?";
+	final String EXISTEACTIVIDAD = "SELECT Nombre_Act FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ?";
+	final String DISPONIBILIDADPLANETAS = "SELECT Disponibilidad FROM PLANETA WHERE Nombre = ? ";
+
 
 	private void openConnection() {
 		try {
@@ -34,14 +38,14 @@ public class TravelController implements ManageTravel {
 	}
 
 	@Override
-	public boolean buyTrip(String origen, Double duracion, String nombrePlaneta, String idUsuarios) {
+	public boolean buyTrip(String origen, Date fechaViaje, String nombrePlaneta, String idUsuarios) {
 		boolean compraRealizada = false;
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(COMPRARVIAJE);
 			stmt.setString(1, getNextTravelCode());
 			stmt.setString(2, origen);
-			stmt.setDouble(3, duracion);
+			stmt.setDate(3, fechaViaje);
 			stmt.setString(4, nombrePlaneta);
 			stmt.setString(5, idUsuarios);
 			if (stmt.executeUpdate() == 1) {
@@ -78,7 +82,7 @@ public class TravelController implements ManageTravel {
 				String originPlanet = rs.getString("Origen");
 				Planeta oriPlanet = convertToPlanetEnum(originPlanet);
 				trip.setOrigen(oriPlanet);
-				trip.setDuracion(rs.getDouble("Duracion"));
+				trip.setFechaViaje(rs.getDate("FechaViaje").toLocalDate());
 				String planetName = rs.getString("Nombre_Planeta");
 				Planeta destinationPlanet = convertToPlanetEnum(planetName);
 				trip.setNom_destino(destinationPlanet);
@@ -86,6 +90,12 @@ public class TravelController implements ManageTravel {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
+			e.printStackTrace();
+		}
+		try {
+			this.closeConnection();
+		} catch (SQLException e) {
+			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
 		}
 
@@ -115,8 +125,43 @@ public class TravelController implements ManageTravel {
 		return cancelado;
 	}
 
+	@Override
+	public Planet getPlanet(String planetName) {
+		Planet planet = null;
+		ArrayList<String> actividades = getPlanetActivities(planetName);
+		ResultSet rs = null;
+		PreparedStatement stmt;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(OBTENERPLANETA);
+			stmt.setString(1, planetName);
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				planet = new Planet();
+				String name = rs.getString("Nombre");
+				Planeta nomPla = convertToPlanetEnum(name);
+				planet.setNom_planeta(nomPla);
+				planet.setSuperficie(rs.getDouble("Superficie"));
+				planet.setHabitantes(rs.getInt("Habitantes"));
+				planet.setClima(rs.getString("Clima"));
+				planet.setActivities(actividades);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			this.closeConnection();
+		} catch (SQLException e) {
+			System.out.println("Error en el cierre de la Base de Datos");
+			e.printStackTrace();
+		}
+		return planet;
+	}
+
 	// Método para obtener el próximo código de viaje disponible en el formato VNNN
-	private String getNextTravelCode() {
+	public String getNextTravelCode() {
 		String nextCode = null;
 		String query = "SELECT MAX(Cod_Viaje) FROM VIAJE";
 		PreparedStatement stmt;
@@ -145,40 +190,58 @@ public class TravelController implements ManageTravel {
 		return nextCode;
 	}
 
-	// Método para convertir el nombre del planeta de String a enum
-	private Planeta convertToPlanetEnum(String planetName) {
-		return Planeta.valueOf(planetName.toUpperCase());
-	}
-
-	@Override
-	public Planet getPlanet(String nom_planeta) {
-		Planeta planetEnum = null;
-		Planet planeta=null;
+	public ArrayList<String> getPlanetActivities(String nombrePlaneta) {
+		ArrayList<String> activities = new ArrayList<>();
 		this.openConnection();
 		try {
-			stmt = con.prepareStatement(OBTENERPLANETA);
-			stmt.setString(1, nom_planeta);
+			PreparedStatement stmt = con.prepareStatement(EXISTEACTIVIDAD);
+			stmt.setString(1, nombrePlaneta);
 			ResultSet rs = stmt.executeQuery();
-	        if (rs.next()) {
-	            String nombre = rs.getString("Nombre");
-	            planetEnum=Planeta.valueOf(nombre);
-	            double superficie = rs.getDouble("Superficie");
-	            int habitantes = rs.getInt("Habitantes");
-	            String clima = rs.getString("Clima");
-	            boolean disponibilidad = rs.getBoolean("Disponibilidad");
-	            // Crear un objeto Planeta con los datos obtenidos
-	            planeta = new Planet(planetEnum, superficie, habitantes, clima, disponibilidad);
-	        }
-		}catch (SQLException e) {
-			System.out.println("Error de SQL");
-			e.printStackTrace();
+			while (rs.next()) {
+				activities.add(rs.getString("Nombre_Act"));
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error al obtener actividades del planeta: " + e.getMessage());
 		}
 		try {
 			this.closeConnection();
 		} catch (SQLException e) {
-			System.out.println("Error en el cierre de la Base de Datos");
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return planeta;
+
+		return activities;
+	}
+
+	public HashMap<String, Boolean> getPlanetDisponibility(String nombrePlaneta) {
+		HashMap<String, Boolean> disponibilidad = new HashMap<>();
+		this.openConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement(DISPONIBILIDADPLANETAS);
+			stmt.setString(1, nombrePlaneta);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				boolean isAvailable = rs.getBoolean("Disponibilidad");
+				disponibilidad.put(nombrePlaneta, isAvailable);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error al obtener la disponibilidad del planeta: " + e.getMessage());
+		}
+		try {
+			this.closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return disponibilidad;
+	}
+
+	// Método para convertir el nombre del planeta de String a enum
+	private Planeta convertToPlanetEnum(String planetName) {
+		return Planeta.valueOf(planetName.toUpperCase());
 	}
 }

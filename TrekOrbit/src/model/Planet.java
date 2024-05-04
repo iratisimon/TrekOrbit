@@ -9,14 +9,25 @@ public class Planet {
 	private String clima;
 	private boolean disponibilidad;
 	private Admin administrador;
-	private ArrayList<Activity> activities;
-	
+	private ArrayList<String> activities;
+
 	public Planet(Planeta nom_planeta, double superficie, int habitantes, String clima, boolean disponibilidad) {
 		this.nom_planeta = nom_planeta;
 		this.superficie = superficie;
 		this.habitantes = habitantes;
 		this.clima = clima;
 		this.disponibilidad = disponibilidad;
+		this.activities= new ArrayList<>();
+
+	}
+
+	public Planet() {
+		this.nom_planeta = null;
+		this.superficie = 0;
+		this.habitantes = 0;
+		this.clima = null;
+		this.disponibilidad = false;
+		this.activities= new ArrayList<>();
 	}
 
 	public Planeta getNom_planeta() {
@@ -59,12 +70,20 @@ public class Planet {
 		this.disponibilidad = disponibilidad;
 	}
 
-	public ArrayList<Activity> getActivities() {
+	public ArrayList<String> getActivities() {
 		return activities;
 	}
 
-	public void setActivities(ArrayList<Activity> activities) {
+	public void setActivities(ArrayList<String> activities) {
 		this.activities = activities;
+	}
+
+	public Admin getAdministrador() {
+		return administrador;
+	}
+
+	public void setAdministrador(Admin administrador) {
+		this.administrador = administrador;
 	}
 
 }
