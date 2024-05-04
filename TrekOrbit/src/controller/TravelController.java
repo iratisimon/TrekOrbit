@@ -2,6 +2,8 @@ package controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import model.Planet;
 import model.Planeta;
 import model.Travel;
@@ -14,6 +16,7 @@ public class TravelController implements ManageTravel {
 	final String VERVIAJES = "CALL  VerViajesComprados(?)";
 	final String OBTENERPLANETA = "SELECT * FROM PLANETA WHERE Nombre = ?";
 	final String EXISTEACTIVIDAD = "SELECT Nombre_Act FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ?";
+	final String DISPONIBILIDADPLANETAS = "SELECT Disponibilidad FROM PLANETA WHERE Nombre = ? ";
 
 	private void openConnection() {
 		try {
@@ -121,36 +124,6 @@ public class TravelController implements ManageTravel {
 		return cancelado;
 	}
 
-	// Método para obtener el próximo código de viaje disponible en el formato VNNN
-	public String getNextTravelCode() {
-		String nextCode = null;
-		String query = "SELECT MAX(Cod_Viaje) FROM VIAJE";
-		PreparedStatement stmt;
-		try {
-			stmt = con.prepareStatement(query);
-
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				String maxCode = rs.getString(1);
-				if (maxCode != null) {
-					int number = Integer.parseInt(maxCode.substring(1)) + 1;
-					nextCode = String.format("V%03d", number);
-				} else {
-					nextCode = "V001";
-				}
-			} else {
-				nextCode = "V001";
-			}
-
-			rs.close();
-			stmt.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return nextCode;
-	}
-
 	@Override
 	public Planet getPlanet(String planetName) {
 		Planet planet = null;
@@ -186,6 +159,36 @@ public class TravelController implements ManageTravel {
 		return planet;
 	}
 
+	// Método para obtener el próximo código de viaje disponible en el formato VNNN
+	public String getNextTravelCode() {
+		String nextCode = null;
+		String query = "SELECT MAX(Cod_Viaje) FROM VIAJE";
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(query);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				String maxCode = rs.getString(1);
+				if (maxCode != null) {
+					int number = Integer.parseInt(maxCode.substring(1)) + 1;
+					nextCode = String.format("V%03d", number);
+				} else {
+					nextCode = "V001";
+				}
+			} else {
+				nextCode = "V001";
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nextCode;
+	}
+
 	public ArrayList<String> getPlanetActivities(String nombrePlaneta) {
 		ArrayList<String> activities = new ArrayList<>();
 		this.openConnection();
@@ -211,9 +214,34 @@ public class TravelController implements ManageTravel {
 		return activities;
 	}
 
+	public HashMap<String, Boolean> getPlanetDisponibility(String nombrePlaneta) {
+		HashMap<String, Boolean> disponibilidad = new HashMap<>();
+		this.openConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement(DISPONIBILIDADPLANETAS);
+			stmt.setString(1, nombrePlaneta);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				boolean isAvailable = rs.getBoolean("Disponibilidad");
+				disponibilidad.put(nombrePlaneta, isAvailable);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error al obtener la disponibilidad del planeta: " + e.getMessage());
+		}
+		try {
+			this.closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return disponibilidad;
+	}
+
 	// Método para convertir el nombre del planeta de String a enum
 	private Planeta convertToPlanetEnum(String planetName) {
-	    return Planeta.valueOf(planetName.toUpperCase());
+		return Planeta.valueOf(planetName.toUpperCase());
 	}
 
 }

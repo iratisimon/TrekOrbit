@@ -39,16 +39,16 @@ public class ConfirmReservation extends JFrame {
 	private Planet planet;
 	private JTextArea actividadesTextArea;
 	private AccessController controladorAcceso;
-	private UserController  controladorUsuario;
+	private UserController controladorUsuario;
 
-	
-	public ConfirmReservation(TravelController travelControl, Travel trip, Ser ser, Planet planet, AccessController controladorAcceso, UserController controladorUsuario) {
+	public ConfirmReservation(TravelController travelControl, Travel trip, Ser ser, Planet planet,
+			AccessController controladorAcceso, UserController controladorUsuario) {
 		this.travelControl = travelControl;
 		this.travel = trip;
 		this.ser = ser;
 		this.planet = planet;
-		this.controladorAcceso=controladorAcceso;
-		this.controladorUsuario=controladorUsuario;
+		this.controladorAcceso = controladorAcceso;
+		this.controladorUsuario = controladorUsuario;
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(ConfirmReservation.class.getResource("/images/logotipo_trekorbit.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,26 +106,26 @@ public class ConfirmReservation extends JFrame {
 
 		ArrayList<String> actividades = travel.getActividades();
 		actividadesTextArea = new JTextArea();
-		actividadesTextArea.setFont(new Font("OCR A Extended", Font.PLAIN, 30));
+		actividadesTextArea.setFont(new Font("OCR A Extended", Font.PLAIN, 25));
 		actividadesTextArea.setForeground(Color.WHITE);
 		actividadesTextArea.setOpaque(false); // Hacer el JTextArea transparente
 		actividadesTextArea.setEditable(false); // No permitir edición del JTextArea
-		actividadesTextArea.setBounds(145, 254, 500, 254); // Establecer posición y tamaño
+		actividadesTextArea.setBounds(210, 254, 385, 245); // Establecer posición y tamaño
 		contentPane.add(actividadesTextArea);
 		for (String actividad : actividades) {
 			actividadesTextArea.append(actividad + "\n"); // Agregar cada actividad seguida de un salto de línea
 		}
-		lblReservar = createClickableLabel("/images/ReservarBlanco.png", 326, 518, 134, 75);
+		lblReservar = createClickableLabel("/images/AVIAJAR.png", 244, 454, 287, 179);
 		contentPane.add(lblReservar);
+
 		lblVolver = createClickableLabel("/images/VolverBlanco.png", 22, 11, 134, 75);
 		contentPane.add(lblVolver);
-		
 
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/galaxy.jpg")));
 		lblFondo.setBounds(0, 0, 793, 640);
 		contentPane.add(lblFondo);
-		
+
 	}
 
 	private JLabel createClickableLabel(String imagePath, int x, int y, int width, int height) {
@@ -141,19 +141,21 @@ public class ConfirmReservation extends JFrame {
 				if (label == lblVolver) {
 					// Si fue la etiqueta "Volver", volver a la ventana anterior
 					String planetName = travel.getNom_destino().name();
-					BuyTripPartTwo volver = new BuyTripPartTwo(planetName, travelControl, ser, planet, controladorAcceso, controladorUsuario);
+					BuyTripPartTwo volver = new BuyTripPartTwo(planetName, travelControl, ser, planet,
+							controladorAcceso, controladorUsuario);
 					volver.setVisible(true);
 					dispose();
 				} else if (label == lblReservar) {
 					LocalDate fecha = travel.getFechaViaje();
 					java.sql.Date date = java.sql.Date.valueOf(fecha);
-					if(travelControl.buyTrip(travel.getOrigen().name(), date, travel.getNom_destino().name(), ser.getId())) {
-						UIManager.put("OptionPane.background", new Color(23, 17, 39));
+					if (travelControl.buyTrip(travel.getOrigen().name(), date, travel.getNom_destino().name(),
+							ser.getId())) {
+						UIManager.put("OptionPane.background", new Color(23, 17, 70));
 						UIManager.put("Panel.background", new Color(23, 20, 39));
 						UIManager.put("OptionPane.messageForeground", Color.WHITE);
 						UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 20));
-						JOptionPane.showMessageDialog(ConfirmReservation.this,(String) "El viaje ha sido reservado","Tenga buen viaje",
-								JOptionPane.INFORMATION_MESSAGE,null);
+						JOptionPane.showMessageDialog(ConfirmReservation.this, (String) "El viaje ha sido reservado",
+								"Tenga buen viaje", JOptionPane.INFORMATION_MESSAGE, null);
 						UserMenu volverMenu = new UserMenu(controladorAcceso, controladorUsuario, ser);
 						volverMenu.setVisible(true);
 						dispose();
