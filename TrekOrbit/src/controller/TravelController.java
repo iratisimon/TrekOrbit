@@ -1,8 +1,8 @@
 package controller;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
+
 
 import model.Planet;
 import model.Planeta;
@@ -17,6 +17,7 @@ public class TravelController implements ManageTravel {
 	final String OBTENERPLANETA = "SELECT * FROM PLANETA WHERE Nombre = ?";
 	final String EXISTEACTIVIDAD = "SELECT Nombre_Act FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ?";
 	final String DISPONIBILIDADPLANETAS = "SELECT Disponibilidad FROM PLANETA WHERE Nombre = ? ";
+
 
 	private void openConnection() {
 		try {
@@ -243,5 +244,4 @@ public class TravelController implements ManageTravel {
 	private Planeta convertToPlanetEnum(String planetName) {
 		return Planeta.valueOf(planetName.toUpperCase());
 	}
-
 }

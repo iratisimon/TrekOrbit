@@ -12,6 +12,4 @@ public interface ManageTravel {
 	public ArrayList<Travel> seeTrip(String nombre);
 	public boolean cancelTrip(String codViaje);
 	public Planet getPlanet(String planetName);
-	
-	
 }

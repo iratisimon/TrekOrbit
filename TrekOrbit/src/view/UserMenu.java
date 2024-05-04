@@ -17,6 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
+import controller.TravelController;
+
 public class UserMenu extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -28,6 +30,7 @@ public class UserMenu extends JFrame implements ActionListener {
 	private AccessController controladorAcceso;
 	private UserController controladorUsuario;
 	private Ser ser;
+	private JLabel lblUsuario;
 
 	/**
 	 * Create the frame.
@@ -47,7 +50,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		
 		//label para el icono del perfil
 		iconoPerfil = new JButton("");
-        iconoPerfil.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\treky4-removebg-preview.png")); // Cambia la ruta según la ubicación de tu icono de perfil
+        iconoPerfil.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\treky4-removebg-preview.png")); // Cambia la ruta según la ubicación de tu icono de perfil
         iconoPerfil.setBounds(56, 29, 184, 189); // Ajusta las coordenadas y el tamaño según tus necesidades
         iconoPerfil.setContentAreaFilled(false); // Establecer el fondo del botón como transparente
         iconoPerfil.setBorderPainted(false);
@@ -55,7 +58,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		
 		//label para foto de treky
 		JLabel treky = new JLabel("");
-		treky.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\treky8-removebg-preview.png"));
+		treky.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\treky8-removebg-preview.png"));
 		treky.setBounds(291, 285, 391, 358);
 		contentPane.add(treky);
 		
@@ -82,10 +85,17 @@ public class UserMenu extends JFrame implements ActionListener {
 		bienvenida.setBounds(294, 59, 657, 100);
 		contentPane.add(bienvenida);
 		
+		lblUsuario = new JLabel("@"+ser.getNick());
+		lblUsuario.setFont(new Font("Magneto", Font.BOLD, 25));
+		lblUsuario.setForeground(new Color(51, 255, 102));
+		lblUsuario.setBounds(467, 176, 244, 42);
+		contentPane.add(lblUsuario);
+		
 		//label para el fondo
 		JLabel fondo = new JLabel("");
+		fondo.setFont(new Font("Magneto", Font.PLAIN, 25));
 		fondo.setForeground(Color.WHITE);
-		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\galaxy.jpg"));
+		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\galaxy.jpg"));
 		fondo.setBounds(0, 0, 1266, 683);
 		contentPane.add(fondo);
 		

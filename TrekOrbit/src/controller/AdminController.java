@@ -15,6 +15,7 @@ public class AdminController implements ManageAdmin{
 	
 	private Connection con;
 	private PreparedStatement stmt;
+
 	final String OBTENERPLANETA = "SELECT * FROM PLANETA WHERE ID_Admin = (SELECT ID_Admin FROM ADMINISTRADOR WHERE ID_Admin = ( SELECT ID FROM SER WHERE Nick = ?))";
 	final String CAMBIARDISPLANETA = "UPDATE PLANETA SET Disponibilidad= NOT Disponibilidad";
 	final String EXISTEACTIVIDAD = "SELECT Nombre_Act FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ?";

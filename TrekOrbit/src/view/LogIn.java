@@ -8,7 +8,6 @@ import controller.AccessController;
 import controller.AdminController;
 import controller.UserController;
 import model.Ser;
-import model.User;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -41,11 +40,11 @@ public class LogIn extends JFrame implements ActionListener {
 
 	public LogIn(AccessController controladorAcesso) {
 		this.controladorAcceso = new AccessController();
-		this.ser=new Ser();
+
 		setBackground(new Color(240, 240, 240));
 		setForeground(new Color(240, 240, 240));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 720);
+		setBounds(100, 100, 1008, 640);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 240, 240));
 		contentPane.setForeground(new Color(0, 0, 0));
@@ -58,65 +57,66 @@ public class LogIn extends JFrame implements ActionListener {
 		titulo.setBackground(new Color(0, 0, 0));
 		titulo.setForeground(new Color(255, 255, 255));
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		titulo.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 40));
-		titulo.setBounds(344, 65, 611, 69);
+		titulo.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 60));
+		titulo.setBounds(230, 112, 540, 69);
 		contentPane.add(titulo);
 
-		JLabel nick = new JLabel("USUARIO: ");
+		JLabel nick = new JLabel("Usuario: ");
 		nick.setForeground(new Color(255, 255, 255));
 		nick.setHorizontalAlignment(SwingConstants.CENTER);
-		nick.setFont(new Font("Verdana", Font.BOLD, 18));
-		nick.setBounds(426, 223, 129, 42);
+		nick.setFont(new Font("Verdana", Font.BOLD, 25));
+		nick.setBounds(251, 216, 202, 42);
 		contentPane.add(nick);
 
-		JLabel contraseña = new JLabel("CONTRASEÑA: ");
+		JLabel contraseña = new JLabel("Contraseña: ");
 		contraseña.setForeground(new Color(255, 255, 255));
 		contraseña.setHorizontalAlignment(SwingConstants.CENTER);
-		contraseña.setFont(new Font("Verdana", Font.BOLD, 18));
-		contraseña.setBounds(426, 275, 169, 42);
+		contraseña.setFont(new Font("Verdana", Font.BOLD, 25));
+		contraseña.setBounds(219, 266, 270, 42);
 		contentPane.add(contraseña);
 
 		textFieldNick = new JTextField();
-		textFieldNick.setBounds(553, 236, 241, 25);
+		textFieldNick.setBounds(479, 229, 241, 25);
 		contentPane.add(textFieldNick);
 		textFieldNick.setColumns(10);
 
 		passwd = new JPasswordField();
-		passwd.setBounds(585, 288, 209, 25);
+		passwd.setBounds(479, 281, 241, 25);
 		contentPane.add(passwd);
 		passwd.setColumns(10);
 
 		inicio = new JButton("Iniciar Sesion");
 		inicio.setBackground(new Color(255, 255, 255));
 		inicio.setForeground(new Color(0, 0, 0));
-		inicio.setFont(new Font("Verdana", Font.BOLD, 13));
-		inicio.setBounds(563, 355, 129, 25);
+		inicio.setFont(new Font("Verdana", Font.BOLD, 15));
+		inicio.setBounds(410, 345, 172, 30);
 		contentPane.add(inicio);
 
 		JLabel preguntaRegristro = new JLabel("¿Aún no te has registrado?");
 		preguntaRegristro.setForeground(new Color(255, 255, 255));
 		preguntaRegristro.setHorizontalAlignment(SwingConstants.CENTER);
-		preguntaRegristro.setFont(new Font("Verdana", Font.BOLD, 12));
-		preguntaRegristro.setBounds(449, 406, 186, 30);
+		preguntaRegristro.setFont(new Font("Verdana", Font.BOLD, 15));
+		preguntaRegristro.setBounds(267, 436, 319, 30);
 		contentPane.add(preguntaRegristro);
 
 		registro = new JButton("Registrarse");
 		registro.setBackground(new Color(255, 255, 255));
-		registro.setFont(new Font("Verdana", Font.BOLD, 9));
-		registro.setBounds(645, 413, 104, 18);
+		registro.setFont(new Font("Verdana", Font.BOLD, 12));
+		registro.setBounds(560, 441, 124, 23);
 		contentPane.add(registro);
 		registro.addActionListener(this);
 
 
-		mensaje = new JLabel("No existe ninguna cuenta con ese usuario");
+		mensaje = new JLabel("");
 		mensaje.setForeground(new Color(255, 255, 255));
 		mensaje.setBounds(435, 464, 364, 30);
 		contentPane.add(mensaje);
 		
+	
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
-		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\galaxy.jpg"));
-		fondo.setBounds(10, 10, 1246, 673);
+		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\galaxy.jpg"));
+		fondo.setBounds(10, 0, 984, 593);
 		contentPane.add(fondo);
 		
 		inicio.addActionListener(this);
@@ -143,16 +143,18 @@ public class LogIn extends JFrame implements ActionListener {
 	            
 	            if (ser.isAdmin()) {
 	                dispose();
-
 	                AdminView av = new AdminView(controladorAcceso, controladorAdmin, ser);
-
 	                av.setVisible(true);
 	                
-	            } else{
+	            } else if (!ser.isAdmin()){
 	                dispose(); 
 	                UserMenu um = new UserMenu(controladorAcceso,controladorUsuario, ser);
 	                um.setVisible(true);
+	                
+	            } else {
+	            	 mensaje.setText("Usuario o contraseña incorrectos");
 	            }
+	            
 	        } else {
 	            mensaje.setText("Usuario o contraseña incorrectos");
 	        }

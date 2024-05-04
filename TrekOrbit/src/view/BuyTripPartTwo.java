@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JCalendar;
-
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
@@ -41,7 +40,6 @@ public class BuyTripPartTwo extends JFrame {
 	private TravelController travelControl;
 	private JLabel lblVolver;
 	private JLabel lblReservar;
-	private JCalendar calendar;
 	private JComboBox<String> comboBoxPlanetasOrigen;
 	private Planet planeta;
 	private Ser ser;
@@ -146,6 +144,7 @@ public class BuyTripPartTwo extends JFrame {
 				selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
 			}
 		});
+
 
 		JLabel lblPlaneta = new JLabel("");
 		lblPlaneta.setBounds(660, 67, 300, 270);

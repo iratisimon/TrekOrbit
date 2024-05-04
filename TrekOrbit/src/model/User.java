@@ -4,11 +4,10 @@ public class User extends Ser {
 	private String nombre;
 	private String raza;
 
-	public User(String passwrd, String nick, String nombre, String raza, boolean admin) {
-		super(passwrd, nick,admin);
+	public User(String id, String passwd, String nick, boolean admin, String nombre, String raza) {
+		super(id, passwd, nick, admin);
 		this.nombre = nombre;
 		this.raza = raza;
-		this.id = generarIDUsuario();
 	}
 
 	public User() {

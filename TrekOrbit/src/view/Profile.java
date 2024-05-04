@@ -110,7 +110,7 @@ public class Profile extends JFrame implements ActionListener {
 		lblMensaje = new JLabel("");
 		lblMensaje.setForeground(new Color(204, 0, 51));
 		lblMensaje.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 20));
-		lblMensaje.setBounds(577, 399, 364, 28);
+		lblMensaje.setBounds(541, 399, 400, 28);
 		contentPane.add(lblMensaje);
 		
 		lblNombre = new JLabel("Mi nombre es:");
@@ -126,7 +126,7 @@ public class Profile extends JFrame implements ActionListener {
 		txtNombre.setColumns(10);
 		
 		JLabel fondo = new JLabel("");
-		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Downloads\\galaxy.jpg"));
+		fondo.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\Imagenes\\galaxy.jpg"));
 		fondo.setBounds(10, 0, 1021, 657);
 		contentPane.add(fondo);
 		
@@ -153,10 +153,11 @@ public class Profile extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		Object o =e.getSource();
-		String nick = txtNick.getText();
-	    String passwd = new String (txtPasswd.getPassword());
+	    String nickOriginal = ser.getNick();
+	    String passwdOriginal = ser.getPasswd(); // Agregar la obtención de la contraseña original
+	    String nickNew = txtNick.getText();
+	    String passwd = new String(txtPasswd.getPassword());
 	    boolean modificado = false;
 		
 	    if (o == btnModificar) {
@@ -166,7 +167,8 @@ public class Profile extends JFrame implements ActionListener {
 	    }
 	    if (o == btnGuardar) {
 	        // Si se presionó el botón "Guardar", intenta guardar los cambios en la base de datos
-	        modificado = controladorUsuario.modificarDatosUser(nick, passwd);
+	        modificado = controladorUsuario.modificarDatosUser(nickOriginal, passwdOriginal, nickNew, passwd);
+	        System.out.println(modificado);
 	        if (modificado == true) {
 	            // Si se modificaron los datos con éxito
 	            // Deshabilita la edición de los campos
@@ -174,6 +176,10 @@ public class Profile extends JFrame implements ActionListener {
 	            txtPasswd.setEditable(false);
 	            lblMensaje.setForeground(new Color(51, 255, 102));
 	            lblMensaje.setText("Se ha modificado correctamente");
+	            
+	            // Actualizar los campos con los nuevos datos
+	            txtNick.setText(nickNew);
+	            txtPasswd.setText(passwd);
 	        } else {
 	            // Si no se pudieron guardar los cambios
 	            lblMensaje.setForeground(new Color(204, 0, 51));

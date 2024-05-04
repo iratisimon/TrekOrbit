@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
@@ -23,6 +22,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.Color;
+
+import model.Planet;
 
 public class ConfirmReservation extends JFrame {
 
