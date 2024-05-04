@@ -100,7 +100,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		Object o = e.getSource();
 		if (o == NuevaAventura) {
 			TravelController controlador = new TravelController();
-			BuyTrip buy = new BuyTrip(controlador,ser);
+			BuyTrip buy = new BuyTrip(controlador,ser,controladorAcceso,controladorUsuario);
 			buy.setVisible(true);
 			dispose();
 		} else if (o == MisAventuras) {

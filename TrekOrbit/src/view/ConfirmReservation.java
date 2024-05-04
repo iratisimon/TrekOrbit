@@ -3,22 +3,23 @@ package view;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import controller.AccessController;
 import controller.TravelController;
+import controller.UserController;
 import model.Planet;
 import model.Ser;
 import model.Travel;
-
 import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.Color;
@@ -37,21 +38,21 @@ public class ConfirmReservation extends JFrame {
 	private JLabel destino;
 	private Planet planet;
 	private JTextArea actividadesTextArea;
+	private AccessController controladorAcceso;
+	private UserController  controladorUsuario;
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @param travelControl
-	 */
-	public ConfirmReservation(TravelController travelControl, Travel trip, Ser ser, Planet planet) {
+	
+	public ConfirmReservation(TravelController travelControl, Travel trip, Ser ser, Planet planet, AccessController controladorAcceso, UserController controladorUsuario) {
 		this.travelControl = travelControl;
 		this.travel = trip;
 		this.ser = ser;
 		this.planet = planet;
+		this.controladorAcceso=controladorAcceso;
+		this.controladorUsuario=controladorUsuario;
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(ConfirmReservation.class.getResource("/images/logotipo_trekorbit.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1024, 680);
+		setBounds(100, 100, 807, 680);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -61,25 +62,25 @@ public class ConfirmReservation extends JFrame {
 		JLabel lblOrigen = new JLabel("Origen: ");
 		lblOrigen.setForeground(new Color(255, 255, 255));
 		lblOrigen.setFont(new Font("Magneto", Font.PLAIN, 30));
-		lblOrigen.setBounds(237, 60, 134, 33);
+		lblOrigen.setBounds(215, 64, 159, 33);
 		contentPane.add(lblOrigen);
 
 		JLabel lblDestino = new JLabel("Destino: ");
 		lblDestino.setForeground(Color.WHITE);
 		lblDestino.setFont(new Font("Magneto", Font.PLAIN, 30));
-		lblDestino.setBounds(240, 111, 163, 33);
+		lblDestino.setBounds(215, 115, 163, 33);
 		contentPane.add(lblDestino);
 
 		JLabel lblFecha = new JLabel("Fecha: ");
 		lblFecha.setForeground(Color.WHITE);
 		lblFecha.setFont(new Font("Magneto", Font.PLAIN, 30));
-		lblFecha.setBounds(240, 167, 134, 33);
+		lblFecha.setBounds(215, 168, 134, 33);
 		contentPane.add(lblFecha);
 
 		JLabel lblActividades = new JLabel("Actividades: ");
 		lblActividades.setForeground(Color.WHITE);
 		lblActividades.setFont(new Font("Magneto", Font.PLAIN, 30));
-		lblActividades.setBounds(240, 211, 238, 33);
+		lblActividades.setBounds(215, 211, 238, 33);
 		contentPane.add(lblActividades);
 
 		origen = new JLabel(travel.getOrigen().toString());
@@ -109,22 +110,22 @@ public class ConfirmReservation extends JFrame {
 		actividadesTextArea.setForeground(Color.WHITE);
 		actividadesTextArea.setOpaque(false); // Hacer el JTextArea transparente
 		actividadesTextArea.setEditable(false); // No permitir edición del JTextArea
-		actividadesTextArea.setBounds(237, 255, 500, 150); // Establecer posición y tamaño
+		actividadesTextArea.setBounds(145, 254, 500, 254); // Establecer posición y tamaño
 		contentPane.add(actividadesTextArea);
 		for (String actividad : actividades) {
 			actividadesTextArea.append(actividad + "\n"); // Agregar cada actividad seguida de un salto de línea
 		}
-		lblReservar = createClickableLabel("/images/ReservarBlanco.png", 880, 555, 134, 75);
+		lblReservar = createClickableLabel("/images/ReservarBlanco.png", 326, 518, 134, 75);
 		contentPane.add(lblReservar);
-
-		lblVolver = createClickableLabel("/images/VolverBlanco.png", 10, 11, 134, 75);
+		lblVolver = createClickableLabel("/images/VolverBlanco.png", 22, 11, 134, 75);
 		contentPane.add(lblVolver);
+		
 
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setIcon(new ImageIcon(BuyTrip.class.getResource("/images/galaxy.jpg")));
-		lblFondo.setBounds(0, 0, 1008, 640);
+		lblFondo.setBounds(0, 0, 793, 640);
 		contentPane.add(lblFondo);
-
+		
 	}
 
 	private JLabel createClickableLabel(String imagePath, int x, int y, int width, int height) {
@@ -140,14 +141,23 @@ public class ConfirmReservation extends JFrame {
 				if (label == lblVolver) {
 					// Si fue la etiqueta "Volver", volver a la ventana anterior
 					String planetName = travel.getNom_destino().name();
-					BuyTripPartTwo volver = new BuyTripPartTwo(planetName, travelControl, ser, planet);
+					BuyTripPartTwo volver = new BuyTripPartTwo(planetName, travelControl, ser, planet, controladorAcceso, controladorUsuario);
 					volver.setVisible(true);
 					dispose();
 				} else if (label == lblReservar) {
 					LocalDate fecha = travel.getFechaViaje();
 					java.sql.Date date = java.sql.Date.valueOf(fecha);
-			        
-					travelControl.buyTrip(travel.getOrigen().name(), date, travel.getNom_destino().name(), ser.getId());
+					if(travelControl.buyTrip(travel.getOrigen().name(), date, travel.getNom_destino().name(), ser.getId())) {
+						UIManager.put("OptionPane.background", new Color(23, 17, 39));
+						UIManager.put("Panel.background", new Color(23, 20, 39));
+						UIManager.put("OptionPane.messageForeground", Color.WHITE);
+						UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 20));
+						JOptionPane.showMessageDialog(ConfirmReservation.this,(String) "El viaje ha sido reservado","Tenga buen viaje",
+								JOptionPane.INFORMATION_MESSAGE,null);
+						UserMenu volverMenu = new UserMenu(controladorAcceso, controladorUsuario, ser);
+						volverMenu.setVisible(true);
+						dispose();
+					}
 				}
 			}
 		});

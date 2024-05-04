@@ -4,7 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.AccessController;
 import controller.TravelController;
+import controller.UserController;
 import model.Planet;
 import model.Ser;
 
@@ -33,13 +35,20 @@ public class BuyTrip extends JFrame {
 	private TravelController travelControl;
 	private Planet planet;
 	private Ser ser;
+	private AccessController controladorAcceso;
+	private UserController  controladorUsuario;
 
 	/**
 	 * Create the frame.
+	 * @param controladorUsuario 
+	 * @param controladorAcceso 
 	 */
-	public BuyTrip(TravelController controlador,Ser ser) {
+	public BuyTrip(TravelController controlador,Ser ser, AccessController controladorAcceso, UserController controladorUsuario) {
 		this.travelControl = controlador;
 		this.ser=ser;
+		this.controladorAcceso=controladorAcceso;
+		this.controladorUsuario=controladorUsuario;
+		ser.setId("S003");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BuyTrip.class.getResource("/images/logotipo_trekorbit.png")));
 		setBackground(new Color(0, 0, 0));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,7 +113,7 @@ public class BuyTrip extends JFrame {
 	// Función para abrir la ventana de BuyTripPartTwo
 	private void openBuyTripPartTwo(String selectedPlanet) {
 		planet=travelControl.getPlanet(selectedPlanet);
-		BuyTripPartTwo buyTrip = new BuyTripPartTwo(selectedPlanet, travelControl,ser,planet);
+		BuyTripPartTwo buyTrip = new BuyTripPartTwo(selectedPlanet, travelControl,ser,planet,controladorAcceso,controladorUsuario);
 		buyTrip.setVisible(true);
 		dispose();
 	}
