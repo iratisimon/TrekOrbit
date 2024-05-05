@@ -7,7 +7,7 @@ import model.Travel;
 
 /**
  * Interfaz que define las operaciones controlables por un gestor de viajes.
- * Esta interfaz proporciona métodos para gestionar operaciones relacionadas con
+ * Esta interfaz proporciona metodos para gestionar operaciones relacionadas con
  * los viajes.
  * 
  * @author Meylin
@@ -24,7 +24,7 @@ public interface ManageTravel {
 	 * @param nombrePlaneta el planeta de destino
 	 * @param idUsuarios    el ID del usuario
 	 * @param actividades   las actividades incluidas en el viaje
-	 * @return true si el viaje se compró correctamente, false en caso contrario
+	 * @return true si el viaje se compro correctamente, false en caso contrario
 	 */
 	public ArrayList<Travel> seeTrip(String nombre);
 
@@ -40,13 +40,13 @@ public interface ManageTravel {
 	/**
 	 * Cancela un viaje.
 	 *
-	 * @param codViaje el código del viaje a cancelar
+	 * @param codViaje el codigo del viaje a cancelar
 	 * @return true si el viaje se canceló correctamente, false en caso contrario
 	 */
 
 	public Planet getPlanet(String planetName);
 	/**
-	 * Recupera información sobre un planeta específico.
+	 * Recupera información sobre un planeta especifico.
 	 *
 	 * @param planetName el nombre del planeta
 	 * @return un objeto Planet representando el planeta

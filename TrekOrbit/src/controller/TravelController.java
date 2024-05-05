@@ -8,14 +8,14 @@ import model.Planeta;
 import model.Travel;
 
 /**
- * Esta clase actúa como controlador para gestionar operaciones relacionadas con
+ * Esta clase actua como controlador para gestionar operaciones relacionadas con
  * viajes en el sistema. Implementa la interfaz ManageTravel para definir
- * métodos para comprar, ver y cancelar viajes, así como obtener información
+ * metodos para comprar, ver y cancelar viajes, asi como obtener informacion
  * sobre planetas. El controlador se comunica con la base de datos para realizar
  * estas operaciones.
  * 
  * <p>
- * Nota: La clase asume una estructura de base de datos específica y utiliza las
+ * Nota: La clase asume una estructura de base de datos especifica y utiliza las
  * interfaces y modelos relacionados.
  * </p>
  * 
@@ -32,9 +32,9 @@ public class TravelController implements ManageTravel {
 	final String EXISTEACTIVIDAD = "SELECT Nombre_Act FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ?";
 	final String DISPONIBILIDADPLANETAS = "SELECT Disponibilidad FROM PLANETA WHERE Nombre = ? ";
 
-	/**
-	 * Abre una conexión con la base de datos.
-	 */
+	 /**
+     * Abre una conexion con la base de datos.
+     */
 
 	private void openConnection() {
 		try {
@@ -46,10 +46,10 @@ public class TravelController implements ManageTravel {
 	}
 
 	/**
-	 * Cierra la conexión con la base de datos.
-	 * 
-	 * @throws SQLException si ocurre un error al cerrar la conexión
-	 */
+     * Cierra la conexion con la base de datos.
+     * 
+     * @throws SQLException si ocurre un error al cerrar la conexión
+     */
 	private void closeConnection() throws SQLException {
 		System.out.println("Conexion cerrada");
 		if (stmt != null)
@@ -60,15 +60,15 @@ public class TravelController implements ManageTravel {
 	}
 
 	/**
-	 * Realiza la compra de un viaje en la base de datos.
-	 * 
-	 * @param origen        el origen del viaje
-	 * @param fechaViaje    la fecha del viaje
-	 * @param nombrePlaneta el nombre del planeta de destino
-	 * @param idUsuarios    el ID del usuario que compra el viaje
-	 * @param actividades   las actividades asociadas al viaje
-	 * @return true si la compra se realiza con éxito, false si no
-	 */
+     * Realiza la compra de un viaje en la base de datos.
+     * 
+     * @param origen        el origen del viaje
+     * @param fechaViaje    la fecha del viaje
+     * @param nombrePlaneta el nombre del planeta de destino
+     * @param idUsuarios    el ID del usuario que compra el viaje
+     * @param actividades   las actividades asociadas al viaje
+     * @return true si la compra se realiza con exito, false si no
+     */
 	@Override
 	public boolean buyTrip(String origen, Date fechaViaje, String nombrePlaneta, String idUsuarios,
 			ArrayList<String> actividades) {
@@ -109,11 +109,11 @@ public class TravelController implements ManageTravel {
 	}
 
 	/**
-	 * Obtiene una lista de viajes asociados a un nombre de usuario.
-	 * 
-	 * @param nombre el nombre de usuario
-	 * @return una lista de objetos Travel representando los viajes
-	 */
+     * Obtiene una lista de viajes asociados a un nombre de usuario.
+     * 
+     * @param nombre el nombre de usuario
+     * @return una lista de objetos Travel representando los viajes
+     */
 	@Override
 	public ArrayList<Travel> seeTrip(String nombre) {
 		CallableStatement cstmt;
@@ -152,12 +152,12 @@ public class TravelController implements ManageTravel {
 		return trips;
 	}
 
-	/**
-	 * Cancela un viaje en la base de datos.
-	 * 
-	 * @param codViaje el código del viaje a cancelar
-	 * @return true si la cancelación se realiza con éxito, false si no
-	 */
+	 /**
+     * Cancela un viaje en la base de datos.
+     * 
+     * @param codViaje el codigo del viaje a cancelar
+     * @return true si la cancelacion se realiza con exito, false si no
+     */
 	@Override
 	public boolean cancelTrip(String codViaje) {
 		boolean cancelado = false;
@@ -182,11 +182,11 @@ public class TravelController implements ManageTravel {
 	}
 
 	/**
-	 * Obtiene información sobre un planeta de la base de datos.
-	 * 
-	 * @param planetName el nombre del planeta
-	 * @return un objeto Planet representando el planeta
-	 */
+     * Obtiene informacion sobre un planeta de la base de datos.
+     * 
+     * @param planetName el nombre del planeta
+     * @return un objeto Planet representando el planeta
+     */
 	@Override
 	public Planet getPlanet(String planetName) {
 		Planet planet = null;
@@ -222,10 +222,10 @@ public class TravelController implements ManageTravel {
 	}
 
 	/**
-	 * Obtiene el próximo código disponible para un viaje.
-	 * 
-	 * @return el próximo código de viaje disponible
-	 */
+     * Obtiene el proximo codigo disponible para un viaje.
+     * 
+     * @return el proximo codigo de viaje disponible
+     */
 	public String getNextTravelCode() {
 		String nextCode = null;
 		String query = "SELECT MAX(Cod_Viaje) FROM VIAJE";
@@ -255,11 +255,11 @@ public class TravelController implements ManageTravel {
 	}
 
 	/**
-	 * Obtiene las actividades disponibles en un planeta de la base de datos.
-	 * 
-	 * @param nombrePlaneta el nombre del planeta
-	 * @return una lista de actividades disponibles en el planeta
-	 */
+     * Obtiene las actividades disponibles en un planeta de la base de datos.
+     * 
+     * @param nombrePlaneta el nombre del planeta
+     * @return una lista de actividades disponibles en el planeta
+     */
 
 	public ArrayList<String> getPlanetActivities(String nombrePlaneta) {
 		ArrayList<String> activities = new ArrayList<>();
@@ -286,11 +286,11 @@ public class TravelController implements ManageTravel {
 	}
 
 	/**
-	 * Obtiene la disponibilidad de un planeta de la base de datos.
-	 * 
-	 * @param nombrePlaneta el nombre del planeta
-	 * @return un mapa que indica la disponibilidad del planeta
-	 */
+     * Obtiene la disponibilidad de un planeta de la base de datos.
+     * 
+     * @param nombrePlaneta el nombre del planeta
+     * @return un mapa que indica la disponibilidad del planeta
+     */
 	public HashMap<String, Boolean> getPlanetDisponibility(String nombrePlaneta) {
 		HashMap<String, Boolean> disponibilidad = new HashMap<>();
 		this.openConnection();
@@ -316,12 +316,12 @@ public class TravelController implements ManageTravel {
 		return disponibilidad;
 	}
 
-	/**
-	 * Convierte el nombre de un planeta en un valor de enumeración Planeta.
-	 * 
-	 * @param planetName el nombre del planeta
-	 * @return el valor de enumeración Planeta correspondiente
-	 */
+	 /**
+     * Convierte el nombre de un planeta en un valor de enumeracion Planeta.
+     * 
+     * @param planetName el nombre del planeta
+     * @return el valor de enumeracion Planeta correspondiente
+     */
 	private Planeta convertToPlanetEnum(String planetName) {
 		return Planeta.valueOf(planetName.toUpperCase());
 	}
