@@ -14,7 +14,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import com.toedter.calendar.JCalendar;
+
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
@@ -22,7 +24,9 @@ import model.Planet;
 import model.Planeta;
 import model.Ser;
 import model.Travel;
+import ownExceptions.FechaNoSeleccionadaException;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -50,8 +54,8 @@ public class BuyTripPartTwo extends JFrame {
 	private JCalendar calendar;
 	private AccessController controladorAcceso;
 	private UserController controladorUsuario;
+	private JCalendar calendar; 
 
-	
 	public BuyTripPartTwo(String planetName, TravelController controlador, Ser ser, Planet planet,
 			AccessController controladorAcceso, UserController controladorUsuario) {
 
@@ -124,7 +128,7 @@ public class BuyTripPartTwo extends JFrame {
 			checkBox.setFont(new Font("OCR A Extended", Font.PLAIN, 20));
 			checkBox.setForeground(Color.WHITE);
 			checkBox.setBackground(new Color(23, 17, 39));
-			checkBox.setBounds(36, yCoord, 300, 30); // Ajusta las coordenadas X e Y según tu diseño
+			checkBox.setBounds(36, yCoord, 300, 50); // Ajusta las coordenadas X e Y según tu diseño
 			contentPane.add(checkBox);
 			yCoord += 40; // Incrementa la coordenada Y para la próxima checkbox
 		}
@@ -136,16 +140,28 @@ public class BuyTripPartTwo extends JFrame {
 		contentPane.add(calendar);
 		customizeCalendar();
 
-		calendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				// Obtener la fecha seleccionada del JCalendar
-				java.util.Date selectedUtilDate = calendar.getDate();
-				Instant instant = selectedUtilDate.toInstant();
-				selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-			}
-		});
 
+		calendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
+		    @Override
+		    public void propertyChange(PropertyChangeEvent evt) {
+		        // Obtener la fecha seleccionada del JCalendar
+		        java.util.Date selectedUtilDate = calendar.getDate();
+		        Instant instant = selectedUtilDate.toInstant();
+		        LocalDate selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+		        
+		        // Obtener la fecha actual
+		        LocalDate currentDate = LocalDate.now();
+		        
+		        // Comparar la fecha seleccionada con la fecha actual
+		        if (selectedDate.isBefore(currentDate)) {
+		            // Si la fecha seleccionada es anterior a la fecha actual, mostrar un mensaje de error
+		            showMessageDialog("No se puede seleccionar una fecha anterior a la actual.", "Fecha Inválida", JOptionPane.PLAIN_MESSAGE);
+		            
+		            // Restaurar la fecha seleccionada al día actual
+		            calendar.setDate(java.sql.Date.valueOf(currentDate));
+		        }
+		    }
+		});
 
 		JLabel lblPlaneta = new JLabel("");
 		lblPlaneta.setBounds(660, 67, 300, 270);
@@ -232,55 +248,65 @@ public class BuyTripPartTwo extends JFrame {
 							}
 						}
 					}
-					Travel travel = new Travel();
-					String planetaOrigen = (String) comboBoxPlanetasOrigen.getSelectedItem();
-					travel.setOrigen(Planeta.valueOf(planetaOrigen));
-					travel.setNom_destino(planeta.getNom_planeta());
-					travel.setFechaViaje(selectedDate);
-					travel.setActividades(actividadesSeleccionadas);
-					ConfirmReservation reserva = new ConfirmReservation(travelControl, travel, ser, planeta,
-							controladorAcceso, controladorUsuario);
-					reserva.setVisible(true);
-					dispose();
+					try {
+						// Verificar si se ha seleccionado una fecha
+						if (selectedDate == null) {
+							throw new FechaNoSeleccionadaException("Por favor, selecciona una fecha de viaje.");
+						}
+						Travel travel = new Travel();
+						String planetaOrigen = (String) comboBoxPlanetasOrigen.getSelectedItem();
+						travel.setOrigen(Planeta.valueOf(planetaOrigen));
+						travel.setNom_destino(planeta.getNom_planeta());
+						travel.setFechaViaje(selectedDate);
+						travel.setActividades(actividadesSeleccionadas);
+						ConfirmReservation reserva = new ConfirmReservation(travelControl, travel, ser, planeta,
+								controladorAcceso, controladorUsuario);
+						reserva.setVisible(true);
+						dispose();
+					} catch (FechaNoSeleccionadaException ex) {
+						showMessageDialog("No ha seleccionado una fecha", "Datos Incompletos",
+								JOptionPane.PLAIN_MESSAGE);
+					}
 				}
 			}
 		});
 		return label;
 	}
-
 	private void customizeCalendar() {
 		// Configuración del color de fondo del calendario
 		calendar.setBackground(new Color(23, 17, 39));
-
 		// Configuración del color de la letra del calendario
 		calendar.setForeground(Color.WHITE);
-
 		// Configuración del color de fondo del área de título
 		calendar.setDecorationBackgroundColor(new Color(23, 17, 39));
-
 		// Configuración del color de la letra del selector de año
 		calendar.getYearChooser().getSpinner().setForeground(Color.WHITE);
-
 		// Configuración del color de fondo del selector de año
 		calendar.getYearChooser().getSpinner().setBackground(new Color(23, 17, 39));
-
 		// Configuración del color de la letra del selector de mes
 		calendar.getMonthChooser().getComboBox().setForeground(Color.WHITE);
-
 		// Configuración del color de fondo del selector de mes
 		calendar.getMonthChooser().getComboBox().setBackground(new Color(23, 17, 39));
-
 		// Configuración del color de fondo del selector de día
 		calendar.getDayChooser().setBackground(new Color(23, 17, 39));
 		calendar.getDayChooser().getDayPanel().setBackground(new Color(23, 17, 39));
-
 		// Configuración del color de la letra del selector de día
 		calendar.getDayChooser().setForeground(Color.BLACK);
-
 		// Ocultar el número de la semana
 		calendar.setWeekOfYearVisible(false);
-
 		// Configuración de la fuente y tamaño de la letra del calendario
 		calendar.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 	}
+	public static void showMessageDialog(String message, String title, int messageType) {
+		// Establecer los colores de fondo para el JOptionPane
+		UIManager.put("OptionPane.background", new Color(23, 17, 39));
+		UIManager.put("Panel.background", new Color(23, 17, 39));
+
+		// Establecer el color y la fuente del mensaje
+		UIManager.put("OptionPane.messageForeground", Color.WHITE);
+		UIManager.put("OptionPane.messageFont", new Font("OCR A Extended", Font.BOLD, 20));
+		// Mostrar el JOptionPane con el mensaje personalizado
+		JOptionPane.showMessageDialog(null, message, title, messageType);
+	}
+
 }

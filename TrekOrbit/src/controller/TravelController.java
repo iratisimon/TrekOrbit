@@ -3,22 +3,38 @@ package controller;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
-
-
 import model.Planet;
 import model.Planeta;
 import model.Travel;
 
+/**
+ * Esta clase actua como controlador para gestionar operaciones relacionadas con
+ * viajes en el sistema. Implementa la interfaz ManageTravel para definir
+ * metodos para comprar, ver y cancelar viajes, asi como obtener informacion
+ * sobre planetas. El controlador se comunica con la base de datos para realizar
+ * estas operaciones.
+ * 
+ * <p>
+ * Nota: La clase asume una estructura de base de datos especifica y utiliza las
+ * interfaces y modelos relacionados.
+ * </p>
+ * 
+ * @author Meylin
+ */
 public class TravelController implements ManageTravel {
 	private Connection con;
 	private PreparedStatement stmt;
 	final String COMPRARVIAJE = "INSERT INTO VIAJE VALUES (?,?,?,?,?)";
+	final String COMPRAVIAJE2 = "INSERT INTO VIAJE_ACTIVIDAD VALUES (?,?)";
 	final String CANCELARVIAJE = "DELETE FROM VIAJE WHERE Cod_Viaje=?";
 	final String VERVIAJES = "CALL  VerViajesComprados(?)";
 	final String OBTENERPLANETA = "SELECT * FROM PLANETA WHERE Nombre = ?";
 	final String EXISTEACTIVIDAD = "SELECT Nombre_Act FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ?";
 	final String DISPONIBILIDADPLANETAS = "SELECT Disponibilidad FROM PLANETA WHERE Nombre = ? ";
 
+	 /**
+     * Abre una conexion con la base de datos.
+     */
 
 	private void openConnection() {
 		try {
@@ -29,6 +45,11 @@ public class TravelController implements ManageTravel {
 		}
 	}
 
+	/**
+     * Cierra la conexion con la base de datos.
+     * 
+     * @throws SQLException si ocurre un error al cerrar la conexión
+     */
 	private void closeConnection() throws SQLException {
 		System.out.println("Conexion cerrada");
 		if (stmt != null)
@@ -38,33 +59,61 @@ public class TravelController implements ManageTravel {
 		System.out.println("--------------------");
 	}
 
+	/**
+     * Realiza la compra de un viaje en la base de datos.
+     * 
+     * @param origen        el origen del viaje
+     * @param fechaViaje    la fecha del viaje
+     * @param nombrePlaneta el nombre del planeta de destino
+     * @param idUsuarios    el ID del usuario que compra el viaje
+     * @param actividades   las actividades asociadas al viaje
+     * @return true si la compra se realiza con exito, false si no
+     */
 	@Override
-	public boolean buyTrip(String origen, Date fechaViaje, String nombrePlaneta, String idUsuarios) {
+	public boolean buyTrip(String origen, Date fechaViaje, String nombrePlaneta, String idUsuarios,
+			ArrayList<String> actividades) {
 		boolean compraRealizada = false;
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(COMPRARVIAJE);
-			stmt.setString(1, getNextTravelCode());
+			String cod = getNextTravelCode();
+			stmt.setString(1, cod);
 			stmt.setString(2, origen);
 			stmt.setDate(3, fechaViaje);
 			stmt.setString(4, nombrePlaneta);
 			stmt.setString(5, idUsuarios);
 			if (stmt.executeUpdate() == 1) {
 				compraRealizada = true;
+				if (!actividades.isEmpty()) {
+					for (String act : actividades) {
+						PreparedStatement stmt2 = con.prepareStatement(COMPRAVIAJE2);
+						stmt2.setString(1, cod);
+						stmt2.setString(2, act);
+						stmt2.executeUpdate();
+						stmt2.close();
+					}
+				}
 			}
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
-		}
-		try {
-			this.closeConnection();
-		} catch (SQLException e) {
-			System.out.println("Error en el cierre de la Base de Datos");
-			e.printStackTrace();
+		} finally {
+			try {
+				this.closeConnection();
+			} catch (SQLException e) {
+				System.out.println("Error en el cierre de la Base de Datos");
+				e.printStackTrace();
+			}
 		}
 		return compraRealizada;
 	}
 
+	/**
+     * Obtiene una lista de viajes asociados a un nombre de usuario.
+     * 
+     * @param nombre el nombre de usuario
+     * @return una lista de objetos Travel representando los viajes
+     */
 	@Override
 	public ArrayList<Travel> seeTrip(String nombre) {
 		CallableStatement cstmt;
@@ -103,6 +152,12 @@ public class TravelController implements ManageTravel {
 		return trips;
 	}
 
+	 /**
+     * Cancela un viaje en la base de datos.
+     * 
+     * @param codViaje el codigo del viaje a cancelar
+     * @return true si la cancelacion se realiza con exito, false si no
+     */
 	@Override
 	public boolean cancelTrip(String codViaje) {
 		boolean cancelado = false;
@@ -126,6 +181,12 @@ public class TravelController implements ManageTravel {
 		return cancelado;
 	}
 
+	/**
+     * Obtiene informacion sobre un planeta de la base de datos.
+     * 
+     * @param planetName el nombre del planeta
+     * @return un objeto Planet representando el planeta
+     */
 	@Override
 	public Planet getPlanet(String planetName) {
 		Planet planet = null;
@@ -149,7 +210,6 @@ public class TravelController implements ManageTravel {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
@@ -161,7 +221,11 @@ public class TravelController implements ManageTravel {
 		return planet;
 	}
 
-	// Método para obtener el próximo código de viaje disponible en el formato VNNN
+	/**
+     * Obtiene el proximo codigo disponible para un viaje.
+     * 
+     * @return el proximo codigo de viaje disponible
+     */
 	public String getNextTravelCode() {
 		String nextCode = null;
 		String query = "SELECT MAX(Cod_Viaje) FROM VIAJE";
@@ -185,11 +249,17 @@ public class TravelController implements ManageTravel {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return nextCode;
 	}
+
+	/**
+     * Obtiene las actividades disponibles en un planeta de la base de datos.
+     * 
+     * @param nombrePlaneta el nombre del planeta
+     * @return una lista de actividades disponibles en el planeta
+     */
 
 	public ArrayList<String> getPlanetActivities(String nombrePlaneta) {
 		ArrayList<String> activities = new ArrayList<>();
@@ -209,13 +279,18 @@ public class TravelController implements ManageTravel {
 		try {
 			this.closeConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return activities;
 	}
 
+	/**
+     * Obtiene la disponibilidad de un planeta de la base de datos.
+     * 
+     * @param nombrePlaneta el nombre del planeta
+     * @return un mapa que indica la disponibilidad del planeta
+     */
 	public HashMap<String, Boolean> getPlanetDisponibility(String nombrePlaneta) {
 		HashMap<String, Boolean> disponibilidad = new HashMap<>();
 		this.openConnection();
@@ -241,7 +316,12 @@ public class TravelController implements ManageTravel {
 		return disponibilidad;
 	}
 
-	// Método para convertir el nombre del planeta de String a enum
+	 /**
+     * Convierte el nombre de un planeta en un valor de enumeracion Planeta.
+     * 
+     * @param planetName el nombre del planeta
+     * @return el valor de enumeracion Planeta correspondiente
+     */
 	private Planeta convertToPlanetEnum(String planetName) {
 		return Planeta.valueOf(planetName.toUpperCase());
 	}

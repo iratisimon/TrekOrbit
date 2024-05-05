@@ -135,7 +135,7 @@ public class AdminController implements ManageAdmin{
 			ResultSet rs = stmt.executeQuery();
 	        if (rs.next()) {
 	            String nombre = rs.getString("Nombre");
-	            planetEnum=Planeta.valueOf(nombre);
+	            planetEnum=Planeta.valueOf(nombre.toUpperCase());
 	            double superficie = rs.getDouble("Superficie");
 	            int habitantes = rs.getInt("Habitantes");
 	            String clima = rs.getString("Clima");
