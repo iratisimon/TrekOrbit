@@ -13,6 +13,7 @@ import model.Travel;
  * @author Meylin
  */
 public interface ManageTravel {
+
 	public boolean buyTrip(String origen, Date fechaViaje, String nombrePlaneta, String idUsuarios,
 			ArrayList<String> actividades);
 
@@ -26,6 +27,7 @@ public interface ManageTravel {
 	 * @param actividades   las actividades incluidas en el viaje
 	 * @return true si el viaje se compro correctamente, false en caso contrario
 	 */
+
 	public ArrayList<Travel> seeTrip(String nombre);
 
 	/**

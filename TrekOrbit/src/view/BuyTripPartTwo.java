@@ -51,6 +51,7 @@ public class BuyTripPartTwo extends JFrame {
 	private JLabel poblacion;
 	private JLabel superficie;
 	private JLabel clima;
+	private JCalendar calendar;
 	private AccessController controladorAcceso;
 	private UserController controladorUsuario;
 	private JCalendar calendar; 

@@ -110,14 +110,14 @@ public class UserMenu extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
+		TravelController controlador = new TravelController();
 		if (o == NuevaAventura) {
-			TravelController controlador = new TravelController();
 			BuyTrip buy = new BuyTrip(controlador,ser,controladorAcceso,controladorUsuario);
 			buy.setVisible(true);
 			dispose();
 		} else if (o == MisAventuras) {
-			// SeeTrip see = new SeeTrip(); Ventana de elbire -- controlador y usuario
-			// a.setVisible(true);
+			SeeTrips see = new SeeTrips(controlador,ser,controladorAcceso,controladorUsuario);
+			see.setVisible(true);
 			dispose();
 		} else if (o == iconoPerfil) {
 			Profile p = new Profile (controladorAcceso,controladorUsuario, ser);

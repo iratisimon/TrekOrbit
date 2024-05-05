@@ -1,42 +1,213 @@
 package view;
 
-import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import controller.AccessController;
+import controller.TravelController;
+import controller.UserController;
+import model.Ser;
+import model.Travel;
+
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.awt.Color;
+import java.awt.Cursor;
 
 public class SeeTrips extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private TravelController controladorViaje;
+	private Ser ser;
+	private AccessController controladorAcceso;
+	private UserController controladorUsuario;
+	private JList<String> list;
+    private DefaultListModel<String> listModel;
+    private JLabel lblInfoViaje;
+    private JLabel lblActivities;
+    private List<Travel> viajesUsuario;
+    private JLabel lblVolver;
+    private JLabel lblCancelarViaje;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SeeTrips frame = new SeeTrips();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public SeeTrips() {
+	public SeeTrips(TravelController controlador, Ser ser, AccessController controladorAcceso, UserController controladorUsuario) {
+		this.controladorViaje=controlador;
+		this.ser=ser;
+		this.controladorAcceso=controladorAcceso;
+		this.controladorUsuario=controladorUsuario;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 1024, 680);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		// Creamos un modelo para la lista
+		listModel = new DefaultListModel<>();
+        list = new JList<>(listModel);
+        list.setBackground(new Color(22, 15, 46));
+        list.setForeground(new Color(255, 255, 255));
+        list.setFont(new Font("Magneto", Font.PLAIN, 15));
+        JScrollPane scrollPane = new JScrollPane(list);
+        scrollPane.setBounds(418, 53, 523, 514); // Establece la posición y el tamaño del JScrollPane
+        contentPane.add(scrollPane);
+        
+        // Crear un JLabel para mostrar la información completa del viaje
+        lblInfoViaje = new JLabel("");
+        lblInfoViaje.setForeground(new Color(255, 255, 255));
+        lblInfoViaje.setFont(new Font("Magneto", Font.PLAIN, 15));
+        lblInfoViaje.setBounds(50, 53, 300, 360); // Ajusta la posición y el tamaño según sea necesario
+        contentPane.add(lblInfoViaje);
+        
+        // Crear un JLabel para mostrar las actividades del viaje
+        lblActivities = new JLabel("Activities:");
+        lblActivities.setForeground(new Color(255, 255, 255));
+        lblActivities.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblActivities.setBounds(50, 400, 100, 20);
+        contentPane.add(lblActivities);
+        
+        lblVolver = new JLabel("");
+		lblVolver.setIcon(new ImageIcon(AdminView.class.getResource("/images/VolverBlanco.png")));
+		lblVolver.setBounds(0, 0, 266, 92);
+		lblVolver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		contentPane.add(lblVolver);
+        
+        
+        lblCancelarViaje = new JLabel("");
+		lblCancelarViaje.setIcon(new ImageIcon(SeeTrips.class.getResource("/images/BotonCancelarViaje.png")));
+		lblCancelarViaje.setBounds(123, 465, 163, 151);
+		lblCancelarViaje.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		contentPane.add(lblCancelarViaje);
+		lblCancelarViaje.setVisible(false);
+        
+        JLabel lblFondo = new JLabel("");
+		lblFondo.setIcon(new ImageIcon(SeeTrips.class.getResource("/images/galaxy.jpg")));
+		lblFondo.setBounds(0, 0, 1008, 641);
+		contentPane.add(lblFondo);
+
+		// Actualizamos la lista de viajes al crear la ventana
+        updateTripsList();
+        
+        list.addListSelectionListener((ListSelectionListener) new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    // Obtener el índice del elemento seleccionado
+                    int index = list.getSelectedIndex();
+                    if (index != -1) {
+                    	// Mostrar el botón si se selecciona un viaje
+                    	lblCancelarViaje.setVisible(true);
+                        // Obtener el viaje seleccionado
+                        Travel viajeSeleccionado = viajesUsuario.get(index);
+
+                        // Mostrar la información completa del viaje en el JLabel
+                        String infoViaje = "Origen: " + viajeSeleccionado.getOrigen() + "<br>" +
+                                            "Destino: " + viajeSeleccionado.getNom_destino().name() + "<br>" +
+                                            "Fecha de viaje: " + viajeSeleccionado.getFechaViaje();
+                        lblInfoViaje.setText("<html>" + infoViaje + "</html>");
+                        
+                     // Mostrar las actividades del viaje
+                        ArrayList<String> actividadesViaje = viajeSeleccionado.getActividades();
+                        String activitiesText = "<html>";
+                        for (String actividad : actividadesViaje) {
+                            activitiesText += actividad + "<br>";
+                        }
+                        activitiesText += "</html>";
+                        lblActivities.setText(activitiesText);
+                    }else {
+                    	lblCancelarViaje.setVisible(false); // Ocultar el botón si no se selecciona ningún viaje
+                    }
+                }
+            }
+        });
+        
+        MouseAdapter mouseAdapter = new MouseAdapter() {
+	        @Override
+	        public void mouseClicked(MouseEvent e) {
+	            if (e.getSource() == lblVolver) {
+                	LogIn login = new LogIn(controladorAcceso);
+            		login.setVisible(true);
+            		dispose();
+                }else if(e.getSource() == lblCancelarViaje) {
+                	cancelSelectedTrip();
+                }
+	            
+	        }
+	    };
+	    lblVolver.addMouseListener(mouseAdapter);
+	    lblCancelarViaje.addMouseListener(mouseAdapter);
 	}
+
+	private void updateTripsList() {
+		// TODO Auto-generated method stub
+		// Obtener los viajes del usuario
+        viajesUsuario = controladorViaje.seeTrip(ser.getNick());
+        
+     // Ordenar la lista de viajes por fecha de viaje (de más nueva a más antigua)
+        Collections.sort(viajesUsuario, new Comparator<Travel>() {
+            @Override
+            public int compare(Travel viaje1, Travel viaje2) {
+                return viaje2.getFechaViaje().compareTo(viaje1.getFechaViaje());
+            }
+        });
+
+        // Limpiar el modelo de la lista
+        listModel.clear();
+        
+        // Agregar los viajes al modelo de la lista
+        for (Travel viaje : viajesUsuario) {
+            listModel.addElement(viaje.getOrigen() + " - "+ viaje.getNom_destino().name() +" / "+ viaje.getFechaViaje());
+        }
+	}
+	
+	 private void cancelSelectedTrip() {
+		// Obtener el índice del elemento seleccionado en la lista
+		    int index = list.getSelectedIndex();
+		    if (index != -1) {
+		        // Obtener el viaje seleccionado
+		        Travel viajeSeleccionado = viajesUsuario.get(index);
+		        
+		        // Verificar si la fecha del viaje ya ha pasado
+		        if (viajeSeleccionado.getFechaViaje().isBefore(LocalDate.now())) {
+		            // Mostrar un mensaje de error si la fecha del viaje ha pasado
+		            JOptionPane.showMessageDialog(contentPane,
+		                "No se puede cancelar un viaje que ya ha pasado la fecha.",
+		                "Error", JOptionPane.ERROR_MESSAGE);
+		        } else {
+		            // Cancelar el viaje
+		            boolean cancelado = controladorViaje.cancelTrip(viajeSeleccionado.getCod_viaje());
+		            if (cancelado) {
+		                // Actualizar la lista de viajes después de la cancelación
+		                updateTripsList();
+		            } 
+		        }
+		    } else {
+		        // Mostrar un mensaje de error si no se ha seleccionado ningún viaje
+		        JOptionPane.showMessageDialog(contentPane,
+		            "Por favor, selecciona un viaje para cancelar.",
+		            "Error", JOptionPane.ERROR_MESSAGE);
+		    }
+	 }
 
 }
