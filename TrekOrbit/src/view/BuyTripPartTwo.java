@@ -54,7 +54,6 @@ public class BuyTripPartTwo extends JFrame {
 	private JCalendar calendar;
 	private AccessController controladorAcceso;
 	private UserController controladorUsuario;
-	private JCalendar calendar; 
 
 	public BuyTripPartTwo(String planetName, TravelController controlador, Ser ser, Planet planet,
 			AccessController controladorAcceso, UserController controladorUsuario) {
@@ -140,27 +139,28 @@ public class BuyTripPartTwo extends JFrame {
 		contentPane.add(calendar);
 		customizeCalendar();
 
-
 		calendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
-		    @Override
-		    public void propertyChange(PropertyChangeEvent evt) {
-		        // Obtener la fecha seleccionada del JCalendar
-		        java.util.Date selectedUtilDate = calendar.getDate();
-		        Instant instant = selectedUtilDate.toInstant();
-		        LocalDate selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-		        
-		        // Obtener la fecha actual
-		        LocalDate currentDate = LocalDate.now();
-		        
-		        // Comparar la fecha seleccionada con la fecha actual
-		        if (selectedDate.isBefore(currentDate)) {
-		            // Si la fecha seleccionada es anterior a la fecha actual, mostrar un mensaje de error
-		            showMessageDialog("No se puede seleccionar una fecha anterior a la actual.", "Fecha Inválida", JOptionPane.PLAIN_MESSAGE);
-		            
-		            // Restaurar la fecha seleccionada al día actual
-		            calendar.setDate(java.sql.Date.valueOf(currentDate));
-		        }
-		    }
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				// Obtener la fecha seleccionada del JCalendar
+				java.util.Date selectedUtilDate = calendar.getDate();
+				Instant instant = selectedUtilDate.toInstant();
+				LocalDate selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+
+				// Obtener la fecha actual
+				LocalDate currentDate = LocalDate.now();
+
+				// Comparar la fecha seleccionada con la fecha actual
+				if (selectedDate.isBefore(currentDate)) {
+					// Si la fecha seleccionada es anterior a la fecha actual, mostrar un mensaje de
+					// error
+					showMessageDialog("No se puede seleccionar una fecha anterior a la actual.", "Fecha Inválida",
+							JOptionPane.PLAIN_MESSAGE);
+
+					// Restaurar la fecha seleccionada al día actual
+					calendar.setDate(java.sql.Date.valueOf(currentDate));
+				}
+			}
 		});
 
 		JLabel lblPlaneta = new JLabel("");
@@ -272,6 +272,7 @@ public class BuyTripPartTwo extends JFrame {
 		});
 		return label;
 	}
+
 	private void customizeCalendar() {
 		// Configuración del color de fondo del calendario
 		calendar.setBackground(new Color(23, 17, 39));
@@ -297,6 +298,7 @@ public class BuyTripPartTwo extends JFrame {
 		// Configuración de la fuente y tamaño de la letra del calendario
 		calendar.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 	}
+
 	public static void showMessageDialog(String message, String title, int messageType) {
 		// Establecer los colores de fondo para el JOptionPane
 		UIManager.put("OptionPane.background", new Color(23, 17, 39));
