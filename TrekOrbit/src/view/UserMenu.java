@@ -147,8 +147,8 @@ public class UserMenu extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o == NuevaAventura) {
-			TravelController controladorViaje= new TravelController();
-			BuyTrip buy = new BuyTrip(controladorViaje,ser);
+			TravelController controlador = new TravelController();
+			BuyTrip buy = new BuyTrip(controlador,ser,controladorAcceso,controladorUsuario);
 			buy.setVisible(true);
 			dispose();
 		} else if (o == MisAventuras) {

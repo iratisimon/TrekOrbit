@@ -9,6 +9,12 @@ public class Activity {
 		this.descripcion = descripcion;
 	}
 
+	
+	public Activity(String nombre) {
+		this.nombre = nombre;
+	}
+
+
 	public String getNombre() {
 		return nombre;
 	}
