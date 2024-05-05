@@ -166,7 +166,7 @@ public class AdminView extends JFrame {
                     }
                     lblPlaneta.setIcon(new ImageIcon(getClass().getResource(imagePath)));	            	
                     // Lógica para cambiar la disponibilidad del planeta
-                    p = c.changePlanetAvailability(p, admin.getNick());
+                    p = c.changePlanetAvailability(p, p.getNom_planeta().name());
                     
                 } else if (e.getSource() == lblVolver) {
                 	LogIn login = new LogIn(controladorAcceso);

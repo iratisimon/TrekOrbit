@@ -45,7 +45,6 @@ public class SeeTrips extends JFrame {
 	private JList<String> list;
     private DefaultListModel<String> listModel;
     private JLabel lblInfoViaje;
-    private JLabel lblActivities;
     private List<Travel> viajesUsuario;
     private JLabel lblVolver;
     private JLabel lblCancelarViaje;
@@ -78,15 +77,15 @@ public class SeeTrips extends JFrame {
         lblInfoViaje = new JLabel("");
         lblInfoViaje.setForeground(new Color(255, 255, 255));
         lblInfoViaje.setFont(new Font("Magneto", Font.PLAIN, 15));
-        lblInfoViaje.setBounds(50, 53, 300, 360); // Ajusta la posición y el tamaño según sea necesario
+        lblInfoViaje.setBounds(50, 117, 300, 205); // Ajusta la posición y el tamaño según sea necesario
         contentPane.add(lblInfoViaje);
         
-        // Crear un JLabel para mostrar las actividades del viaje
-        lblActivities = new JLabel("Activities:");
-        lblActivities.setForeground(new Color(255, 255, 255));
-        lblActivities.setFont(new Font("Tahoma", Font.BOLD, 14));
-        lblActivities.setBounds(50, 400, 100, 20);
-        contentPane.add(lblActivities);
+        // Crear un JLabel para mostrar las actividades del viaje seleccionado
+        JLabel lblActividadesViaje = new JLabel("");
+        lblActividadesViaje.setForeground(new Color(255, 255, 255));
+        lblActividadesViaje.setFont(new Font("Magneto", Font.PLAIN, 15));
+        lblActividadesViaje.setBounds(50, 264, 300, 179); // Ajustar posición y tamaño según sea necesario
+        contentPane.add(lblActividadesViaje);
         
         lblVolver = new JLabel("");
 		lblVolver.setIcon(new ImageIcon(AdminView.class.getResource("/images/VolverBlanco.png")));
@@ -127,14 +126,14 @@ public class SeeTrips extends JFrame {
                                             "Fecha de viaje: " + viajeSeleccionado.getFechaViaje();
                         lblInfoViaje.setText("<html>" + infoViaje + "</html>");
                         
-                     // Mostrar las actividades del viaje
-                        ArrayList<String> actividadesViaje = viajeSeleccionado.getActividades();
-                        String activitiesText = "<html>";
-                        for (String actividad : actividadesViaje) {
-                            activitiesText += actividad + "<br>";
+                     // Obtener y mostrar las actividades asociadas al viaje
+                        String actividadesViaje = "<html><body>";
+                        actividadesViaje += "<b>Actividades del viaje:</b><br>";
+                        for (String actividad : viajeSeleccionado.getActividades()) {
+                            actividadesViaje += "- " + actividad + "<br>";
                         }
-                        activitiesText += "</html>";
-                        lblActivities.setText(activitiesText);
+                        actividadesViaje += "</body></html>";
+                        lblActividadesViaje.setText(actividadesViaje);
                     }else {
                     	lblCancelarViaje.setVisible(false); // Ocultar el botón si no se selecciona ningún viaje
                     }
@@ -146,9 +145,9 @@ public class SeeTrips extends JFrame {
 	        @Override
 	        public void mouseClicked(MouseEvent e) {
 	            if (e.getSource() == lblVolver) {
-                	LogIn login = new LogIn(controladorAcceso);
-            		login.setVisible(true);
-            		dispose();
+	            	UserMenu volverMenu = new UserMenu(controladorAcceso, controladorUsuario, ser);
+					volverMenu.setVisible(true);
+					dispose();
                 }else if(e.getSource() == lblCancelarViaje) {
                 	cancelSelectedTrip();
                 }
@@ -187,7 +186,7 @@ public class SeeTrips extends JFrame {
 		    if (index != -1) {
 		        // Obtener el viaje seleccionado
 		        Travel viajeSeleccionado = viajesUsuario.get(index);
-		        
+		       
 		        // Verificar si la fecha del viaje ya ha pasado
 		        if (viajeSeleccionado.getFechaViaje().isBefore(LocalDate.now())) {
 		            // Mostrar un mensaje de error si la fecha del viaje ha pasado

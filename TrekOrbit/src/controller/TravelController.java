@@ -31,6 +31,8 @@ public class TravelController implements ManageTravel {
 	final String OBTENERPLANETA = "SELECT * FROM PLANETA WHERE Nombre = ?";
 	final String EXISTEACTIVIDAD = "SELECT Nombre_Act FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ?";
 	final String DISPONIBILIDADPLANETAS = "SELECT Disponibilidad FROM PLANETA WHERE Nombre = ? ";
+	final String ELIMINARACTIVIDADES="DELETE FROM viaje_actividad WHERE Cod_Viaje = ?";
+	final String OBTENERACTIVIDADES="SELECT Nombre_Act FROM VIAJE_ACTIVIDAD WHERE Cod_Viaje = ?";
 
 	 /**
      * Abre una conexion con la base de datos.
@@ -136,6 +138,8 @@ public class TravelController implements ManageTravel {
 				String planetName = rs.getString("Nombre_Planeta");
 				Planeta destinationPlanet = convertToPlanetEnum(planetName);
 				trip.setNom_destino(destinationPlanet);
+				// Obtener actividades asociadas a este viaje
+	            trip.setActividades(getActivitiesForTrip(trip.getCod_viaje()));
 				trips.add(trip);
 			}
 		} catch (SQLException e) {
@@ -163,6 +167,10 @@ public class TravelController implements ManageTravel {
 		boolean cancelado = false;
 		this.openConnection();
 		try {
+			// Eliminar actividades asociadas al viaje
+	        deleteActivitiesForTrip(codViaje);
+	        
+	     // Luego, eliminar el viaje en sí
 			stmt = con.prepareStatement(CANCELARVIAJE);
 			stmt.setString(1, codViaje);
 			if (stmt.executeUpdate() == 1) {
@@ -325,5 +333,45 @@ public class TravelController implements ManageTravel {
 	private Planeta convertToPlanetEnum(String planetName) {
 		return Planeta.valueOf(planetName.toUpperCase());
 	}
+	
+	private ArrayList<String> getActivitiesForTrip(String codViaje) {
+	    ArrayList<String> activities = new ArrayList<>();
+	    this.openConnection();
+	    try {
+	        PreparedStatement stmt = con.prepareStatement(OBTENERACTIVIDADES);
+	        stmt.setString(1, codViaje);
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            activities.add(rs.getString("Nombre_Act"));
+	        }
+	        rs.close();
+	        stmt.close();
+	    } catch (SQLException e) {
+	        System.out.println("Error al obtener actividades del viaje: " + e.getMessage());
+	    } finally {
+	        try {
+	            this.closeConnection();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return activities;
+	}
+
+	public boolean deleteActivitiesForTrip(String codViaje) {
+	    try {
+	        PreparedStatement stmt = con.prepareStatement(ELIMINARACTIVIDADES);
+	        stmt.setString(1, codViaje);
+	        int rowsAffected = stmt.executeUpdate();
+	        // Devolver true si se eliminaron actividades correctamente
+	        stmt.close();
+	        return rowsAffected > 0;
+	    } catch (SQLException e) {
+	        System.out.println("Error al eliminar actividades del viaje: " + e.getMessage());
+	        e.printStackTrace();
+	    } 
+	    return false;
+	}
+
 
 }
