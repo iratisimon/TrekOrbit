@@ -79,27 +79,32 @@ public class AccessController implements ManageAccess {
 	     
 		 try {   
 			 this.openConnection();
-		        // Insertar en la tabla SER
-		        stmt = con.prepareStatement(ALTASER);
-		        stmt.setString(1, nuevoID);
-		        stmt.setString(2, passwd);
-		        stmt.setString(3, nick);
-		        stmt.setBoolean(4, false); // Asumiendo que el nuevo usuario no es admin por defecto
-		        int rowsAffected = stmt.executeUpdate(); // Ejecutar la inserción
-		        
-		        if (rowsAffected == 1) { // Verificar si se insertó correctamente en SER
-		            // Insertar en la tabla USUARIO
-		            stmt = con.prepareStatement(ALTAUSUARIO);
-		            stmt.setString(1, nuevoID);
-		            stmt.setString(2, nombre);
-		            stmt.setString(3, raza);
-		            rowsAffected = stmt.executeUpdate(); // Ejecutar la inserción
-		            
-		            if (rowsAffected == 1) { // Verificar si se insertó correctamente en USUARIO
-		                modificado = true;
-		            }
-		        }
 
+			// Verificar si ya existe un usuario con el mismo nick
+		        if (existeUsuarioConNick(nick)) {
+		        	modificado=false;
+              
+		        } else {
+		        	stmt = con.prepareStatement(ALTASER);
+			        stmt.setString(1, nuevoID);
+			        stmt.setString(2, passwd);
+			        stmt.setString(3, nick);
+			        stmt.setBoolean(4, false); // Asumiendo que el nuevo usuario no es admin por defecto
+			        int rowsAffected = stmt.executeUpdate(); // Ejecutar la inserción
+			        
+			        if (rowsAffected == 1) { // Verificar si se insertó correctamente en SER
+			            // Insertar en la tabla USUARIO
+			            stmt = con.prepareStatement(ALTAUSUARIO);
+			            stmt.setString(1, nuevoID);
+			            stmt.setString(2, nombre);
+			            stmt.setString(3, raza);
+			            rowsAffected = stmt.executeUpdate(); // Ejecutar la inserción
+			            
+			            if (rowsAffected == 1) { // Verificar si se insertó correctamente en USUARIO
+			                modificado = true;
+			            }
+			        }
+		        }
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
@@ -111,6 +116,32 @@ public class AccessController implements ManageAccess {
 			e.printStackTrace();
 		}
 		return modificado;
+	}
+	private boolean existeUsuarioConNick(String nick) throws SQLException {
+	    boolean existe = false;
+	    ResultSet rs = null;
+	    try {
+	        
+	        stmt = con.prepareStatement(OBTENERUSUARIO);
+	        stmt.setString(1, nick);
+	        rs = stmt.executeQuery();
+	      
+	        if (rs.next()) {
+	        	existe=true;
+	        	
+	        }
+	        // Verificar si se encontró algún resultado
+	        
+	    } finally {
+	        // Cerrar el ResultSet y el Statement
+	        if (rs != null) {
+	            rs.close();
+	        }
+	        if (stmt != null) {
+	            stmt.close();
+	        }
+	    }
+	    return existe;
 	}
 
 	@Override
