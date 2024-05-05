@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.Color;
 
-import model.Planet;
-
 public class ConfirmReservation extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -107,11 +105,11 @@ public class ConfirmReservation extends JFrame {
 
 		ArrayList<String> actividades = travel.getActividades();
 		actividadesTextArea = new JTextArea();
+		actividadesTextArea.setLineWrap(true);
 		actividadesTextArea.setFont(new Font("OCR A Extended", Font.PLAIN, 25));
 		actividadesTextArea.setForeground(Color.WHITE);
-		actividadesTextArea.setOpaque(false); // Hacer el JTextArea transparente
-		actividadesTextArea.setEditable(false); // No permitir edición del JTextArea
-		actividadesTextArea.setBounds(210, 254, 385, 245); // Establecer posición y tamaño
+		actividadesTextArea.setOpaque(false);
+		actividadesTextArea.setBounds(48, 254, 697, 245); // Establecer posición y tamaño
 		contentPane.add(actividadesTextArea);
 		for (String actividad : actividades) {
 			actividadesTextArea.append(actividad + "\n"); // Agregar cada actividad seguida de un salto de línea
@@ -133,8 +131,7 @@ public class ConfirmReservation extends JFrame {
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(getClass().getResource(imagePath)));
 		label.setBounds(x, y, width, height);
-		label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Cambiar el cursor al pasar por encima del
-																			// JLabel // Label
+		label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -150,13 +147,9 @@ public class ConfirmReservation extends JFrame {
 					LocalDate fecha = travel.getFechaViaje();
 					java.sql.Date date = java.sql.Date.valueOf(fecha);
 					if (travelControl.buyTrip(travel.getOrigen().name(), date, travel.getNom_destino().name(),
-							ser.getId())) {
-						UIManager.put("OptionPane.background", new Color(23, 17, 70));
-						UIManager.put("Panel.background", new Color(23, 20, 39));
-						UIManager.put("OptionPane.messageForeground", Color.WHITE);
-						UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 20));
-						JOptionPane.showMessageDialog(ConfirmReservation.this, (String) "El viaje ha sido reservado",
-								"Tenga buen viaje", JOptionPane.INFORMATION_MESSAGE, null);
+							ser.getId(), travel.getActividades())) {
+						showMessageDialog("Que la fuerza os acompañe", "Viaje reservado",
+								JOptionPane.PLAIN_MESSAGE);
 						UserMenu volverMenu = new UserMenu(controladorAcceso, controladorUsuario, ser);
 						volverMenu.setVisible(true);
 						dispose();
@@ -165,5 +158,18 @@ public class ConfirmReservation extends JFrame {
 			}
 		});
 		return label;
+	}
+
+	public static void showMessageDialog(String message, String title, int messageType) {
+		// Establecer los colores de fondo para el JOptionPane
+		UIManager.put("OptionPane.background", new Color(23, 17, 39));
+		UIManager.put("Panel.background", new Color(23, 17, 39));
+
+		// Establecer el color y la fuente del mensaje
+		UIManager.put("OptionPane.messageForeground", Color.WHITE);
+		UIManager.put("OptionPane.messageFont", new Font("OCR A Extended", Font.BOLD, 20));
+
+		// Mostrar el JOptionPane con el mensaje personalizado y la imagen
+		JOptionPane.showMessageDialog(null, message, title, messageType);
 	}
 }

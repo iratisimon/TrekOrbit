@@ -1,8 +1,8 @@
 package controller;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
-
 
 import model.Planet;
 import model.Planeta;
@@ -12,12 +12,12 @@ public class TravelController implements ManageTravel {
 	private Connection con;
 	private PreparedStatement stmt;
 	final String COMPRARVIAJE = "INSERT INTO VIAJE VALUES (?,?,?,?,?)";
+	final String COMPRAVIAJE2 = "INSERT INTO VIAJE_ACTIVIDAD VALUES (?,?)";
 	final String CANCELARVIAJE = "DELETE FROM VIAJE WHERE Cod_Viaje=?";
 	final String VERVIAJES = "CALL  VerViajesComprados(?)";
 	final String OBTENERPLANETA = "SELECT * FROM PLANETA WHERE Nombre = ?";
 	final String EXISTEACTIVIDAD = "SELECT Nombre_Act FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ?";
 	final String DISPONIBILIDADPLANETAS = "SELECT Disponibilidad FROM PLANETA WHERE Nombre = ? ";
-
 
 	private void openConnection() {
 		try {
@@ -38,28 +38,40 @@ public class TravelController implements ManageTravel {
 	}
 
 	@Override
-	public boolean buyTrip(String origen, Date fechaViaje, String nombrePlaneta, String idUsuarios) {
+	public boolean buyTrip(String origen, Date fechaViaje, String nombrePlaneta, String idUsuarios,
+			ArrayList<String> actividades) {
 		boolean compraRealizada = false;
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(COMPRARVIAJE);
-			stmt.setString(1, getNextTravelCode());
+			String cod = getNextTravelCode();
+			stmt.setString(1, cod);
 			stmt.setString(2, origen);
 			stmt.setDate(3, fechaViaje);
 			stmt.setString(4, nombrePlaneta);
 			stmt.setString(5, idUsuarios);
 			if (stmt.executeUpdate() == 1) {
 				compraRealizada = true;
+				if (!actividades.isEmpty()) {
+					for (String act : actividades) {
+						PreparedStatement stmt2 = con.prepareStatement(COMPRAVIAJE2);
+						stmt2.setString(1, cod);
+						stmt2.setString(2, act);
+						stmt2.executeUpdate();
+						stmt2.close();
+					}
+				}
 			}
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
-		}
-		try {
-			this.closeConnection();
-		} catch (SQLException e) {
-			System.out.println("Error en el cierre de la Base de Datos");
-			e.printStackTrace();
+		} finally {
+			try {
+				this.closeConnection();
+			} catch (SQLException e) {
+				System.out.println("Error en el cierre de la Base de Datos");
+				e.printStackTrace();
+			}
 		}
 		return compraRealizada;
 	}
@@ -244,4 +256,5 @@ public class TravelController implements ManageTravel {
 	private Planeta convertToPlanetEnum(String planetName) {
 		return Planeta.valueOf(planetName.toUpperCase());
 	}
+
 }
