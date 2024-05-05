@@ -45,7 +45,7 @@ public class BuyTrip extends JFrame {
 		this.ser = ser;
 		this.controladorAcceso = controladorAcceso;
 		this.controladorUsuario = controladorUsuario;
-		ser.setId("S003");
+		ser.setId("S001");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BuyTrip.class.getResource("/images/logotipo_trekorbit.png")));
 		setBackground(new Color(0, 0, 0));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
