@@ -51,6 +51,7 @@ public class AccessController implements ManageAccess {
 			
 			if (rs.next()) {
 				ser = new Ser();
+				ser.setId(rs.getString("ID"));
 				ser.setNick(nick);
 				ser.setPasswd(passwd);
 				ser.setAdmin(rs.getBoolean("EsAdmin"));

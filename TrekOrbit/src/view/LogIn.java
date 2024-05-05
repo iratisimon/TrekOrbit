@@ -210,6 +210,7 @@ public class LogIn extends JFrame implements ActionListener {
 						AdminView av = new AdminView(controladorAcceso, controladorAdmin, ser);
 						av.setVisible(true);
 					} else if (!ser.isAdmin()) {
+						System.out.println(ser.getId());
 						dispose();
 						UserMenu um = new UserMenu(controladorAcceso, controladorUsuario, ser);
 						um.setVisible(true);

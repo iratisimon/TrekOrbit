@@ -54,7 +54,6 @@ public class BuyTripPartTwo extends JFrame {
 	private JCalendar calendar;
 	private AccessController controladorAcceso;
 	private UserController controladorUsuario;
-	private JCalendar calendar; 
 
 	public BuyTripPartTwo(String planetName, TravelController controlador, Ser ser, Planet planet,
 			AccessController controladorAcceso, UserController controladorUsuario) {
@@ -145,9 +144,9 @@ public class BuyTripPartTwo extends JFrame {
 		    @Override
 		    public void propertyChange(PropertyChangeEvent evt) {
 		        // Obtener la fecha seleccionada del JCalendar
-		        java.util.Date selectedUtilDate = calendar.getDate();
+		    	java.util.Date selectedUtilDate = calendar.getDate();
 		        Instant instant = selectedUtilDate.toInstant();
-		        LocalDate selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+		        selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
 		        
 		        // Obtener la fecha actual
 		        LocalDate currentDate = LocalDate.now();
