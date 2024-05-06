@@ -17,7 +17,7 @@ public class AdminController implements ManageAdmin{
 	private PreparedStatement stmt;
 
 	final String OBTENERPLANETA = "SELECT * FROM PLANETA WHERE ID_Admin = (SELECT ID_Admin FROM ADMINISTRADOR WHERE ID_Admin = ( SELECT ID FROM SER WHERE Nick = ?))";
-	final String CAMBIARDISPLANETA = "UPDATE PLANETA SET Disponibilidad= NOT Disponibilidad";
+	final String CAMBIARDISPLANETA = "UPDATE PLANETA SET Disponibilidad= NOT Disponibilidad WHERE Nombre = ?";
 	final String EXISTEACTIVIDAD = "SELECT Nombre_Act FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ?";
 	final String ACTIVIDADESDISPONIBLES ="SELECT Nombre FROM ACTIVIDAD WHERE Nombre NOT IN (SELECT Nombre_Act FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ?)";
 	final String QUITARACTIVIDAD = "DELETE FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ? AND Nombre_Act = ?";;
@@ -135,7 +135,7 @@ public class AdminController implements ManageAdmin{
 			ResultSet rs = stmt.executeQuery();
 	        if (rs.next()) {
 	            String nombre = rs.getString("Nombre");
-	            planetEnum=Planeta.valueOf(nombre);
+	            planetEnum=Planeta.valueOf(nombre.toUpperCase());
 	            double superficie = rs.getDouble("Superficie");
 	            int habitantes = rs.getInt("Habitantes");
 	            String clima = rs.getString("Clima");
@@ -147,23 +147,23 @@ public class AdminController implements ManageAdmin{
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		}
-		/*try {
+		try {
 			this.closeConnection();
 		} catch (SQLException e) {
 			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
-		}*/
+		}
 		return planeta;
 	}
 	
 	@Override
-	public Planet changePlanetAvailability(Planet p, String nick) {
+	public Planet changePlanetAvailability(Planet p, String planetName) {
 		// TODO Auto-generated method stub
 		boolean cambiadaDisponibilidad = false;
-		//this.openConnection();
+		this.openConnection();
 		try {
 			stmt = con.prepareStatement(CAMBIARDISPLANETA);
-			//stmt.setString(1, p.getNom_planeta().name());
+			stmt.setString(1, planetName);
 			if (stmt.executeUpdate() == 1) {
 				cambiadaDisponibilidad = true;
 			}
@@ -171,14 +171,13 @@ public class AdminController implements ManageAdmin{
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		}
-		
-		/*try {
+		try {
 			this.closeConnection();
 		} catch (SQLException e) {
 			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
-		}*/
-		return getPlanet(nick);
+		}
+		return getPlanet(p.getNom_planeta().name());
 	}
 
 }
