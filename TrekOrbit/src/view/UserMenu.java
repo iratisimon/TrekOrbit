@@ -3,21 +3,20 @@ package view;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
 import model.Ser;
-import model.User;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.Color;
-
-import controller.TravelController;
+import java.awt.Cursor;
 import java.awt.Toolkit;
 
 public class UserMenu extends JFrame implements ActionListener {
@@ -27,6 +26,7 @@ public class UserMenu extends JFrame implements ActionListener {
 	private JButton NuevaAventura;
 	private JButton MisAventuras;
 	private JButton iconoPerfil;
+	private JLabel lblCerrarSesion;
 	
 	private AccessController controladorAcceso;
 	private UserController controladorUsuario;
@@ -53,7 +53,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		//label para el icono del perfil
 		iconoPerfil = new JButton("");
         iconoPerfil.setIcon(new ImageIcon(UserMenu.class.getResource("/images/treky4-removebg-preview.png"))); // Cambia la ruta según la ubicación de tu icono de perfil
-        iconoPerfil.setBounds(56, 29, 184, 189); // Ajusta las coordenadas y el tamaño según tus necesidades
+        iconoPerfil.setBounds(804, 10, 184, 189); // Ajusta las coordenadas y el tamaño según tus necesidades
         iconoPerfil.setContentAreaFilled(false); // Establecer el fondo del botón como transparente
         iconoPerfil.setBorderPainted(false);
         contentPane.add(iconoPerfil);
@@ -69,7 +69,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		NuevaAventura.setForeground(new Color(255, 255, 255));
 		NuevaAventura.setBackground(new Color(128, 128, 255));
 		NuevaAventura.setFont(new Font("Verdana", Font.BOLD, 23));
-		NuevaAventura.setBounds(698, 373, 264, 122);
+		NuevaAventura.setBounds(700, 273, 264, 122);
 		contentPane.add(NuevaAventura);
 		
 		//boton para acceder a la ventana que te muestra los viajes comprados
@@ -77,21 +77,18 @@ public class UserMenu extends JFrame implements ActionListener {
 		MisAventuras.setForeground(new Color(255, 255, 255));
 		MisAventuras.setBackground(new Color(128, 128, 255));
 		MisAventuras.setFont(new Font("Verdana", Font.BOLD, 23));
-		MisAventuras.setBounds(49, 373, 264, 122);
+		MisAventuras.setBounds(51, 273, 264, 122);
 		contentPane.add(MisAventuras);
-		
-		//label de titulo 
-		JLabel bienvenida = new JLabel("Bienvenid@! ");
-		bienvenida.setForeground(Color.WHITE);
-		bienvenida.setFont(new Font("Verdana", Font.BOLD, 80));
-		bienvenida.setBounds(294, 59, 657, 100);
-		contentPane.add(bienvenida);
 		
 		lblUsuario = new JLabel("@"+ser.getNick());
 		lblUsuario.setFont(new Font("Magneto", Font.BOLD, 25));
 		lblUsuario.setForeground(new Color(51, 255, 102));
-		lblUsuario.setBounds(467, 176, 244, 42);
+		lblUsuario.setBounds(550, 74, 244, 42);
 		contentPane.add(lblUsuario);
+		
+		//label para el boton de cerrar sesión
+		lblCerrarSesion = createClickableLabel("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\CERRARSESION.png",80, 479, 156, 131);
+		contentPane.add(lblCerrarSesion);
 		
 		//label para el fondo
 		JLabel fondo = new JLabel("");
@@ -105,18 +102,38 @@ public class UserMenu extends JFrame implements ActionListener {
 		NuevaAventura.addActionListener(this);
 		MisAventuras.addActionListener(this);
 	}
-
+	private JLabel createClickableLabel(String imagePath, int x, int y, int width, int height) {
+		// TODO Auto-generated method stub
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(UserMenu.class.getResource("/images/CERRARSESION.png")));
+		label.setBounds(53, 31, width, height);
+		label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Cambiar el cursor al pasar por encima del
+																			// JLabel // Label
+		label.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// Verificar qué etiqueta fue clicada
+				if (label == lblCerrarSesion) {
+					// Si fue la etiqueta "Cerrar Sesión", volver a la ventana anterior
+					LogIn volver = new LogIn(controladorAcceso);
+					volver.setVisible(true);
+					dispose();
+				}
+			}
+		});
+		return label;
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
-		TravelController controlador = new TravelController();
+		TravelController controladorViaje = new TravelController();
 		if (o == NuevaAventura) {
-			BuyTrip buy = new BuyTrip(controlador,ser,controladorAcceso,controladorUsuario);
+			BuyTrip buy = new BuyTrip(controladorViaje,ser,controladorAcceso,controladorUsuario);
 			buy.setVisible(true);
 			dispose();
 		} else if (o == MisAventuras) {
-			SeeTrips see = new SeeTrips(controlador,ser,controladorAcceso,controladorUsuario);
+			SeeTrips see = new SeeTrips(controladorViaje,ser,controladorAcceso,controladorUsuario);
 			see.setVisible(true);
 			dispose();
 		} else if (o == iconoPerfil) {

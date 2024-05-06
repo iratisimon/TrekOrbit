@@ -29,7 +29,6 @@ public class LogIn extends JFrame implements ActionListener {
 	private JPasswordField passwd;
 	private JButton inicio;
 	private JButton registro;
-	private boolean contraseñaVisible = false;
 	private AccessController controladorAcceso;
 	private AdminController controladorAdmin;
 	private UserController controladorUsuario;
@@ -128,7 +127,7 @@ public class LogIn extends JFrame implements ActionListener {
             }
         };
         show.setForeground(Color.BLACK);
-        show.setIcon(new ImageIcon(LogIn.class.getResource("/images/Actividades.png")));
+        show.setIcon(new ImageIcon(LogIn.class.getResource("/images/ojorojo1.png")));
         show.setBounds(730, 280, 52, 27);
         show.setBorderPainted(false); // Oculta el borde del botón
         show.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
@@ -157,7 +156,7 @@ public class LogIn extends JFrame implements ActionListener {
             }
         };
         hide.setForeground(Color.BLACK);
-        hide.setIcon(new ImageIcon(LogIn.class.getResource("/images/treky9.png")));
+        hide.setIcon(new ImageIcon(LogIn.class.getResource("/images/ojorojo1.png")));
         hide.setBounds(730, 280, 52, 27);
         hide.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
         hide.setBorderPainted(false); // Oculta el borde del botó
