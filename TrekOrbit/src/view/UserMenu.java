@@ -59,7 +59,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		
 		//label para foto de treky
 		JLabel treky = new JLabel("");
-		treky.setIcon(new ImageIcon(UserMenu.class.getResource("/images/treky8-removebg-preview.png")));
+		treky.setIcon(new ImageIcon(UserMenu.class.getResource("/images/TrekyUserMenu.png")));
 		treky.setBounds(291, 285, 391, 358);
 		contentPane.add(treky);
 		
