@@ -51,7 +51,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		
 		//label para el icono del perfil
 		iconoPerfil = new JButton("");
-        iconoPerfil.setIcon(new ImageIcon(UserMenu.class.getResource("/images/treky4-removebg-preview.png"))); // Cambia la ruta según la ubicación de tu icono de perfil
+        iconoPerfil.setIcon(new ImageIcon(UserMenu.class.getResource("/images/TrekyIconoPerfil.png"))); // Cambia la ruta según la ubicación de tu icono de perfil
         iconoPerfil.setBounds(804, 10, 184, 189); // Ajusta las coordenadas y el tamaño según tus necesidades
         iconoPerfil.setContentAreaFilled(false); // Establecer el fondo del botón como transparente
         iconoPerfil.setBorderPainted(false);
