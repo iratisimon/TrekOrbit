@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import main.AccessFactory;
+import ownExceptions.UsuarioExistenteException;
 
 public class SignUp extends JFrame implements ActionListener {
 
@@ -35,7 +36,7 @@ public class SignUp extends JFrame implements ActionListener {
 	private JButton hide;
 	private JButton show2;
 	private JButton hide2;
-	
+
 	private AccessController controladorAcceso;
 
 	/**
@@ -146,96 +147,97 @@ public class SignUp extends JFrame implements ActionListener {
 		textFieldRaza.setBounds(420, 272, 276, 25);
 		contentPane.add(textFieldRaza);
 		textFieldRaza.setColumns(10);
-		
+
 		show = new JButton("") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                if (!isOpaque() && getBackground().getAlpha() < 255) {
-                    Graphics2D g2 = (Graphics2D) g.create();
-                    g2.setComposite(AlphaComposite.Src);
-                    g2.setColor(getBackground());
-                    g2.fillRect(0, 0, getWidth(), getHeight());
-                    g2.dispose();
-                }
-                super.paintComponent(g);
-            }
-        };
-        show.setForeground(Color.BLACK);
-        show.setIcon(new ImageIcon(SignUp.class.getResource("/images/ojorojo1.png")));
-        show.setBounds(763, 326, 52, 27);
-        show.setBorderPainted(false); // Oculta el borde del botón
-        show.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
-        show.addActionListener(this);
+			@Override
+			protected void paintComponent(Graphics g) {
+				if (!isOpaque() && getBackground().getAlpha() < 255) {
+					Graphics2D g2 = (Graphics2D) g.create();
+					g2.setComposite(AlphaComposite.Src);
+					g2.setColor(getBackground());
+					g2.fillRect(0, 0, getWidth(), getHeight());
+					g2.dispose();
+				}
+				super.paintComponent(g);
+			}
+		};
+		show.setForeground(Color.BLACK);
+		show.setIcon(new ImageIcon(SignUp.class.getResource("/images/ojorojo1.png")));
+		show.setBounds(763, 326, 52, 27);
+		show.setBorderPainted(false); // Oculta el borde del botón
+		show.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
+		show.addActionListener(this);
 
-        getContentPane().add(show);
-		
-        hide = new JButton("") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                if (!isOpaque() && getBackground().getAlpha() < 255) {
-                    Graphics2D g2 = (Graphics2D) g.create();
-                    g2.setComposite(AlphaComposite.Src);
-                    g2.setColor(getBackground());
-                    g2.fillRect(0, 0, getWidth(), getHeight());
-                    g2.dispose();
-                }
-                super.paintComponent(g);
-            }
-        };
-        hide.setForeground(Color.BLACK);
-        hide.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
-        hide.setBounds(763, 324, 52, 27);
-        hide.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
-        hide.setBorderPainted(false); // Oculta el borde del botó
-        hide.addActionListener(this);
+		getContentPane().add(show);
 
-        getContentPane().add(hide);
-        
-        
-        //BOTON 2 
-        
-        show2 = new JButton("") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                if (!isOpaque() && getBackground().getAlpha() < 255) {
-                    Graphics2D g2 = (Graphics2D) g.create();
-                    g2.setComposite(AlphaComposite.Src);
-                    g2.setColor(getBackground());
-                    g2.fillRect(0, 0, getWidth(), getHeight());
-                    g2.dispose();
-                }
-                super.paintComponent(g);
-            }
-        };
-        show2.setForeground(Color.BLACK);
-        show2.setIcon(new ImageIcon(SignUp.class.getResource("/images/ojorojo1.png")));
-        show2.setBounds(763, 381, 52, 27);
-        show2.setBorderPainted(false); // Oculta el borde del botón
-        show2.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
-        show2.addActionListener(this);
+		hide = new JButton("") {
+			@Override
+			protected void paintComponent(Graphics g) {
+				if (!isOpaque() && getBackground().getAlpha() < 255) {
+					Graphics2D g2 = (Graphics2D) g.create();
+					g2.setComposite(AlphaComposite.Src);
+					g2.setColor(getBackground());
+					g2.fillRect(0, 0, getWidth(), getHeight());
+					g2.dispose();
+				}
+				super.paintComponent(g);
+			}
+		};
+		hide.setForeground(Color.BLACK);
+		hide.setIcon(new ImageIcon(
+				"C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
+		hide.setBounds(763, 324, 52, 27);
+		hide.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
+		hide.setBorderPainted(false); // Oculta el borde del botó
+		hide.addActionListener(this);
 
-        getContentPane().add(show2);
-		
-        hide2 = new JButton("") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                if (!isOpaque() && getBackground().getAlpha() < 255) {
-                    Graphics2D g2 = (Graphics2D) g.create();
-                    g2.setComposite(AlphaComposite.Src);
-                    g2.setColor(getBackground());
-                    g2.fillRect(0, 0, getWidth(), getHeight());
-                    g2.dispose();
-                }
-                super.paintComponent(g);
-            }
-        };
-        hide2.setForeground(Color.BLACK);
-        hide2.setIcon(new ImageIcon("C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
-        hide2.setBounds(763, 381, 52, 27);
-        hide2.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
-        hide2.setBorderPainted(false); // Oculta el borde del botó
-        hide2.addActionListener(this);
-        getContentPane().add(hide2);
+		getContentPane().add(hide);
+
+		// BOTON 2
+
+		show2 = new JButton("") {
+			@Override
+			protected void paintComponent(Graphics g) {
+				if (!isOpaque() && getBackground().getAlpha() < 255) {
+					Graphics2D g2 = (Graphics2D) g.create();
+					g2.setComposite(AlphaComposite.Src);
+					g2.setColor(getBackground());
+					g2.fillRect(0, 0, getWidth(), getHeight());
+					g2.dispose();
+				}
+				super.paintComponent(g);
+			}
+		};
+		show2.setForeground(Color.BLACK);
+		show2.setIcon(new ImageIcon(SignUp.class.getResource("/images/ojorojo1.png")));
+		show2.setBounds(763, 381, 52, 27);
+		show2.setBorderPainted(false); // Oculta el borde del botón
+		show2.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
+		show2.addActionListener(this);
+
+		getContentPane().add(show2);
+
+		hide2 = new JButton("") {
+			@Override
+			protected void paintComponent(Graphics g) {
+				if (!isOpaque() && getBackground().getAlpha() < 255) {
+					Graphics2D g2 = (Graphics2D) g.create();
+					g2.setComposite(AlphaComposite.Src);
+					g2.setColor(getBackground());
+					g2.fillRect(0, 0, getWidth(), getHeight());
+					g2.dispose();
+				}
+				super.paintComponent(g);
+			}
+		};
+		hide2.setForeground(Color.BLACK);
+		hide2.setIcon(new ImageIcon(
+				"C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
+		hide2.setBounds(763, 381, 52, 27);
+		hide2.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
+		hide2.setBorderPainted(false); // Oculta el borde del botó
+		hide2.addActionListener(this);
+		getContentPane().add(hide2);
 
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
@@ -249,8 +251,8 @@ public class SignUp extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-    
-    if (o == show) {
+
+		if (o == show) {
 			textFieldIntroducirNewPasswd.setEchoChar((char) 0);
 			hide.setVisible(true);
 			show.setVisible(false);
@@ -258,9 +260,9 @@ public class SignUp extends JFrame implements ActionListener {
 			textFieldIntroducirNewPasswd.setEchoChar('\u2022');
 			hide.setVisible(false);
 			show.setVisible(true);
-		}    
-		
-		//BOTON 2
+		}
+
+		// BOTON 2
 		if (o == show2) {
 			textFieldRepiteNewpasswd.setEchoChar((char) 0);
 			hide2.setVisible(true);
@@ -269,8 +271,8 @@ public class SignUp extends JFrame implements ActionListener {
 			textFieldRepiteNewpasswd.setEchoChar('\u2022');
 			hide2.setVisible(false);
 			show2.setVisible(true);
-		}    
-    
+		}
+
 		if (o == iniciarSesionBtn) {
 			dispose();
 			LogIn login1 = new LogIn(controladorAcceso);
@@ -278,8 +280,8 @@ public class SignUp extends JFrame implements ActionListener {
 		}
 
 		if (o == registrarseBtn) {
-			String passwd1 = new String (textFieldIntroducirNewPasswd.getPassword());
-			String passwd2 = new String (textFieldRepiteNewpasswd.getPassword());
+			String passwd1 = new String(textFieldIntroducirNewPasswd.getPassword());
+			String passwd2 = new String(textFieldRepiteNewpasswd.getPassword());
 			String nick = textFieldNick.getText();
 			String raza = textFieldRaza.getText();
 			String nombre = textFieldNombre.getText();
@@ -289,23 +291,30 @@ public class SignUp extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
 				if (!passwd1.equals(passwd2)) {
-					JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				} else {
-					boolean modificado = AccessFactory.getManageAccess().singUp(nombre, nick, raza, passwd1);
-					if (modificado) {
-						JOptionPane.showMessageDialog(this, "Se ha registrado correctamente", "Success", JOptionPane.INFORMATION_MESSAGE);
-						double segundos = 0.7;
-						try {
-							Thread.sleep((long) (segundos * 1000));
-						} catch (InterruptedException ex) {
-							Thread.currentThread().interrupt();
-						}
+					try {
+						boolean modificado = AccessFactory.getManageAccess().singUp(nombre, nick, raza, passwd1);
+						if (modificado) {
+							JOptionPane.showMessageDialog(this, "Se ha registrado correctamente", "Success",
+									JOptionPane.INFORMATION_MESSAGE);
+							double segundos = 0.7;
+							try {
+								Thread.sleep((long) (segundos * 1000));
+							} catch (InterruptedException ex) {
+								Thread.currentThread().interrupt();
+							}
 
-						dispose(); //esto no lo esta haciendo???
-						LogIn login1 = new LogIn(controladorAcceso);
-						login1.setVisible(true);
-					} else {
-						JOptionPane.showMessageDialog(this, "Nombre de usuario existente", "Error", JOptionPane.ERROR_MESSAGE);
+							dispose(); // esto no lo esta haciendo???
+							LogIn login1 = new LogIn(controladorAcceso);
+							login1.setVisible(true);
+						} else {
+							JOptionPane.showMessageDialog(this, "Nombre de usuario existente", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					} catch (UsuarioExistenteException ex) {
+						JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
