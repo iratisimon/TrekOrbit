@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DBConnectionController {
-	
+	 /**
+     * Abre una conexion con la base de datos.
+     */
 	public Connection openConnection() {
 		// TODO Auto-generated method stub
 		Connection con = null;
@@ -18,7 +20,11 @@ public class DBConnectionController {
 		}
 		return con;
 	}
-
+	/**
+     * Cierra la conexion con la base de datos.
+     * 
+     * @throws SQLException si ocurre un error al cerrar la conexión
+     */
 	public void closeConnection(PreparedStatement stmt, Connection con) throws SQLException {
 		System.out.println("Conexion cerrada");
 		if (stmt != null)
