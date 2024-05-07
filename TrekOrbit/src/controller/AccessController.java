@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.Ser;
+import ownExceptions.SerNoEncontradoException;
 
 public class AccessController implements ManageAccess {
 	private Connection con;
@@ -21,7 +22,7 @@ public class AccessController implements ManageAccess {
 	
 
 	@Override
-	public Ser logIn(String nick, String passwd){
+	public Ser logIn(String nick, String passwd)throws SerNoEncontradoException {
 		// TODO Auto-generated method stub
 		ResultSet rs = null;
 		Ser ser = null;
@@ -39,6 +40,8 @@ public class AccessController implements ManageAccess {
 				ser.setNick(nick);
 				ser.setPasswd(passwd);
 				ser.setAdmin(rs.getBoolean("EsAdmin"));
+			} else {
+				throw new SerNoEncontradoException("Ser no encontrado");
 			}
 
 		} catch (SQLException e) {
