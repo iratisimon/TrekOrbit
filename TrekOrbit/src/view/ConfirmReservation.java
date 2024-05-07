@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
+import main.TravelFactory;
 import model.Planet;
 import model.Ser;
 import model.Travel;
@@ -146,7 +147,7 @@ public class ConfirmReservation extends JFrame {
 				} else if (label == lblReservar) {
 					LocalDate fecha = travel.getFechaViaje();
 					java.sql.Date date = java.sql.Date.valueOf(fecha);
-					if (travelControl.buyTrip(travel.getOrigen().name(), date, travel.getNom_destino().name(),
+					if (TravelFactory.getManageTravel().buyTrip(travel.getOrigen().name(), date, travel.getNom_destino().name(),
 							ser.getId(), travel.getActividades())) {
 						showMessageDialog("Que la fuerza os acompañe", "Viaje reservado",
 								JOptionPane.PLAIN_MESSAGE);

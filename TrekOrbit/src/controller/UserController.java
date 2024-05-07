@@ -11,6 +11,7 @@ import model.User;
 /**
  * La clase UserController implementa la interfaz ManageUser y proporciona funcionalidades para gestionar usuarios en la base de datos.
  * Permite mostrar los datos de un usuario y modificarlos.
+ * @author Irati
  */
 
 public class UserController implements ManageUser {

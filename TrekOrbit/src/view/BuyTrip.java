@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
+import main.TravelFactory;
 import model.Planet;
 import model.Ser;
 import java.awt.Color;
@@ -138,7 +139,7 @@ public class BuyTrip extends JFrame {
 
 	// Función para abrir la ventana de BuyTripPartTwo
 	private void openBuyTripPartTwo(String selectedPlanet) {
-		planet = travelControl.getPlanet(selectedPlanet);
+		planet = TravelFactory.getManageTravel().getPlanet(selectedPlanet);
 		BuyTripPartTwo buyTrip = new BuyTripPartTwo(selectedPlanet, travelControl, ser, planet, controladorAcceso,
 				controladorUsuario);
 		buyTrip.setVisible(true);

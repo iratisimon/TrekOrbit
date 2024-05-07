@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
+import main.TravelFactory;
 import model.Ser;
 import model.Travel;
 
@@ -161,7 +162,7 @@ public class SeeTrips extends JFrame {
 	private void updateTripsList() {
 		// TODO Auto-generated method stub
 		// Obtener los viajes del usuario
-        viajesUsuario = controladorViaje.seeTrip(ser.getNick());
+        viajesUsuario = TravelFactory.getManageTravel().seeTrip(ser.getNick());
         
      // Ordenar la lista de viajes por fecha de viaje (de más nueva a más antigua)
         Collections.sort(viajesUsuario, new Comparator<Travel>() {
@@ -195,7 +196,7 @@ public class SeeTrips extends JFrame {
 		                "Error", JOptionPane.ERROR_MESSAGE);
 		        } else {
 		            // Cancelar el viaje
-		            boolean cancelado = controladorViaje.cancelTrip(viajeSeleccionado.getCod_viaje());
+		            boolean cancelado = TravelFactory.getManageTravel().cancelTrip(viajeSeleccionado.getCod_viaje());
 		            if (cancelado) {
 		                // Actualizar la lista de viajes después de la cancelación
 		                updateTripsList();

@@ -24,6 +24,7 @@ import model.Travel;
 public class TravelController implements ManageTravel {
 	private Connection con;
 	private PreparedStatement stmt;
+	private DBConnectionController conController = new DBConnectionController();
 	final String COMPRARVIAJE = "INSERT INTO VIAJE VALUES (?,?,?,?,?)";
 	final String COMPRAVIAJE2 = "INSERT INTO VIAJE_ACTIVIDAD VALUES (?,?)";
 	final String CANCELARVIAJE = "DELETE FROM VIAJE WHERE Cod_Viaje=?";
@@ -33,33 +34,6 @@ public class TravelController implements ManageTravel {
 	final String DISPONIBILIDADPLANETAS = "SELECT Disponibilidad FROM PLANETA WHERE Nombre = ? ";
 	final String ELIMINARACTIVIDADES="DELETE FROM viaje_actividad WHERE Cod_Viaje = ?";
 	final String OBTENERACTIVIDADES="SELECT Nombre_Act FROM VIAJE_ACTIVIDAD WHERE Cod_Viaje = ?";
-
-	 /**
-     * Abre una conexion con la base de datos.
-     */
-
-	private void openConnection() {
-		try {
-			String url = "jdbc:mysql://localhost:3306/TREKORBIT?serverTimezone=Europe/Madrid&useSSL=false";
-			con = DriverManager.getConnection(url, "root", "abcd*1234");
-		} catch (SQLException e) {
-			System.out.println("Error al intentar abrir la BD");
-		}
-	}
-
-	/**
-     * Cierra la conexion con la base de datos.
-     * 
-     * @throws SQLException si ocurre un error al cerrar la conexión
-     */
-	private void closeConnection() throws SQLException {
-		System.out.println("Conexion cerrada");
-		if (stmt != null)
-			stmt.close();
-		if (con != null)
-			con.close();
-		System.out.println("--------------------");
-	}
 
 	/**
      * Realiza la compra de un viaje en la base de datos.
@@ -75,7 +49,7 @@ public class TravelController implements ManageTravel {
 	public boolean buyTrip(String origen, Date fechaViaje, String nombrePlaneta, String idUsuarios,
 			ArrayList<String> actividades) {
 		boolean compraRealizada = false;
-		this.openConnection();
+	    con = conController.openConnection();
 		try {
 			stmt = con.prepareStatement(COMPRARVIAJE);
 			String cod = getNextTravelCode();
@@ -101,7 +75,7 @@ public class TravelController implements ManageTravel {
 			e.printStackTrace();
 		} finally {
 			try {
-				this.closeConnection();
+	        	conController.closeConnection(stmt, con);
 			} catch (SQLException e) {
 				System.out.println("Error en el cierre de la Base de Datos");
 				e.printStackTrace();
@@ -122,7 +96,7 @@ public class TravelController implements ManageTravel {
 		ResultSet rs = null;
 		Travel trip = null;
 		ArrayList<Travel> trips = null;
-		this.openConnection();
+	    con = conController.openConnection();
 		try {
 			cstmt = con.prepareCall(VERVIAJES);
 			cstmt.setString(1, nombre);
@@ -147,7 +121,7 @@ public class TravelController implements ManageTravel {
 			e.printStackTrace();
 		}
 		try {
-			this.closeConnection();
+        	conController.closeConnection(stmt, con);
 		} catch (SQLException e) {
 			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
@@ -165,7 +139,7 @@ public class TravelController implements ManageTravel {
 	@Override
 	public boolean cancelTrip(String codViaje) {
 		boolean cancelado = false;
-		this.openConnection();
+	    con = conController.openConnection();
 		try {
 			// Eliminar actividades asociadas al viaje
 	        deleteActivitiesForTrip(codViaje);
@@ -181,7 +155,7 @@ public class TravelController implements ManageTravel {
 			e.printStackTrace();
 		}
 		try {
-			this.closeConnection();
+        	conController.closeConnection(stmt, con);
 		} catch (SQLException e) {
 			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
@@ -200,8 +174,8 @@ public class TravelController implements ManageTravel {
 		Planet planet = null;
 		ArrayList<String> actividades = getPlanetActivities(planetName);
 		ResultSet rs = null;
-		PreparedStatement stmt;
-		this.openConnection();
+		PreparedStatement stmt = null;
+	    con = conController.openConnection();
 		try {
 			stmt = con.prepareStatement(OBTENERPLANETA);
 			stmt.setString(1, planetName);
@@ -221,7 +195,7 @@ public class TravelController implements ManageTravel {
 			e.printStackTrace();
 		}
 		try {
-			this.closeConnection();
+        	conController.closeConnection(stmt, con);
 		} catch (SQLException e) {
 			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
@@ -271,7 +245,7 @@ public class TravelController implements ManageTravel {
 
 	public ArrayList<String> getPlanetActivities(String nombrePlaneta) {
 		ArrayList<String> activities = new ArrayList<>();
-		this.openConnection();
+	    con = conController.openConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement(EXISTEACTIVIDAD);
 			stmt.setString(1, nombrePlaneta);
@@ -285,7 +259,7 @@ public class TravelController implements ManageTravel {
 			System.out.println("Error al obtener actividades del planeta: " + e.getMessage());
 		}
 		try {
-			this.closeConnection();
+        	conController.closeConnection(stmt, con);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -301,7 +275,7 @@ public class TravelController implements ManageTravel {
      */
 	public HashMap<String, Boolean> getPlanetDisponibility(String nombrePlaneta) {
 		HashMap<String, Boolean> disponibilidad = new HashMap<>();
-		this.openConnection();
+	    con = conController.openConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement(DISPONIBILIDADPLANETAS);
 			stmt.setString(1, nombrePlaneta);
@@ -316,7 +290,7 @@ public class TravelController implements ManageTravel {
 			System.out.println("Error al obtener la disponibilidad del planeta: " + e.getMessage());
 		}
 		try {
-			this.closeConnection();
+        	conController.closeConnection(stmt, con);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -336,7 +310,7 @@ public class TravelController implements ManageTravel {
 	
 	private ArrayList<String> getActivitiesForTrip(String codViaje) {
 	    ArrayList<String> activities = new ArrayList<>();
-	    this.openConnection();
+	    con = conController.openConnection();
 	    try {
 	        PreparedStatement stmt = con.prepareStatement(OBTENERACTIVIDADES);
 	        stmt.setString(1, codViaje);
@@ -350,7 +324,7 @@ public class TravelController implements ManageTravel {
 	        System.out.println("Error al obtener actividades del viaje: " + e.getMessage());
 	    } finally {
 	        try {
-	            this.closeConnection();
+	        	conController.closeConnection(stmt, con);
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
