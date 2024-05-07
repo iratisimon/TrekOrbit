@@ -8,7 +8,7 @@ import model.Planet;
 public interface ManageAdmin {
 
 	public Planet getPlanet(String Nick);
-	public Planet changePlanetAvailability(Planet p,String planetName);
+	public boolean changePlanetAvailability(String planetName);
 	public ArrayList<Activity> getAvailableActivities(String planetName);
 	public boolean addPlanetActivity(String planetName, String selectedActivity);
 	public boolean removePlanetActivity(String planetName, String activityName);
