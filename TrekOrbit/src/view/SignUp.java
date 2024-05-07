@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import controller.AccessController;
+import main.AccessFactory;
 
 public class SignUp extends JFrame implements ActionListener {
 
@@ -215,7 +216,7 @@ public class SignUp extends JFrame implements ActionListener {
 
         getContentPane().add(show2);
 		
-        hide2 = new JButton("New button") {
+        hide2 = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 if (!isOpaque() && getBackground().getAlpha() < 255) {
@@ -290,7 +291,7 @@ public class SignUp extends JFrame implements ActionListener {
 				if (!passwd1.equals(passwd2)) {
 					JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					boolean modificado = controladorAcceso.singUp(nombre, nick, raza, passwd1);
+					boolean modificado = AccessFactory.getManageAccess().singUp(nombre, nick, raza, passwd1);
 					if (modificado) {
 						JOptionPane.showMessageDialog(this, "Se ha registrado correctamente", "Success", JOptionPane.INFORMATION_MESSAGE);
 						double segundos = 0.7;

@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import controller.AdminController;
 import controller.UserController;
+import main.AccessFactory;
 import model.Ser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -196,7 +197,9 @@ public class LogIn extends JFrame implements ActionListener {
 		if (o == inicio) {
 			String password = new String(passwd.getPassword());
 			String nick = textFieldNick.getText();
-			ser = controladorAcceso.logIn(nick, password);
+			
+			ser = AccessFactory.getManageAccess().logIn(nick, password);
+			
 			if (nick.isEmpty() || password.isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
 

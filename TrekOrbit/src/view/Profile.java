@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import controller.UserController;
+import main.UserFactory;
 import model.Ser;
 import model.User;
 import javax.swing.JLabel;
@@ -225,7 +226,7 @@ public class Profile extends JFrame implements ActionListener {
 
 	public void cargarDatosUsuario() {
 	    // Obtener los datos del usuario utilizando el controlador de usuario
-	    User datosUsuario = controladorUsuario.mostrarDatosUser(ser);
+	    User datosUsuario = UserFactory.getManageUser().mostrarDatosUser(ser);
 	
 	    if (datosUsuario != null) {
 	        // Establecer los valores en los campos de texto
@@ -269,7 +270,7 @@ public class Profile extends JFrame implements ActionListener {
 	    }
 	    if (o == btnGuardar) {
 	        // Si se presionó el botón "Guardar", intenta guardar los cambios en la base de datos
-	        modificado = controladorUsuario.modificarDatosUser(nickOriginal, passwdOriginal, nickNew, passwd);
+	        modificado = UserFactory.getManageUser().modificarDatosUser(nickOriginal, passwdOriginal, nickNew, passwd);
 	        System.out.println(modificado);
 	        if (modificado == true) {
 	            // Si se modificaron los datos con éxito

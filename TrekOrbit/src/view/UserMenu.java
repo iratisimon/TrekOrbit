@@ -27,7 +27,6 @@ public class UserMenu extends JFrame implements ActionListener {
 	private JButton MisAventuras;
 	private JButton iconoPerfil;
 	private JLabel lblCerrarSesion;
-	
 	private AccessController controladorAcceso;
 	private UserController controladorUsuario;
 	private Ser ser;
