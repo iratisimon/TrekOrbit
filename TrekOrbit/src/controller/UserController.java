@@ -12,30 +12,13 @@ import model.User;
 public class UserController implements ManageUser {
 	private Connection con;
 	private PreparedStatement stmt;
+	private DBConnectionController conController = new DBConnectionController();
 	final String OBTENERUSUARIO = "SELECT S.Nick, S.Passwd, U.Nombre, U.Raza FROM SER S, USUARIO U WHERE S.ID = U.ID_Usuario AND S.Nick=? AND S.Passwd=?";
 	final String MODIFICARUSUARIO = "UPDATE SER SET Nick=?, Passwd=? WHERE Nick=? AND Passwd=?";
-	
-	private void openConnection() {
-		try {
-			String url = "jdbc:mysql://localhost:3306/TREKORBIT?serverTimezone=Europe/Madrid&useSSL=false";
-			con = DriverManager.getConnection(url, "root", "abcd*1234");
-		} catch (SQLException e) {
-			System.out.println("Error al intentar abrir la BD");
-		}
-	}
-
-	private void closeConnection() throws SQLException {
-		System.out.println("Conexion cerrada");
-		if (stmt != null)
-			stmt.close();
-		if (con != null)
-			con.close();
-		System.out.println("--------------------");
-	}
 
 	public User mostrarDatosUser(Ser ser) {
 	    User usuario = null;
-	    this.openConnection();
+	    con = conController.openConnection();
 	    
 	    try {
 	        stmt = con.prepareStatement(OBTENERUSUARIO);
@@ -60,7 +43,7 @@ public class UserController implements ManageUser {
 	        e.printStackTrace();
 	    } finally {
 	        try {
-	            this.closeConnection();
+	        	conController.closeConnection(stmt, con);
 	        } catch (SQLException e) {
 	            System.out.println("Error en el cierre de la conexión");
 	            e.printStackTrace();
@@ -73,8 +56,8 @@ public class UserController implements ManageUser {
 	@Override
 	public boolean modificarDatosUser(String nickOriginal, String passwdOriginal, String nickNew, String passwd) {
 	    boolean modificado = false;
-	    this.openConnection();
 	    Ser ser = new Ser();
+	    con = conController.openConnection();
 	    
 	    try {
 	        PreparedStatement stmt = con.prepareStatement(MODIFICARUSUARIO);
@@ -95,7 +78,7 @@ public class UserController implements ManageUser {
 	        e.printStackTrace();
 	    } finally {
 	        try {
-	            this.closeConnection();
+	        	conController.closeConnection(stmt, con);
 	        } catch (SQLException e) {
 	            System.out.println("Error en el cierre de la conexión.");
 	            e.printStackTrace();

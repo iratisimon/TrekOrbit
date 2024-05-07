@@ -11,6 +11,7 @@ import model.Ser;
 public class AccessController implements ManageAccess {
 	private Connection con;
 	private PreparedStatement stmt;
+	private DBConnectionController conController = new DBConnectionController();
 	final String OBTENERSER = "SELECT * FROM SER WHERE Nick=? AND Passwd=?";
 	final String OBTENERUSUARIO = "SELECT * FROM USUARIO WHERE ID_Usuario = (SELECT ID FROM SER WHERE Nick=?)";
 	final String ALTASER = "INSERT INTO SER(ID, Passwd, Nick, EsAdmin) VALUES (?, ?, ?, ?)";
@@ -18,30 +19,13 @@ public class AccessController implements ManageAccess {
 	final String OBTENERULTIMOID = "SELECT ID_Usuario FROM USUARIO ORDER BY ID_Usuario DESC LIMIT 1";
 	final String EXISTEID = "SELECT ID FROM SER WHERE ID=?";
 	
-	private void openConnection() {
-		try {
-			String url = "jdbc:mysql://localhost:3306/TREKORBIT?serverTimezone=Europe/Madrid&useSSL=false";
-			con = DriverManager.getConnection(url, "root", "abcd*1234");
-		} catch (SQLException e) {
-			System.out.println("Error al intentar abrir la BD");
-		}
-	}
-
-	private void closeConnection() throws SQLException {
-		System.out.println("Conexion cerrada");
-		if (stmt != null)
-			stmt.close();
-		if (con != null)
-			con.close();
-		System.out.println("--------------------");
-	}
 
 	@Override
-	public Ser logIn(String nick, String passwd) {
+	public Ser logIn(String nick, String passwd){
 		// TODO Auto-generated method stub
 		ResultSet rs = null;
 		Ser ser = null;
-		this.openConnection();
+	    con = conController.openConnection();
 		
 		try {
 			stmt = con.prepareStatement(OBTENERSER);
@@ -55,8 +39,7 @@ public class AccessController implements ManageAccess {
 				ser.setNick(nick);
 				ser.setPasswd(passwd);
 				ser.setAdmin(rs.getBoolean("EsAdmin"));
-
-			} 
+			}
 
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
@@ -64,7 +47,7 @@ public class AccessController implements ManageAccess {
 		}
 
 		try {
-			this.closeConnection();
+        	conController.closeConnection(stmt, con);
 		} catch (SQLException e) {
 			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
@@ -79,7 +62,7 @@ public class AccessController implements ManageAccess {
 		String nuevoID = generarIdUsuario(); // Generar un nuevo ID de usuario
 	     
 		 try {   
-			 this.openConnection();
+			    con = conController.openConnection();
 		        // Insertar en la tabla SER
 		        stmt = con.prepareStatement(ALTASER);
 		        stmt.setString(1, nuevoID);
@@ -106,7 +89,7 @@ public class AccessController implements ManageAccess {
 			e.printStackTrace();
 		}
 		try {
-			this.closeConnection();
+        	conController.closeConnection(stmt, con);
 		} catch (SQLException e) {
 			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
@@ -122,7 +105,7 @@ public class AccessController implements ManageAccess {
 	    String nuevoID = null;
 	    
 	        try {
-	        	this.openConnection();
+	    	    con = conController.openConnection();
 	        	stmt = con.prepareStatement(OBTENERULTIMOID);
 	            rs = stmt.executeQuery();
 
@@ -151,7 +134,7 @@ public class AccessController implements ManageAccess {
 	                if (stmt != null) {
 	                    stmt.close();
 	                }
-	                this.closeConnection();
+		        	conController.closeConnection(stmt, con);
 	            } catch (SQLException e) {
 	                e.printStackTrace();
 	            }
