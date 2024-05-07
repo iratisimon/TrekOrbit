@@ -20,7 +20,6 @@ public class AccessController implements ManageAccess {
 	final String OBTENERULTIMOID = "SELECT ID_Usuario FROM USUARIO ORDER BY ID_Usuario DESC LIMIT 1";
 	final String EXISTEID = "SELECT ID FROM SER WHERE ID=?";
 	
-
 	@Override
 	public Ser logIn(String nick, String passwd)throws SerNoEncontradoException {
 		// TODO Auto-generated method stub

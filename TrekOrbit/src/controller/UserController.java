@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import model.Ser;
 import model.User;
 
+/**
+ * La clase UserController implementa la interfaz ManageUser y proporciona funcionalidades para gestionar usuarios en la base de datos.
+ * Permite mostrar los datos de un usuario y modificarlos.
+ */
 
 public class UserController implements ManageUser {
 	private Connection con;
@@ -15,7 +19,14 @@ public class UserController implements ManageUser {
 	private DBConnectionController conController = new DBConnectionController();
 	final String OBTENERUSUARIO = "SELECT S.Nick, S.Passwd, U.Nombre, U.Raza FROM SER S, USUARIO U WHERE S.ID = U.ID_Usuario AND S.Nick=? AND S.Passwd=?";
 	final String MODIFICARUSUARIO = "UPDATE SER SET Nick=?, Passwd=? WHERE Nick=? AND Passwd=?";
-
+	
+	/**
+     * Muestra los datos de un usuario a partir de las credenciales proporcionadas.
+     *
+     * @param ser El objeto Ser que contiene el nombre de usuario y la contraseña del usuario.
+     * @return Un objeto User que contiene los datos del usuario si existe; de lo contrario, devuelve null.
+     */
+	
 	public User mostrarDatosUser(Ser ser) {
 	    User usuario = null;
 	    con = conController.openConnection();
@@ -52,7 +63,17 @@ public class UserController implements ManageUser {
 	   
 	    return usuario;
 	}
-  	
+	
+	/**
+     * Modifica los datos de un usuario en la base de datos.
+     *
+     * @param nickOriginal El nombre de usuario original del usuario que se va a modificar.
+     * @param passwdOriginal La contraseña original del usuario que se va a modificar.
+     * @param nickNew El nuevo nombre de usuario.
+     * @param passwd La nueva contraseña del usuario.
+     * @return true si los datos del usuario se modificaron correctamente; de lo contrario, false.
+     */
+	
 	@Override
 	public boolean modificarDatosUser(String nickOriginal, String passwdOriginal, String nickNew, String passwd) {
 	    boolean modificado = false;
