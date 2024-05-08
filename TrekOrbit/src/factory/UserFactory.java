@@ -1,4 +1,4 @@
-package main;
+package factory;
 
 import controller.ManageUser;
 import controller.UserController;

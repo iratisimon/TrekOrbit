@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import controller.AdminController;
 import controller.UserController;
-import main.AccessFactory;
+import factory.AccessFactory;
 import model.Ser;
 import ownExceptions.SerNoEncontradoException;
 

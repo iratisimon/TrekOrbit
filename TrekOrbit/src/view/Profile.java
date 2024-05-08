@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import controller.UserController;
-import main.UserFactory;
+import factory.UserFactory;
 import model.Ser;
 import model.User;
 import javax.swing.JLabel;

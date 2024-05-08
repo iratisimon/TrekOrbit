@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.AccessController;
 import controller.AdminController;
-import main.AdminFactory;
+import factory.AdminFactory;
 import model.Planet;
 import model.Ser;
 

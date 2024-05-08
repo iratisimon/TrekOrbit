@@ -14,7 +14,7 @@ import javax.swing.event.ListSelectionListener;
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
-import main.TravelFactory;
+import factory.TravelFactory;
 import model.Ser;
 import model.Travel;
 

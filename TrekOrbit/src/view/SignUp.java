@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import controller.AccessController;
-import main.AccessFactory;
+import factory.AccessFactory;
 import ownExceptions.UsuarioExistenteException;
 
 public class SignUp extends JFrame implements ActionListener {
