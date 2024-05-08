@@ -119,7 +119,7 @@ public class TravelController implements ManageTravel {
 				trip.setNom_destino(destinationPlanet);
 				
 				// Obtener actividades asociadas a este viaje
-	            //trip.setActividades(getActivitiesForTrip(trip.getCod_viaje()));
+	            trip.setActividades(getActivitiesForTrip(trip.getCod_viaje()));
 				trips.add(trip);
 			}
 		} catch (SQLException e) {

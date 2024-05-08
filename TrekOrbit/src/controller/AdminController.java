@@ -10,6 +10,9 @@ import model.Activity;
 import model.Planet;
 import model.Planeta;
 
+/**
+ * Esta clase proporciona métodos para que el administrador del sistema gestione los planetas y las actividades asociadas a ellos.
+ */
 public class AdminController implements ManageAdmin{
 	
 	private Connection con;
@@ -22,6 +25,12 @@ public class AdminController implements ManageAdmin{
 	final String QUITARACTIVIDAD = "DELETE FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ? AND Nombre_Act = ?";;
 	final String AÑADIRACTIVIDAD = "INSERT INTO PLANETA_ACTIVIDAD (Nombre_Planeta, Nombre_Act) VALUES (?, ?)";
 
+	/**
+     * Obtiene las actividades disponibles que aún no están asociadas a un planeta específico.
+     *
+     * @param planetName el nombre del planeta del que se desea obtener las actividades disponibles.
+     * @return una lista de actividades disponibles.
+     */
 	public ArrayList<Activity> getAvailableActivities(String planetName) {
         ArrayList<Activity> availableActivities = new ArrayList<>();
 		con = conController.openConnection();
@@ -43,6 +52,12 @@ public class AdminController implements ManageAdmin{
         return availableActivities;
     }
 	
+	 /**
+     * Obtiene las actividades asociadas a un planeta específico.
+     *
+     * @param nombrePlaneta el nombre del planeta del que se desean obtener las actividades.
+     * @return una lista de nombres de actividades asociadas al planeta.
+     */
 	@Override
 	public ArrayList<String> getPlanetActivities(String nombrePlaneta) {
         ArrayList<String> activities = new ArrayList<>();
@@ -69,6 +84,13 @@ public class AdminController implements ManageAdmin{
         return activities;
     }
 
+	/**
+     * Agrega una actividad a un planeta específico.
+     *
+     * @param planetName el nombre del planeta al que se desea agregar la actividad.
+     * @param selectedActivity el nombre de la actividad que se desea agregar.
+     * @return true si se agregó la actividad correctamente, false de lo contrario.
+     */
 	public boolean addPlanetActivity(String planetName, String selectedActivity) {
 		// TODO Auto-generated method stub
 		con = conController.openConnection();
@@ -92,6 +114,13 @@ public class AdminController implements ManageAdmin{
         }
 	}
 
+	/**
+     * Elimina una actividad de un planeta específico.
+     *
+     * @param planetName el nombre del planeta del que se desea eliminar la actividad.
+     * @param activityName el nombre de la actividad que se desea eliminar.
+     * @return true si se eliminó la actividad correctamente, false de lo contrario.
+     */
 	@Override
 	public boolean removePlanetActivity(String planetName, String activityName) {
 		con = conController.openConnection();
@@ -114,7 +143,13 @@ public class AdminController implements ManageAdmin{
 			}
         }
 	}
-
+	
+	/**
+     * Obtiene información sobre el planeta asignado al administrador especificado.
+     *
+     * @param nick el nombre de usuario (nick) del administrador.
+     * @return un objeto Planet que representa el planeta asignado al administrador.
+     */
 	@Override
 	public Planet getPlanetFromAdmin(String nick) {
 		// TODO Auto-generated method stub
@@ -148,6 +183,12 @@ public class AdminController implements ManageAdmin{
 		return planeta;
 	}
 	
+	/**
+     * Cambia la disponibilidad del planeta especificado.
+     *
+     * @param planetName el nombre del planeta del que se desea cambiar la disponibilidad.
+     * @return true si se cambió la disponibilidad correctamente, false de lo contrario.
+     */
 	@Override
 	public boolean changePlanetAvailability(String planetName) {
 		// TODO Auto-generated method stub

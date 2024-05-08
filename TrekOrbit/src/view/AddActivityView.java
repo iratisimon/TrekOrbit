@@ -13,17 +13,19 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.border.EmptyBorder;
 
 import controller.AdminController;
 import model.Activity;
 
 public class AddActivityView extends JDialog implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private AdminController controladorAdmin;
     private String planetName;
     private JButton addButton;
-    private String selectedActivity;
     private ButtonGroup group;
     private AdminView parent;
 

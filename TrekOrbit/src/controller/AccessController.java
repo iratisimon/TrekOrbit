@@ -1,7 +1,6 @@
 package controller;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +9,10 @@ import model.Ser;
 import ownExceptions.UsuarioExistenteException;
 import ownExceptions.SerNoEncontradoException;
 
+/**
+ * Esta clase proporciona métodos para controlar el acceso y la gestión de usuarios en la base de datos.
+ * Implementa la interfaz ManageAccess.
+ */
 public class AccessController implements ManageAccess {
 	private Connection con;
 	private PreparedStatement stmt;
@@ -21,6 +24,14 @@ public class AccessController implements ManageAccess {
 	final String OBTENERULTIMOID = "SELECT ID_Usuario FROM USUARIO ORDER BY ID_Usuario DESC LIMIT 1";
 	final String EXISTEID = "SELECT ID FROM SER WHERE ID=?";
 
+	/**
+     * Método para iniciar sesión de un usuario en el sistema.
+     *
+     * @param nick el nombre de usuario (nick) del usuario.
+     * @param passwd la contraseña del usuario.
+     * @return el objeto Ser que representa al usuario que ha iniciado sesión.
+     * @throws SerNoEncontradoException si el usuario no se encuentra en la base de datos.
+     */
 	@Override
 	public Ser logIn(String nick, String passwd) throws SerNoEncontradoException {
 		// TODO Auto-generated method stub
@@ -58,6 +69,16 @@ public class AccessController implements ManageAccess {
 		return ser;
 	}
 
+	/**
+     * Método para registrar un nuevo usuario en el sistema.
+     *
+     * @param nombre el nombre completo del nuevo usuario.
+     * @param nick el nombre de usuario (nick) del nuevo usuario.
+     * @param raza la raza del nuevo usuario.
+     * @param passwd la contraseña del nuevo usuario.
+     * @return true si el usuario se ha registrado correctamente, false de lo contrario.
+     * @throws UsuarioExistenteException si ya existe un usuario con el mismo nombre de usuario (nick).
+     */
 	@Override
 	public boolean singUp(String nombre, String nick, String raza, String passwd) throws UsuarioExistenteException {
 		// TODO Auto-generated method stub
@@ -106,6 +127,11 @@ public class AccessController implements ManageAccess {
 		return modificado;
 	}
 
+	 /**
+     * Método para generar un nuevo ID de usuario único para el registro de usuarios.
+     *
+     * @return el nuevo ID de usuario generado.
+     */
 	public String generateUserId() {
 		// TODO Auto-generated method stub
 
@@ -150,6 +176,12 @@ public class AccessController implements ManageAccess {
 		return nuevoID;
 	}
 
+	/**
+     * Método para verificar si un ID de usuario ya existe en la base de datos.
+     *
+     * @param id el ID de usuario a verificar.
+     * @return true si el ID de usuario ya existe en la base de datos, false de lo contrario.
+     */
 	public boolean existsUserId(String id) {
 		// TODO Auto-generated method stub
 		boolean existe = false;
@@ -171,6 +203,13 @@ public class AccessController implements ManageAccess {
 		return existe;
 	}
 
+	/**
+     * Método para verificar si un nombre de usuario (nick) ya existe en la base de datos.
+     *
+     * @param nick el nombre de usuario (nick) a verificar.
+     * @return true si el nombre de usuario ya existe en la base de datos, false de lo contrario.
+     * @throws SQLException si ocurre un error al ejecutar la consulta SQL.
+     */
 	public boolean existsUserNick(String nick) throws SQLException {
 		boolean existe = false;
 		ResultSet rs = null;

@@ -139,7 +139,7 @@ public class BuyTrip extends JFrame {
 
 	// Función para abrir la ventana de BuyTripPartTwo
 	private void openBuyTripPartTwo(String selectedPlanet) {
-		planet = TravelFactory.getManageTravel().getPlanet(selectedPlanet);
+		planet = TravelFactory.getManageTravel().getPlanetData(selectedPlanet);
 		BuyTripPartTwo buyTrip = new BuyTripPartTwo(selectedPlanet, travelControl, ser, planet, controladorAcceso,
 				controladorUsuario);
 		buyTrip.setVisible(true);

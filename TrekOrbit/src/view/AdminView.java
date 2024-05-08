@@ -52,7 +52,7 @@ public class AdminView extends JFrame {
 		this.controladorAcceso = controladorAcceso;
 		this.admin = administrador;
 		this.controladorAdmin = controladorAdmin;
-		this.planeta = controladorAdmin.getPlanet(admin.getNick());
+		this.planeta = controladorAdmin.getPlanetFromAdmin(admin.getNick());
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 680);
@@ -174,7 +174,7 @@ public class AdminView extends JFrame {
                     }else {
                     	JOptionPane.showMessageDialog(AdminView.this, "Error cambiando la disponibilidad", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    planeta = AdminFactory.getManageAdmin().getPlanet(admin.getNick());
+                    planeta = AdminFactory.getManageAdmin().getPlanetFromAdmin(admin.getNick());
                     
                     
                 } else if (e.getSource() == lblVolver) {
