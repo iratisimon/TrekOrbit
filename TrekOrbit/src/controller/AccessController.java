@@ -13,7 +13,7 @@ import ownExceptions.SerNoEncontradoException;
 public class AccessController implements ManageAccess {
 	private Connection con;
 	private PreparedStatement stmt;
-	private DBConnectionController conController = new DBConnectionController();
+	private DBConnection conController = new DBConnection();
 	final String OBTENERSER = "SELECT * FROM SER WHERE Nick=? AND Passwd=?";
 	final String OBTENERUSUARIO = "SELECT * FROM USUARIO WHERE ID_Usuario = (SELECT ID FROM SER WHERE Nick=?)";
 	final String ALTASER = "INSERT INTO SER(ID, Passwd, Nick, EsAdmin) VALUES (?, ?, ?, ?)";

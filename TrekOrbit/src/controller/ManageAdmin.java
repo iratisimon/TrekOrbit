@@ -12,4 +12,5 @@ public interface ManageAdmin {
 	public ArrayList<Activity> getAvailableActivities(String planetName);
 	public boolean addPlanetActivity(String planetName, String selectedActivity);
 	public boolean removePlanetActivity(String planetName, String activityName);
+	public ArrayList<String> getPlanetActivities(String nombrePlaneta);
 }

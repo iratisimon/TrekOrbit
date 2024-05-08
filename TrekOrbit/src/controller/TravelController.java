@@ -24,7 +24,7 @@ import model.Travel;
 public class TravelController implements ManageTravel {
 	private Connection con;
 	private PreparedStatement stmt;
-	private DBConnectionController conController = new DBConnectionController();
+	private DBConnection conController = new DBConnection();
 	final String COMPRARVIAJE = "INSERT INTO VIAJE VALUES (?,?,?,?,?)";
 	final String COMPRAVIAJE2 = "INSERT INTO VIAJE_ACTIVIDAD VALUES (?,?)";
 	final String CANCELARVIAJE = "DELETE FROM VIAJE WHERE Cod_Viaje=?";
