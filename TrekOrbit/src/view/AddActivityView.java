@@ -20,7 +20,7 @@ import model.Activity;
 
 public class AddActivityView extends JDialog implements ActionListener{
 
-	private AdminController c;
+	private AdminController controladorAdmin;
     private String planetName;
     private JButton addButton;
     private String selectedActivity;
@@ -30,7 +30,7 @@ public class AddActivityView extends JDialog implements ActionListener{
     public AddActivityView(JFrame parent, AdminController controller, String planetName) {
         super(parent, "Add Activity", true);
         this.parent=(AdminView) parent;
-        this.c = controller;
+        this.controladorAdmin = controller;
         this.planetName = planetName;
         initComponents();
     }
@@ -42,7 +42,7 @@ public class AddActivityView extends JDialog implements ActionListener{
         JLabel label = new JLabel("Selecciona la actividad que quieras añadir:");
         panel.add(label);
 
-        ArrayList<Activity> availableActivities = c.getAvailableActivities(planetName);
+        ArrayList<Activity> availableActivities = controladorAdmin.getAvailableActivities(planetName);
 
         if (!availableActivities.isEmpty()) {
             group = new ButtonGroup();
@@ -73,7 +73,7 @@ public class AddActivityView extends JDialog implements ActionListener{
     	if (e.getSource() == addButton) {
             String activity = group.getSelection().getActionCommand(); // Obtener el nombre de la actividad seleccionada
             if (activity != null && !activity.isEmpty()) {
-                boolean added = c.addPlanetActivity(planetName, activity);
+                boolean added = controladorAdmin.addPlanetActivity(planetName, activity);
                 if (added) {
                     JOptionPane.showMessageDialog(this, "La actividad ha sido añadida", "Success", JOptionPane.INFORMATION_MESSAGE);
                     parent.updatePlanetActivities(planetName);

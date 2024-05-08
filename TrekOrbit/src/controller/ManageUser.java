@@ -4,6 +4,6 @@ import model.Ser;
 import model.User;
 
 public interface ManageUser {
-	public User mostrarDatosUser(Ser ser); 
-	public boolean modificarDatosUser(String nickOriginal, String passwdOriginal, String nickNew, String passwdNew);//depende de lo que quieras modificar
+	public User showUserData(Ser ser); 
+	public boolean modifyUserData(String nickOriginal, String passwdOriginal, String nickNew, String passwd);//depende de lo que quieras modificar
 }

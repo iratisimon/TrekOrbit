@@ -226,7 +226,7 @@ public class Profile extends JFrame implements ActionListener {
 
 	public void cargarDatosUsuario() {
 	    // Obtener los datos del usuario utilizando el controlador de usuario
-	    User datosUsuario = UserFactory.getManageUser().mostrarDatosUser(ser);
+	    User datosUsuario = UserFactory.getManageUser().showUserData(ser);
 	
 	    if (datosUsuario != null) {
 	        // Establecer los valores en los campos de texto
@@ -270,7 +270,7 @@ public class Profile extends JFrame implements ActionListener {
 	    }
 	    if (o == btnGuardar) {
 	        // Si se presionó el botón "Guardar", intenta guardar los cambios en la base de datos
-	        modificado = UserFactory.getManageUser().modificarDatosUser(nickOriginal, passwdOriginal, nickNew, passwd);
+	        modificado = UserFactory.getManageUser().modifyUserData(nickOriginal, passwdOriginal, nickNew, passwd);
 	        System.out.println(modificado);
 	        if (modificado == true) {
 	            // Si se modificaron los datos con éxito

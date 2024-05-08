@@ -62,13 +62,13 @@ public class AccessController implements ManageAccess {
 	public boolean singUp(String nombre, String nick, String raza, String passwd) throws UsuarioExistenteException {
 		// TODO Auto-generated method stub
 		boolean modificado = false;
-		String nuevoID = generarIdUsuario(); // Generar un nuevo ID de usuario
+		String nuevoID = generateUserId(); // Generar un nuevo ID de usuario
 
 		try {
 			con = conController.openConnection();
 
 			// Verificar si ya existe un usuario con el mismo nick
-			if (existeUsuarioConNick(nick)) {
+			if (existsUserNick(nick)) {
 				throw new UsuarioExistenteException("El usuario con el nick '" + nick + "' ya existe.");
 			} else {
 				// Insertar en la tabla SER
@@ -106,8 +106,7 @@ public class AccessController implements ManageAccess {
 		return modificado;
 	}
 
-	@Override
-	public String generarIdUsuario() {
+	public String generateUserId() {
 		// TODO Auto-generated method stub
 
 		ResultSet rs = null;
@@ -127,7 +126,7 @@ public class AccessController implements ManageAccess {
 			nuevoID = "S" + String.format("%03d", numero); // Formatear el número para obtener el nuevo ID
 
 			// Verificar si el nuevo ID ya existe en la base de datos
-			while (existeIdUsuario(nuevoID)) {
+			while (existsUserId(nuevoID)) {
 				numero++; // Incrementar el número si el ID ya existe
 				nuevoID = "S" + String.format("%03d", numero); // Generar un nuevo ID
 			}
@@ -151,8 +150,7 @@ public class AccessController implements ManageAccess {
 		return nuevoID;
 	}
 
-	@Override
-	public boolean existeIdUsuario(String id) {
+	public boolean existsUserId(String id) {
 		// TODO Auto-generated method stub
 		boolean existe = false;
 
@@ -173,8 +171,7 @@ public class AccessController implements ManageAccess {
 		return existe;
 	}
 
-	@Override
-	public boolean existeUsuarioConNick(String nick) throws SQLException {
+	public boolean existsUserNick(String nick) throws SQLException {
 		boolean existe = false;
 		ResultSet rs = null;
 		try {

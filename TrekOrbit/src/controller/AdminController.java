@@ -22,7 +22,6 @@ public class AdminController implements ManageAdmin{
 	final String QUITARACTIVIDAD = "DELETE FROM PLANETA_ACTIVIDAD WHERE Nombre_Planeta = ? AND Nombre_Act = ?";;
 	final String AÑADIRACTIVIDAD = "INSERT INTO PLANETA_ACTIVIDAD (Nombre_Planeta, Nombre_Act) VALUES (?, ?)";
 
-	@Override
 	public ArrayList<Activity> getAvailableActivities(String planetName) {
         ArrayList<Activity> availableActivities = new ArrayList<>();
 		con = conController.openConnection();
@@ -70,7 +69,6 @@ public class AdminController implements ManageAdmin{
         return activities;
     }
 
-	@Override
 	public boolean addPlanetActivity(String planetName, String selectedActivity) {
 		// TODO Auto-generated method stub
 		con = conController.openConnection();
@@ -118,7 +116,7 @@ public class AdminController implements ManageAdmin{
 	}
 
 	@Override
-	public Planet getPlanet(String nick) {
+	public Planet getPlanetFromAdmin(String nick) {
 		// TODO Auto-generated method stub
 		Planeta planetEnum = null;
 		Planet planeta=null;
