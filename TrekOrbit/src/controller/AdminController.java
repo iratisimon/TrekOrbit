@@ -45,7 +45,7 @@ public class AdminController implements ManageAdmin{
 	
 	public ArrayList<Activity> getAvailableActivities(String planetName) {
         ArrayList<Activity> availableActivities = new ArrayList<>();
-        //openConnection();
+        this.openConnection();
         try {
             PreparedStatement stmt = con.prepareStatement(ACTIVIDADESDISPONIBLES);
             stmt.setString(1, planetName);
@@ -66,7 +66,7 @@ public class AdminController implements ManageAdmin{
 	
 	public ArrayList<String> getPlanetActivities(String nombrePlaneta) {
         ArrayList<String> activities = new ArrayList<>();
-        //openConnection();
+        this.openConnection();
         try {
             PreparedStatement stmt = con.prepareStatement(EXISTEACTIVIDAD);
             stmt.setString(1, nombrePlaneta);
@@ -78,14 +78,14 @@ public class AdminController implements ManageAdmin{
             stmt.close();
         } catch (SQLException e) {
             System.out.println("Error al obtener actividades del planeta: " + e.getMessage());
-        } /*finally {
+        } finally {
             try {
 				closeConnection();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        }*/
+        }
         return activities;
     }
 
@@ -93,6 +93,7 @@ public class AdminController implements ManageAdmin{
 	@Override
 	public boolean addPlanetActivity(String planetName, String selectedActivity) {
 		// TODO Auto-generated method stub
+		this.openConnection();
 		try {
             stmt = con.prepareStatement(AÑADIRACTIVIDAD);
             stmt.setString(1, planetName);
@@ -103,14 +104,20 @@ public class AdminController implements ManageAdmin{
         } catch (SQLException e) {
             System.out.println("Error adding activity to planet: " + e.getMessage());
             return false;
-        } /*finally {
-            closeConnection();
-        }*/
+        } finally {
+        	try {
+				closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
 	}
 
 	@Override
 	public boolean removePlanetActivity(String planetName, String activityName) {
-	    try {
+		this.openConnection();
+		try {
 	    	stmt = con.prepareStatement(QUITARACTIVIDAD);
 	    	stmt.setString(1, planetName);
 	    	stmt.setString(2, activityName);
@@ -120,7 +127,14 @@ public class AdminController implements ManageAdmin{
 	    } catch (SQLException e) {
 	        System.out.println("Error removing activity from planet: " + e.getMessage());
 	        return false;
-	    }
+	    }finally {
+        	try {
+				closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
 	}
 
 	@Override
@@ -157,7 +171,7 @@ public class AdminController implements ManageAdmin{
 	}
 	
 	@Override
-	public Planet changePlanetAvailability(Planet p, String planetName) {
+	public boolean changePlanetAvailability(String planetName) {
 		// TODO Auto-generated method stub
 		boolean cambiadaDisponibilidad = false;
 		this.openConnection();
@@ -177,7 +191,7 @@ public class AdminController implements ManageAdmin{
 			System.out.println("Error en el cierre de la Base de Datos");
 			e.printStackTrace();
 		}
-		return getPlanet(p.getNom_planeta().name());
+		return cambiadaDisponibilidad;
 	}
 
 }

@@ -28,7 +28,7 @@ import java.awt.Cursor;
 
 public class AdminView extends JFrame {
 	
-	private Planet p;
+	private Planet planeta;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel availabilities;
@@ -45,23 +45,23 @@ public class AdminView extends JFrame {
 
 	private AccessController controladorAcceso;
 	private Ser admin;
-	private AdminController c;
+	private AdminController controladorAdmin;
 	
 
-	public AdminView(AccessController controladorAcceso, AdminController c1, Ser administrador) {
+	public AdminView(AccessController controladorAcceso, AdminController controladorAdmin, Ser administrador) {
 		this.controladorAcceso = controladorAcceso;
 		this.admin = administrador;
-		this.c = c1;
-
-		p = c.getPlanet(admin.getNick());
+		this.controladorAdmin = controladorAdmin;
+		this.planeta = controladorAdmin.getPlanet(admin.getNick());
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 680);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		if (p.isDisponibilidad()) {
-			imagePath = path + p.getNom_planeta().name() + 400 + png;
+		if (planeta.isDisponibilidad()) {
+			imagePath = path + planeta.getNom_planeta().name() + 400 + png;
 		} else {
-			imagePath = path + p.getNom_planeta().name() + 400 + "B" + png;
+			imagePath = path + planeta.getNom_planeta().name() + 400 + "B" + png;
 		}
 		
 
@@ -88,7 +88,7 @@ public class AdminView extends JFrame {
 		contentPane.add(activityScrollPane);
 
 		// Obtener y mostrar las actividades del planeta
-		ArrayList<String> planetActivities = c.getPlanetActivities(p.getNom_planeta().name());
+		ArrayList<String> planetActivities = controladorAdmin.getPlanetActivities(planeta.getNom_planeta().name());
 		for (String activity : planetActivities) {
 			activityListModel.addElement(activity);
 		}
@@ -124,8 +124,8 @@ public class AdminView extends JFrame {
         contentPane.add(botonDisp);
         
         lblVolver = new JLabel("");
-		lblVolver.setIcon(new ImageIcon(AdminView.class.getResource("/images/VolverBlanco.png")));
-		lblVolver.setBounds(0, 8, 266, 92);
+		lblVolver.setIcon(new ImageIcon(AdminView.class.getResource("/images/CERRARSESION.png")));
+		lblVolver.setBounds(10, 22, 166, 92);
 		lblVolver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		contentPane.add(lblVolver);
 		
@@ -140,16 +140,16 @@ public class AdminView extends JFrame {
 	        @Override
 	        public void mouseClicked(MouseEvent e) {
 	            if (e.getSource() == botonAñadir) {
-	                AddActivityView NewActivities = new AddActivityView(AdminView.this, c, p.getNom_planeta().name());
+	                AddActivityView NewActivities = new AddActivityView(AdminView.this, controladorAdmin, planeta.getNom_planeta().name());
 	            } else if (e.getSource() == botonQuitar) {
 	                String selectedActivity = activityList.getSelectedValue();
 	                if (selectedActivity != null) {
 	                    int confirm = JOptionPane.showConfirmDialog(AdminView.this, "Seguro que quieres borrar la actividad seleccionada?", "Confirm", JOptionPane.YES_NO_OPTION);
 	                    if (confirm == JOptionPane.YES_OPTION) {
-	                        boolean removed = c.removePlanetActivity(p.getNom_planeta().name(), selectedActivity);
+	                        boolean removed = controladorAdmin.removePlanetActivity(planeta.getNom_planeta().name(), selectedActivity);
 	                        if (removed) {
 	                            JOptionPane.showMessageDialog(AdminView.this, "Se ha borrado la actividad", "Success", JOptionPane.INFORMATION_MESSAGE);
-	                            updatePlanetActivities(p.getNom_planeta().name());
+	                            updatePlanetActivities(planeta.getNom_planeta().name());
 	                        } else {
 	                            JOptionPane.showMessageDialog(AdminView.this, "Error borrando la actividad", "Error", JOptionPane.ERROR_MESSAGE);
 	                        }
@@ -158,15 +158,24 @@ public class AdminView extends JFrame {
 	                    JOptionPane.showMessageDialog(AdminView.this, "Selecciona una actividad para removerla", "Error", JOptionPane.ERROR_MESSAGE);
 	                }
 	            } else if (e.getSource() == botonDisp) {
+	            	// Lógica para cambiar la disponibilidad del planeta
 	            	
-	            	if (p.isDisponibilidad()) {
-                        imagePath = path + p.getNom_planeta().name() + 400 + "B" + png; // Cambiar a la imagen de planeta no disponible
+	            	System.out.println("SOCORRO "+planeta.isDisponibilidad());
+	            	if (planeta.isDisponibilidad()) {
+                        imagePath = path + planeta.getNom_planeta().name() + 400 + "B" + png; // Cambiar a la imagen de planeta no disponible
                     } else {
-                        imagePath = path + p.getNom_planeta().name() + 400 + png; // Cambiar a la imagen de planeta disponible
+                        imagePath = path + planeta.getNom_planeta().name() + 400 + png; // Cambiar a la imagen de planeta disponible
                     }
-                    lblPlaneta.setIcon(new ImageIcon(getClass().getResource(imagePath)));	            	
-                    // Lógica para cambiar la disponibilidad del planeta
-                    p = c.changePlanetAvailability(p, p.getNom_planeta().name());
+                    lblPlaneta.setIcon(new ImageIcon(getClass().getResource(imagePath)));
+                    
+                    boolean cambio= controladorAdmin.changePlanetAvailability(planeta.getNom_planeta().name());
+                    if(cambio) {
+                    	JOptionPane.showMessageDialog(AdminView.this, "Se ha cambiado la disponibilidad", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    }else {
+                    	JOptionPane.showMessageDialog(AdminView.this, "Error cambiando la disponibilidad", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    planeta = controladorAdmin.getPlanet(admin.getNick());
+                    
                     
                 } else if (e.getSource() == lblVolver) {
                 	LogIn login = new LogIn(controladorAcceso);
@@ -184,7 +193,7 @@ public class AdminView extends JFrame {
 	}
 	  
 	public void updatePlanetActivities(String planetName) {
-		ArrayList<String> planetActivities = c.getPlanetActivities(planetName);
+		ArrayList<String> planetActivities = controladorAdmin.getPlanetActivities(planetName);
 		activityListModel.clear(); // Limpiar el modelo de lista antes de añadir las actividades actualizadas
 		for (String activity : planetActivities) {
 			activityListModel.addElement(activity);

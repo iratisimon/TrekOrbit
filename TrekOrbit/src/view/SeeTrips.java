@@ -49,6 +49,7 @@ public class SeeTrips extends JFrame {
     private List<Travel> viajesUsuario;
     private JLabel lblVolver;
     private JLabel lblCancelarViaje;
+    private JLabel lblActividadesViaje;
 
 	public SeeTrips(TravelController controlador, Ser ser, AccessController controladorAcceso, UserController controladorUsuario) {
 		this.controladorViaje=controlador;
@@ -71,21 +72,21 @@ public class SeeTrips extends JFrame {
         list.setForeground(new Color(255, 255, 255));
         list.setFont(new Font("Magneto", Font.PLAIN, 15));
         JScrollPane scrollPane = new JScrollPane(list);
-        scrollPane.setBounds(418, 53, 523, 514); // Establece la posición y el tamaño del JScrollPane
+        scrollPane.setBounds(418, 53, 523, 514); 
         contentPane.add(scrollPane);
         
         // Crear un JLabel para mostrar la información completa del viaje
         lblInfoViaje = new JLabel("");
         lblInfoViaje.setForeground(new Color(255, 255, 255));
         lblInfoViaje.setFont(new Font("Magneto", Font.PLAIN, 15));
-        lblInfoViaje.setBounds(50, 117, 300, 205); // Ajusta la posición y el tamaño según sea necesario
+        lblInfoViaje.setBounds(50, 117, 300, 205); 
         contentPane.add(lblInfoViaje);
         
         // Crear un JLabel para mostrar las actividades del viaje seleccionado
-        JLabel lblActividadesViaje = new JLabel("");
+        lblActividadesViaje = new JLabel("");
         lblActividadesViaje.setForeground(new Color(255, 255, 255));
         lblActividadesViaje.setFont(new Font("Magneto", Font.PLAIN, 15));
-        lblActividadesViaje.setBounds(50, 264, 300, 179); // Ajustar posición y tamaño según sea necesario
+        lblActividadesViaje.setBounds(50, 264, 300, 179); 
         contentPane.add(lblActividadesViaje);
         
         lblVolver = new JLabel("");
@@ -101,6 +102,7 @@ public class SeeTrips extends JFrame {
 		lblCancelarViaje.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		contentPane.add(lblCancelarViaje);
 		lblCancelarViaje.setVisible(false);
+		
         
         JLabel lblFondo = new JLabel("");
 		lblFondo.setIcon(new ImageIcon(SeeTrips.class.getResource("/images/galaxy.jpg")));
@@ -135,6 +137,9 @@ public class SeeTrips extends JFrame {
                         }
                         actividadesViaje += "</body></html>";
                         lblActividadesViaje.setText(actividadesViaje);
+                        
+                        lblInfoViaje.setVisible(true);
+		                lblActividadesViaje.setVisible(true);
                     }else {
                     	lblCancelarViaje.setVisible(false); // Ocultar el botón si no se selecciona ningún viaje
                     }
@@ -163,6 +168,7 @@ public class SeeTrips extends JFrame {
 		// TODO Auto-generated method stub
 		// Obtener los viajes del usuario
         viajesUsuario = TravelFactory.getManageTravel().seeTrip(ser.getNick());
+        
         
      // Ordenar la lista de viajes por fecha de viaje (de más nueva a más antigua)
         Collections.sort(viajesUsuario, new Comparator<Travel>() {
@@ -200,6 +206,8 @@ public class SeeTrips extends JFrame {
 		            if (cancelado) {
 		                // Actualizar la lista de viajes después de la cancelación
 		                updateTripsList();
+		                lblInfoViaje.setVisible(false);
+		                lblActividadesViaje.setVisible(false);
 		            } 
 		        }
 		    } else {
