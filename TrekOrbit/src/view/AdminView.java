@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.AccessController;
 import controller.AdminController;
+import factory.AdminFactory;
 import model.Planet;
 import model.Ser;
 
@@ -31,7 +31,7 @@ public class AdminView extends JFrame {
 	private Planet planeta;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel availabilities;
+	//private JLabel availabilities;
 	private JList<String> activityList;
 	private DefaultListModel<String> activityListModel;
 	private JLabel lblVolver;
@@ -52,7 +52,7 @@ public class AdminView extends JFrame {
 		this.controladorAcceso = controladorAcceso;
 		this.admin = administrador;
 		this.controladorAdmin = controladorAdmin;
-		this.planeta = controladorAdmin.getPlanet(admin.getNick());
+		this.planeta = controladorAdmin.getPlanetFromAdmin(admin.getNick());
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 680);
@@ -88,7 +88,7 @@ public class AdminView extends JFrame {
 		contentPane.add(activityScrollPane);
 
 		// Obtener y mostrar las actividades del planeta
-		ArrayList<String> planetActivities = controladorAdmin.getPlanetActivities(planeta.getNom_planeta().name());
+		ArrayList<String> planetActivities = AdminFactory.getManageAdmin().getPlanetActivities(planeta.getNom_planeta().name());
 		for (String activity : planetActivities) {
 			activityListModel.addElement(activity);
 		}
@@ -146,7 +146,7 @@ public class AdminView extends JFrame {
 	                if (selectedActivity != null) {
 	                    int confirm = JOptionPane.showConfirmDialog(AdminView.this, "Seguro que quieres borrar la actividad seleccionada?", "Confirm", JOptionPane.YES_NO_OPTION);
 	                    if (confirm == JOptionPane.YES_OPTION) {
-	                        boolean removed = controladorAdmin.removePlanetActivity(planeta.getNom_planeta().name(), selectedActivity);
+	                        boolean removed = AdminFactory.getManageAdmin().removePlanetActivity(planeta.getNom_planeta().name(), selectedActivity);
 	                        if (removed) {
 	                            JOptionPane.showMessageDialog(AdminView.this, "Se ha borrado la actividad", "Success", JOptionPane.INFORMATION_MESSAGE);
 	                            updatePlanetActivities(planeta.getNom_planeta().name());
@@ -168,15 +168,14 @@ public class AdminView extends JFrame {
                     }
                     lblPlaneta.setIcon(new ImageIcon(getClass().getResource(imagePath)));
                     
-                    boolean cambio= controladorAdmin.changePlanetAvailability(planeta.getNom_planeta().name());
+                    boolean cambio= AdminFactory.getManageAdmin().changePlanetAvailability(planeta.getNom_planeta().name());
                     if(cambio) {
                     	JOptionPane.showMessageDialog(AdminView.this, "Se ha cambiado la disponibilidad", "Success", JOptionPane.INFORMATION_MESSAGE);
                     }else {
                     	JOptionPane.showMessageDialog(AdminView.this, "Error cambiando la disponibilidad", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    planeta = controladorAdmin.getPlanet(admin.getNick());
-                    
-                    
+                    planeta = AdminFactory.getManageAdmin().getPlanetFromAdmin(admin.getNick());
+                             
                 } else if (e.getSource() == lblVolver) {
                 	LogIn login = new LogIn(controladorAcceso);
             		login.setVisible(true);
@@ -193,7 +192,7 @@ public class AdminView extends JFrame {
 	}
 	  
 	public void updatePlanetActivities(String planetName) {
-		ArrayList<String> planetActivities = controladorAdmin.getPlanetActivities(planetName);
+		ArrayList<String> planetActivities = AdminFactory.getManageAdmin().getPlanetActivities(planetName);
 		activityListModel.clear(); // Limpiar el modelo de lista antes de añadir las actividades actualizadas
 		for (String activity : planetActivities) {
 			activityListModel.addElement(activity);

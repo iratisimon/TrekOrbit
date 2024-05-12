@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
-import main.TravelFactory;
+import factory.TravelFactory;
 import model.Planet;
 import model.Ser;
 import model.Travel;

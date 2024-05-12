@@ -1,4 +1,4 @@
-package main;
+package factory;
 
 import controller.AdminController;
 import controller.ManageAdmin;

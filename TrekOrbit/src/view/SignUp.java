@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import controller.AccessController;
-import main.AccessFactory;
+import factory.AccessFactory;
 import ownExceptions.UsuarioExistenteException;
 
 public class SignUp extends JFrame implements ActionListener {
@@ -149,6 +149,11 @@ public class SignUp extends JFrame implements ActionListener {
 		textFieldRaza.setColumns(10);
 
 		show = new JButton("") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void paintComponent(Graphics g) {
 				if (!isOpaque() && getBackground().getAlpha() < 255) {
@@ -171,6 +176,11 @@ public class SignUp extends JFrame implements ActionListener {
 		getContentPane().add(show);
 
 		hide = new JButton("") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void paintComponent(Graphics g) {
 				if (!isOpaque() && getBackground().getAlpha() < 255) {
@@ -196,6 +206,11 @@ public class SignUp extends JFrame implements ActionListener {
 		// BOTON 2
 
 		show2 = new JButton("") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void paintComponent(Graphics g) {
 				if (!isOpaque() && getBackground().getAlpha() < 255) {
@@ -218,6 +233,11 @@ public class SignUp extends JFrame implements ActionListener {
 		getContentPane().add(show2);
 
 		hide2 = new JButton("") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void paintComponent(Graphics g) {
 				if (!isOpaque() && getBackground().getAlpha() < 255) {

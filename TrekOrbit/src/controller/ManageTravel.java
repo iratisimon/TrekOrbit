@@ -46,7 +46,7 @@ public interface ManageTravel {
 	 * @return true si el viaje se canceló correctamente, false en caso contrario
 	 */
 
-	public Planet getPlanet(String planetName);
+	public Planet getPlanetData(String planetName);
 	/**
 	 * Recupera información sobre un planeta especifico.
 	 *

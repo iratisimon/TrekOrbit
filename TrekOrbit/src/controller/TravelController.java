@@ -24,7 +24,7 @@ import model.Travel;
 public class TravelController implements ManageTravel {
 	private Connection con;
 	private PreparedStatement stmt;
-	private DBConnectionController conController = new DBConnectionController();
+	private DBConnection conController = new DBConnection();
 	final String COMPRARVIAJE = "INSERT INTO VIAJE VALUES (?,?,?,?,?)";
 	final String COMPRAVIAJE2 = "INSERT INTO VIAJE_ACTIVIDAD VALUES (?,?)";
 	final String CANCELARVIAJE = "DELETE FROM VIAJE WHERE Cod_Viaje=?";
@@ -97,21 +97,27 @@ public class TravelController implements ManageTravel {
 		Travel trip = null;
 		ArrayList<Travel> trips = null;
 	    con = conController.openConnection();
+	    
 		try {
 			cstmt = con.prepareCall(VERVIAJES);
 			cstmt.setString(1, nombre);
 			rs = cstmt.executeQuery();
 			trips = new ArrayList<Travel>();
+			
 			while (rs.next()) {
 				trip = new Travel();
 				trip.setCod_viaje(rs.getString("cod_viaje"));
+				
 				String originPlanet = rs.getString("Origen");
 				Planeta oriPlanet = convertToPlanetEnum(originPlanet);
 				trip.setOrigen(oriPlanet);
+				
 				trip.setFechaViaje(rs.getDate("FechaViaje").toLocalDate());
+				
 				String planetName = rs.getString("Nombre_Planeta");
 				Planeta destinationPlanet = convertToPlanetEnum(planetName);
 				trip.setNom_destino(destinationPlanet);
+				
 				// Obtener actividades asociadas a este viaje
 	            trip.setActividades(getActivitiesForTrip(trip.getCod_viaje()));
 				trips.add(trip);
@@ -170,7 +176,7 @@ public class TravelController implements ManageTravel {
      * @return un objeto Planet representando el planeta
      */
 	@Override
-	public Planet getPlanet(String planetName) {
+	public Planet getPlanetData(String planetName) {
 		Planet planet = null;
 		ArrayList<String> actividades = getPlanetActivities(planetName);
 		ResultSet rs = null;

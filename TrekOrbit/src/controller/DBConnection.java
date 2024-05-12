@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DBConnectionController {
+public class DBConnection {
 	 /**
      * Abre una conexion con la base de datos.
      */

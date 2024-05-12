@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -15,7 +14,7 @@ import javax.swing.event.ListSelectionListener;
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
-import main.TravelFactory;
+import factory.TravelFactory;
 import model.Ser;
 import model.Travel;
 
@@ -24,11 +23,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;

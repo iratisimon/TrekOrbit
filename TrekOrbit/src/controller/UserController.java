@@ -1,7 +1,6 @@
 package controller;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +16,7 @@ import model.User;
 public class UserController implements ManageUser {
 	private Connection con;
 	private PreparedStatement stmt;
-	private DBConnectionController conController = new DBConnectionController();
+	private DBConnection conController = new DBConnection();
 	final String OBTENERUSUARIO = "SELECT S.Nick, S.Passwd, U.Nombre, U.Raza FROM SER S, USUARIO U WHERE S.ID = U.ID_Usuario AND S.Nick=? AND S.Passwd=?";
 	final String MODIFICARUSUARIO = "UPDATE SER SET Nick=?, Passwd=? WHERE Nick=? AND Passwd=?";
 	
@@ -28,7 +27,7 @@ public class UserController implements ManageUser {
      * @return Un objeto User que contiene los datos del usuario si existe; de lo contrario, devuelve null.
      */
 	
-	public User mostrarDatosUser(Ser ser) {
+	public User showUserData(Ser ser) {
 	    User usuario = null;
 	    con = conController.openConnection();
 	    
@@ -76,7 +75,7 @@ public class UserController implements ManageUser {
      */
 	
 	@Override
-	public boolean modificarDatosUser(String nickOriginal, String passwdOriginal, String nickNew, String passwd) {
+	public boolean modifyUserData(String nickOriginal, String passwdOriginal, String nickNew, String passwd) {
 	    boolean modificado = false;
 	    Ser ser = new Ser();
 	    con = conController.openConnection();
