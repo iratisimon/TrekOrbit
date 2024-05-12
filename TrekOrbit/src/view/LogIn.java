@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class LogIn extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -43,6 +44,7 @@ public class LogIn extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public LogIn(AccessController controladorAcesso) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LogIn.class.getResource("/images/logotipo_trekorbit.png")));
 		this.controladorAcceso = new AccessController();
 
 		setBackground(new Color(240, 240, 240));
@@ -57,12 +59,13 @@ public class LogIn extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel titulo = new JLabel("TREKORBIT");
+		JLabel titulo = new JLabel("");
+		titulo.setIcon(new ImageIcon(LogIn.class.getResource("/images/AL_INFINITO_Y_MAS_ALLÁ_.png")));
 		titulo.setBackground(new Color(0, 0, 0));
 		titulo.setForeground(new Color(255, 255, 255));
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		titulo.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 60));
-		titulo.setBounds(230, 112, 540, 69);
+		titulo.setBounds(0, 0, 992, 218);
 		contentPane.add(titulo);
 
 		JLabel nick = new JLabel("Usuario: ");
@@ -171,8 +174,9 @@ public class LogIn extends JFrame implements ActionListener {
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
 		fondo.setIcon(new ImageIcon(LogIn.class.getResource("/images/galaxy.jpg")));
-		fondo.setBounds(10, 0, 984, 593);
+		fondo.setBounds(0, 0, 992, 601);
 		contentPane.add(fondo);
+		
 		inicio.addActionListener(this);
 		registro.addActionListener(this);
 	}
