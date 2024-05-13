@@ -10,7 +10,6 @@ import controller.UserController;
 import factory.AccessFactory;
 import model.Ser;
 import ownExceptions.SerNoEncontradoException;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
@@ -71,49 +70,57 @@ public class LogIn extends JFrame implements ActionListener {
 		JLabel nick = new JLabel("Usuario: ");
 		nick.setForeground(new Color(255, 255, 255));
 		nick.setHorizontalAlignment(SwingConstants.CENTER);
-		nick.setFont(new Font("Verdana", Font.BOLD, 25));
-		nick.setBounds(251, 216, 202, 42);
+		nick.setFont(new Font("OCR A Extended", Font.BOLD, 25));
+		nick.setBounds(285, 263, 189, 42);
 		contentPane.add(nick);
 
 		JLabel contraseña = new JLabel("Contraseña: ");
 		contraseña.setForeground(new Color(255, 255, 255));
 		contraseña.setHorizontalAlignment(SwingConstants.CENTER);
-		contraseña.setFont(new Font("Verdana", Font.BOLD, 25));
-		contraseña.setBounds(219, 266, 270, 42);
+		contraseña.setFont(new Font("OCR A Extended", Font.BOLD, 25));
+		contraseña.setBounds(285, 337, 189, 42);
 		contentPane.add(contraseña);
-
-		textFieldNick = new JTextField();
-		textFieldNick.setBounds(479, 229, 241, 25);
-		contentPane.add(textFieldNick);
-		textFieldNick.setColumns(10);
-
-		passwd = new JPasswordField();
-		passwd.setBounds(479, 281, 241, 25);
-		contentPane.add(passwd);
-		passwd.setColumns(10);
-
-		inicio = new JButton("Iniciar Sesion");
-		inicio.setBackground(new Color(255, 255, 255));
-		inicio.setForeground(new Color(0, 0, 0));
-		inicio.setFont(new Font("Verdana", Font.BOLD, 15));
-		inicio.setBounds(410, 345, 172, 30);
-		contentPane.add(inicio);
 
 		JLabel preguntaRegristro = new JLabel("¿Aún no te has registrado?");
 		preguntaRegristro.setForeground(new Color(255, 255, 255));
 		preguntaRegristro.setHorizontalAlignment(SwingConstants.CENTER);
-		preguntaRegristro.setFont(new Font("Verdana", Font.BOLD, 15));
-		preguntaRegristro.setBounds(267, 436, 319, 30);
+		preguntaRegristro.setFont(new Font("OCR A Extended", Font.BOLD, 15));
+		preguntaRegristro.setBounds(31, 560, 319, 30);
 		contentPane.add(preguntaRegristro);
 
+		textFieldNick = new JTextField();
+		textFieldNick.setFont(new Font("OCR A Extended", Font.PLAIN, 13));
+		textFieldNick.setBounds(479, 263, 241, 42);
+		contentPane.add(textFieldNick);
+		textFieldNick.setColumns(10);
+
+		passwd = new JPasswordField();
+		passwd.setFont(new Font("OCR A Extended", Font.PLAIN, 13));
+		passwd.setBounds(479, 337, 241, 40);
+		contentPane.add(passwd);
+		passwd.setColumns(10);
+
+		inicio = new JButton("");
+		inicio.setIcon(new ImageIcon(LogIn.class.getResource("/images/IniciarSesion.png")));
+		inicio.setBorderPainted(false);
+		inicio.setFocusPainted(true);
+		inicio.setContentAreaFilled(false);
+		inicio.setForeground(new Color(0, 0, 0));
+		inicio.setFont(new Font("Verdana", Font.BOLD, 15));
+		inicio.setBounds(394, 397, 241, 148);
+		contentPane.add(inicio);
+
 		registro = new JButton("Registrarse");
-		registro.setBackground(new Color(255, 255, 255));
-		registro.setFont(new Font("Verdana", Font.BOLD, 12));
-		registro.setBounds(560, 441, 124, 23);
+		registro.setForeground(new Color(255, 0, 255));
+		registro.setBorderPainted(false);
+		registro.setFocusPainted(true);
+		registro.setContentAreaFilled(false);
+		registro.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		registro.setBounds(820, 565, 124, 23);
 		contentPane.add(registro);
 		registro.addActionListener(this);
 
-		show = new JButton("New button");
+		show = new JButton("");
 		show = new JButton("") {
 			/**
 			 * 
@@ -133,8 +140,8 @@ public class LogIn extends JFrame implements ActionListener {
 			}
 		};
 		show.setForeground(Color.BLACK);
-		show.setIcon(new ImageIcon(LogIn.class.getResource("/images/ojorojo1.png")));
-		show.setBounds(730, 280, 52, 27);
+		show.setIcon(new ImageIcon(LogIn.class.getResource("/images/OjoVerde.png")));
+		show.setBounds(730, 337, 52, 42);
 		show.setBorderPainted(false); // Oculta el borde del botón
 		show.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
 		show.addActionListener(this);
@@ -162,8 +169,8 @@ public class LogIn extends JFrame implements ActionListener {
 			}
 		};
 		hide.setForeground(Color.BLACK);
-		hide.setIcon(new ImageIcon(LogIn.class.getResource("/images/ojorojo1.png")));
-		hide.setBounds(730, 280, 52, 27);
+		hide.setIcon(new ImageIcon(LogIn.class.getResource("/images/OjoRosa.png")));
+		hide.setBounds(730, 338, 52, 41);
 		hide.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
 		hide.setBorderPainted(false); // Oculta el borde del botó
 		hide.addActionListener(this);
@@ -176,7 +183,7 @@ public class LogIn extends JFrame implements ActionListener {
 		fondo.setIcon(new ImageIcon(LogIn.class.getResource("/images/galaxy.jpg")));
 		fondo.setBounds(0, 0, 992, 601);
 		contentPane.add(fondo);
-		
+
 		inicio.addActionListener(this);
 		registro.addActionListener(this);
 	}
@@ -196,9 +203,9 @@ public class LogIn extends JFrame implements ActionListener {
 		}
 
 		if (o == registro) {
-			dispose();
 			SignUp login2 = new SignUp(controladorAcceso);
 			login2.setVisible(true);
+			this.dispose();
 		}
 		if (o == inicio) {
 			String password = new String(passwd.getPassword());
@@ -208,7 +215,7 @@ public class LogIn extends JFrame implements ActionListener {
 				ser = AccessFactory.getManageAccess().logIn(nick, password);
 
 				if (nick.isEmpty() || password.isEmpty()) {
-					JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+					MakeLessUgly.showMessageDialog("Rellene todos los campos", "Error", JOptionPane.PLAIN_MESSAGE);
 
 				} else {
 					if (ser != null) {
@@ -227,8 +234,7 @@ public class LogIn extends JFrame implements ActionListener {
 					}
 				}
 			} catch (SerNoEncontradoException ex) {
-				JOptionPane.showMessageDialog(this, "El usuario o la contraseña son incorrectos", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				MakeLessUgly.showMessageDialog("El usuario o la contraseña son incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

@@ -277,14 +277,14 @@ public class Profile extends JFrame implements ActionListener {
 	            // Deshabilita la edición de los campos
 	            txtNick.setEditable(false);
 	            txtPasswd.setEditable(false);
-	            JOptionPane.showMessageDialog(this, "Se ha modificado correctamente", "Success", JOptionPane.INFORMATION_MESSAGE);
+	            MakeLessUgly.showMessageDialog( "Se ha modificado correctamente", "Success", JOptionPane.INFORMATION_MESSAGE);
                 
 	            
 	            // Actualizar los campos con los nuevos datos
 	            txtNick.setText(nickNew);
 	            txtPasswd.setText(passwd);
 	        } else {
-	            JOptionPane.showMessageDialog(this, "No se han podido modificar los datos", "Error", JOptionPane.ERROR_MESSAGE);
+	        	MakeLessUgly.showMessageDialog("No se han podido modificar los datos", "Error", JOptionPane.ERROR_MESSAGE);
 	        }
 	    }	
 	}

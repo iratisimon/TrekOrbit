@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import factory.AccessFactory;
 import ownExceptions.UsuarioExistenteException;
+import java.awt.Toolkit;
 
 public class SignUp extends JFrame implements ActionListener {
 
@@ -45,6 +46,8 @@ public class SignUp extends JFrame implements ActionListener {
 	 * @param controladorAcesso
 	 */
 	public SignUp(AccessController controladorAcceso) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SignUp.class.getResource("/images/logotipo_trekorbit.png")));
+		setTitle("REGISTRO");
 		this.controladorAcceso = controladorAcceso;
 
 		setBackground(new Color(240, 240, 240));
@@ -60,93 +63,102 @@ public class SignUp extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel tituloLbl = new JLabel("TREKORBIT");
+		JLabel tituloLbl = new JLabel("");
+		tituloLbl.setIcon(new ImageIcon(SignUp.class.getResource("/images/AL_INFINITO_Y_MAS_ALLÁ_PEQUEÑO.png")));
 		tituloLbl.setBackground(new Color(0, 0, 0));
 		tituloLbl.setForeground(new Color(255, 255, 255));
 		tituloLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		tituloLbl.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 60));
-		tituloLbl.setBounds(262, 53, 516, 69);
+		tituloLbl.setBounds(254, 11, 516, 153);
 		contentPane.add(tituloLbl);
 
 		JLabel nickLbl = new JLabel("Usuario: ");
 		nickLbl.setForeground(new Color(255, 255, 255));
 		nickLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		nickLbl.setFont(new Font("Verdana", Font.BOLD, 20));
-		nickLbl.setBounds(251, 210, 171, 42);
+		nickLbl.setFont(new Font("OCR A Extended", Font.BOLD, 20));
+		nickLbl.setBounds(203, 222, 153, 30);
 		contentPane.add(nickLbl);
 
 		JLabel repitePasswdLbl = new JLabel("Repite la contraseña:");
 		repitePasswdLbl.setForeground(new Color(255, 255, 255));
-		repitePasswdLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		repitePasswdLbl.setFont(new Font("Verdana", Font.BOLD, 20));
-		repitePasswdLbl.setBounds(191, 366, 329, 42);
+		repitePasswdLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		repitePasswdLbl.setFont(new Font("OCR A Extended", Font.BOLD, 20));
+		repitePasswdLbl.setBounds(143, 375, 295, 30);
 		contentPane.add(repitePasswdLbl);
-
-		textFieldNombre = new JTextField();
-		textFieldNombre.setBounds(420, 175, 276, 25);
-		contentPane.add(textFieldNombre);
-		textFieldNombre.setColumns(10);
-
-		textFieldNick = new JTextField();
-		textFieldNick.setBounds(420, 223, 276, 25);
-		contentPane.add(textFieldNick);
-		textFieldNick.setColumns(10);
-
-		registrarseBtn = new JButton("Registrarse");
-		registrarseBtn.setBackground(new Color(255, 255, 255));
-		registrarseBtn.setForeground(new Color(0, 0, 0));
-		registrarseBtn.setFont(new Font("Verdana", Font.BOLD, 15));
-		registrarseBtn.setBounds(418, 444, 171, 30);
-		contentPane.add(registrarseBtn);
 
 		JLabel preguntaRegistradoLbl = new JLabel("¿Ya estas registrado?");
 		preguntaRegistradoLbl.setForeground(new Color(255, 255, 255));
 		preguntaRegistradoLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		preguntaRegistradoLbl.setFont(new Font("Verdana", Font.BOLD, 15));
-		preguntaRegistradoLbl.setBounds(302, 503, 186, 30);
+		preguntaRegistradoLbl.setFont(new Font("OCR A Extended", Font.BOLD, 15));
+		preguntaRegistradoLbl.setBounds(283, 534, 237, 30);
 		contentPane.add(preguntaRegistradoLbl);
-
-		iniciarSesionBtn = new JButton("Iniciar Sesion");
-		iniciarSesionBtn.setBackground(new Color(255, 255, 255));
-		iniciarSesionBtn.setFont(new Font("Verdana", Font.BOLD, 12));
-		iniciarSesionBtn.setBounds(498, 507, 153, 23);
-		contentPane.add(iniciarSesionBtn);
 
 		JLabel razaLbl = new JLabel("Raza:");
 		razaLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		razaLbl.setForeground(Color.WHITE);
-		razaLbl.setFont(new Font("Verdana", Font.BOLD, 20));
-		razaLbl.setBounds(293, 262, 81, 42);
+		razaLbl.setFont(new Font("OCR A Extended", Font.BOLD, 20));
+		razaLbl.setBounds(203, 263, 153, 30);
 		contentPane.add(razaLbl);
 
 		JLabel nombreLbl = new JLabel("Nombre:");
 		nombreLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		nombreLbl.setForeground(Color.WHITE);
-		nombreLbl.setFont(new Font("Verdana", Font.BOLD, 20));
-		nombreLbl.setBounds(241, 162, 169, 42);
+		nombreLbl.setFont(new Font("OCR A Extended", Font.BOLD, 20));
+		nombreLbl.setBounds(203, 169, 153, 30);
 		contentPane.add(nombreLbl);
+
+		JLabel passwdLbl = new JLabel("Contraseña: ");
+		passwdLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		passwdLbl.setForeground(Color.WHITE);
+		passwdLbl.setFont(new Font("OCR A Extended", Font.BOLD, 20));
+		passwdLbl.setBounds(203, 320, 164, 30);
+		contentPane.add(passwdLbl);
+
+		textFieldNombre = new JTextField();
+		textFieldNombre.setBounds(420, 175, 276, 25);
+		textFieldNombre.setFont(new Font("OCR A Extended", Font.PLAIN, 13));
+		contentPane.add(textFieldNombre);
+		textFieldNombre.setColumns(10);
+
+		textFieldNick = new JTextField();
+		textFieldNick.setBounds(420, 223, 276, 25);
+		textFieldNick.setFont(new Font("OCR A Extended", Font.PLAIN, 13));
+		contentPane.add(textFieldNick);
+		textFieldNick.setColumns(10);
 
 		textFieldRepiteNewpasswd = new JPasswordField();
 		textFieldRepiteNewpasswd.setColumns(10);
-		textFieldRepiteNewpasswd.setBounds(519, 378, 231, 25);
+		textFieldRepiteNewpasswd.setFont(new Font("OCR A Extended", Font.PLAIN, 13));
+		textFieldRepiteNewpasswd.setBounds(420, 378, 276, 25);
 		contentPane.add(textFieldRepiteNewpasswd);
 
 		textFieldIntroducirNewPasswd = new JPasswordField();
 		textFieldIntroducirNewPasswd.setColumns(10);
-		textFieldIntroducirNewPasswd.setBounds(509, 326, 241, 25);
+		textFieldIntroducirNewPasswd.setFont(new Font("OCR A Extended", Font.PLAIN, 13));
+		textFieldIntroducirNewPasswd.setBounds(420, 326, 276, 25);
 		contentPane.add(textFieldIntroducirNewPasswd);
-
-		JLabel nuevaContraseñaLbl = new JLabel("Nueva contraseña: ");
-		nuevaContraseñaLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		nuevaContraseñaLbl.setForeground(Color.WHITE);
-		nuevaContraseñaLbl.setFont(new Font("Verdana", Font.BOLD, 20));
-		nuevaContraseñaLbl.setBounds(223, 314, 276, 42);
-		contentPane.add(nuevaContraseñaLbl);
 
 		textFieldRaza = new JTextField();
 		textFieldRaza.setBounds(420, 272, 276, 25);
+		textFieldRaza.setFont(new Font("OCR A Extended", Font.PLAIN, 13));
 		contentPane.add(textFieldRaza);
 		textFieldRaza.setColumns(10);
+
+		registrarseBtn = new JButton("");
+		registrarseBtn.setIcon(new ImageIcon(SignUp.class.getResource("/images/Registrarse.png")));
+		registrarseBtn.setBorderPainted(false);
+		registrarseBtn.setContentAreaFilled(false);
+		registrarseBtn.setBounds(373, 416, 263, 106);
+		contentPane.add(registrarseBtn);
+
+		iniciarSesionBtn = new JButton("Iniciar Sesion");
+		iniciarSesionBtn.setForeground(new Color(255, 0, 255));
+		iniciarSesionBtn.setBorderPainted(false);
+		iniciarSesionBtn.setFocusPainted(true);
+		iniciarSesionBtn.setContentAreaFilled(false);
+		iniciarSesionBtn.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		iniciarSesionBtn.setBounds(508, 536, 153, 28);
+		contentPane.add(iniciarSesionBtn);
 
 		show = new JButton("") {
 			/**
@@ -167,8 +179,8 @@ public class SignUp extends JFrame implements ActionListener {
 			}
 		};
 		show.setForeground(Color.BLACK);
-		show.setIcon(new ImageIcon(SignUp.class.getResource("/images/ojorojo1.png")));
-		show.setBounds(763, 326, 52, 27);
+		show.setIcon(new ImageIcon(SignUp.class.getResource("/images/OjoVerde.png")));
+		show.setBounds(706, 323, 52, 27);
 		show.setBorderPainted(false); // Oculta el borde del botón
 		show.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
 		show.addActionListener(this);
@@ -194,9 +206,8 @@ public class SignUp extends JFrame implements ActionListener {
 			}
 		};
 		hide.setForeground(Color.BLACK);
-		hide.setIcon(new ImageIcon(
-				"C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
-		hide.setBounds(763, 324, 52, 27);
+		hide.setIcon(new ImageIcon(SignUp.class.getResource("/images/OjoRosa.png")));
+		hide.setBounds(706, 323, 52, 27);
 		hide.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
 		hide.setBorderPainted(false); // Oculta el borde del botó
 		hide.addActionListener(this);
@@ -224,8 +235,8 @@ public class SignUp extends JFrame implements ActionListener {
 			}
 		};
 		show2.setForeground(Color.BLACK);
-		show2.setIcon(new ImageIcon(SignUp.class.getResource("/images/ojorojo1.png")));
-		show2.setBounds(763, 381, 52, 27);
+		show2.setIcon(new ImageIcon(SignUp.class.getResource("/images/OjoVerde.png")));
+		show2.setBounds(706, 378, 52, 27);
 		show2.setBorderPainted(false); // Oculta el borde del botón
 		show2.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
 		show2.addActionListener(this);
@@ -251,9 +262,8 @@ public class SignUp extends JFrame implements ActionListener {
 			}
 		};
 		hide2.setForeground(Color.BLACK);
-		hide2.setIcon(new ImageIcon(
-				"C:\\Users\\1dami\\Desktop\\Repositorio\\TrekOrbit\\TrekOrbit\\src\\images\\ojorojo1.png"));
-		hide2.setBounds(763, 381, 52, 27);
+		hide2.setIcon(new ImageIcon(SignUp.class.getResource("/images/OjoRosa.png")));
+		hide2.setBounds(706, 378, 52, 27);
 		hide2.setContentAreaFilled(false); // Hace que el área de contenido del botón sea transparente
 		hide2.setBorderPainted(false); // Oculta el borde del botó
 		hide2.addActionListener(this);
@@ -262,7 +272,7 @@ public class SignUp extends JFrame implements ActionListener {
 		JLabel fondo = new JLabel("");
 		fondo.setFont(new Font("Verdana", Font.BOLD, 10));
 		fondo.setIcon(new ImageIcon(SignUp.class.getResource("/images/galaxy.jpg")));
-		fondo.setBounds(10, 10, 984, 582);
+		fondo.setBounds(-13, 0, 1016, 601);
 		contentPane.add(fondo);
 
 		registrarseBtn.addActionListener(this);
@@ -308,16 +318,15 @@ public class SignUp extends JFrame implements ActionListener {
 
 			// Verificar que ningún campo esté vacío
 			if (passwd1.isEmpty() || passwd2.isEmpty() || nick.isEmpty() || raza.isEmpty() || nombre.isEmpty()) {
-				JOptionPane.showMessageDialog(this, "Complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+				MakeLessUgly.showMessageDialog("Complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
 				if (!passwd1.equals(passwd2)) {
-					JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					MakeLessUgly.showMessageDialog("Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					try {
 						boolean modificado = AccessFactory.getManageAccess().singUp(nombre, nick, raza, passwd1);
 						if (modificado) {
-							JOptionPane.showMessageDialog(this, "Se ha registrado correctamente", "Success",
+							MakeLessUgly.showMessageDialog("Se ha registrado correctamente", "Success",
 									JOptionPane.INFORMATION_MESSAGE);
 							double segundos = 0.7;
 							try {
@@ -326,15 +335,15 @@ public class SignUp extends JFrame implements ActionListener {
 								Thread.currentThread().interrupt();
 							}
 
-							dispose(); // esto no lo esta haciendo???
+							this.dispose();
 							LogIn login1 = new LogIn(controladorAcceso);
 							login1.setVisible(true);
 						} else {
-							JOptionPane.showMessageDialog(this, "Nombre de usuario existente", "Error",
+							MakeLessUgly.showMessageDialog("Nombre de usuario existente", "Error",
 									JOptionPane.ERROR_MESSAGE);
 						}
 					} catch (UsuarioExistenteException ex) {
-						JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+						MakeLessUgly.showMessageDialog(ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}

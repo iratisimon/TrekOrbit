@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Toolkit;
+import javax.swing.SwingConstants;
 
 public class UserMenu extends JFrame implements ActionListener {
 
@@ -57,6 +58,11 @@ public class UserMenu extends JFrame implements ActionListener {
         iconoPerfil.setBorderPainted(false);
         contentPane.add(iconoPerfil);
 		
+		JLabel bienvenido = new JLabel("");
+		bienvenido.setIcon(new ImageIcon(UserMenu.class.getResource("/images/Menu.png")));
+		bienvenido.setBounds(211, 10, 583, 189);
+		contentPane.add(bienvenido);
+		
 		//label para foto de treky
 		JLabel treky = new JLabel("");
 		treky.setIcon(new ImageIcon(UserMenu.class.getResource("/images/TrekyUserMenu.png")));
@@ -80,9 +86,10 @@ public class UserMenu extends JFrame implements ActionListener {
 		contentPane.add(MisAventuras);
 		
 		lblUsuario = new JLabel("@"+ser.getNick());
+		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsuario.setFont(new Font("Magneto", Font.BOLD, 25));
-		lblUsuario.setForeground(new Color(51, 255, 102));
-		lblUsuario.setBounds(550, 74, 244, 42);
+		lblUsuario.setForeground(new Color(255, 128, 0));
+		lblUsuario.setBounds(238, 152, 486, 42);
 		contentPane.add(lblUsuario);
 		
 		//label para el boton de cerrar sesión
@@ -105,7 +112,7 @@ public class UserMenu extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(UserMenu.class.getResource("/images/CERRARSESION.png")));
-		label.setBounds(53, 31, width, height);
+		label.setBounds(10, 539, 156, 91);
 		label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Cambiar el cursor al pasar por encima del
 																			// JLabel // Label
 		label.addMouseListener(new MouseAdapter() {

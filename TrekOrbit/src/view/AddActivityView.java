@@ -77,13 +77,13 @@ public class AddActivityView extends JDialog implements ActionListener{
             if (activity != null && !activity.isEmpty()) {
                 boolean added = controladorAdmin.addPlanetActivity(planetName, activity);
                 if (added) {
-                    JOptionPane.showMessageDialog(this, "La actividad ha sido añadida", "Success", JOptionPane.INFORMATION_MESSAGE);
+                	MakeLessUgly.showMessageDialog( "La actividad ha sido añadida", "Success", JOptionPane.INFORMATION_MESSAGE);
                     parent.updatePlanetActivities(planetName);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Error añadiendo la actividad", "Error", JOptionPane.ERROR_MESSAGE);
+                	MakeLessUgly.showMessageDialog( "Error añadiendo la actividad", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Selecciona una actividad para añadirla", "Error", JOptionPane.ERROR_MESSAGE);
+            	MakeLessUgly.showMessageDialog( "Selecciona una actividad para añadirla", "Error", JOptionPane.ERROR_MESSAGE);
             }
             dispose(); // Cerrar el diálogo después de añadir la actividad
         }

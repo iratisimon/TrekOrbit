@@ -148,14 +148,14 @@ public class AdminView extends JFrame {
 	                    if (confirm == JOptionPane.YES_OPTION) {
 	                        boolean removed = AdminFactory.getManageAdmin().removePlanetActivity(planeta.getNom_planeta().name(), selectedActivity);
 	                        if (removed) {
-	                            JOptionPane.showMessageDialog(AdminView.this, "Se ha borrado la actividad", "Success", JOptionPane.INFORMATION_MESSAGE);
+	                        	MakeLessUgly.showMessageDialog("Se ha borrado la actividad", "Success", JOptionPane.INFORMATION_MESSAGE);
 	                            updatePlanetActivities(planeta.getNom_planeta().name());
 	                        } else {
-	                            JOptionPane.showMessageDialog(AdminView.this, "Error borrando la actividad", "Error", JOptionPane.ERROR_MESSAGE);
+	                        	MakeLessUgly.showMessageDialog( "Error borrando la actividad", "Error", JOptionPane.ERROR_MESSAGE);
 	                        }
 	                    }
 	                } else {
-	                    JOptionPane.showMessageDialog(AdminView.this, "Selecciona una actividad para removerla", "Error", JOptionPane.ERROR_MESSAGE);
+	                	MakeLessUgly.showMessageDialog("Selecciona una actividad para removerla", "Error", JOptionPane.ERROR_MESSAGE);
 	                }
 	            } else if (e.getSource() == botonDisp) {
 	            	// Lógica para cambiar la disponibilidad del planeta

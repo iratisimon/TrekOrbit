@@ -6,7 +6,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import controller.TravelController;
@@ -136,9 +135,7 @@ public class ConfirmReservation extends JFrame {
 		label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// Verificar qué etiqueta fue clicada
 				if (label == lblVolver) {
-					// Si fue la etiqueta "Volver", volver a la ventana anterior
 					String planetName = travel.getNom_destino().name();
 					BuyTripPartTwo volver = new BuyTripPartTwo(planetName, travelControl, ser, planet,
 							controladorAcceso, controladorUsuario);
@@ -149,7 +146,7 @@ public class ConfirmReservation extends JFrame {
 					java.sql.Date date = java.sql.Date.valueOf(fecha);
 					if (TravelFactory.getManageTravel().buyTrip(travel.getOrigen().name(), date, travel.getNom_destino().name(),
 							ser.getId(), travel.getActividades())) {
-						showMessageDialog("Que la fuerza os acompañe", "Viaje reservado",
+						MakeLessUgly.showMessageDialog("Que la fuerza os acompañe", "Viaje reservado",
 								JOptionPane.PLAIN_MESSAGE);
 						UserMenu volverMenu = new UserMenu(controladorAcceso, controladorUsuario, ser);
 						volverMenu.setVisible(true);
@@ -159,18 +156,5 @@ public class ConfirmReservation extends JFrame {
 			}
 		});
 		return label;
-	}
-
-	public static void showMessageDialog(String message, String title, int messageType) {
-		// Establecer los colores de fondo para el JOptionPane
-		UIManager.put("OptionPane.background", new Color(23, 17, 39));
-		UIManager.put("Panel.background", new Color(23, 17, 39));
-
-		// Establecer el color y la fuente del mensaje
-		UIManager.put("OptionPane.messageForeground", Color.WHITE);
-		UIManager.put("OptionPane.messageFont", new Font("OCR A Extended", Font.BOLD, 20));
-
-		// Mostrar el JOptionPane con el mensaje personalizado y la imagen
-		JOptionPane.showMessageDialog(null, message, title, messageType);
 	}
 }
