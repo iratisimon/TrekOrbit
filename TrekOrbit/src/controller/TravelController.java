@@ -315,7 +315,15 @@ public class TravelController implements ManageTravel {
 	private Planeta convertToPlanetEnum(String planetName) {
 		return Planeta.valueOf(planetName.toUpperCase());
 	}
+	
+	/**
+	 * Obtiene las actividades asociadas a un viaje especificado en la base de datos.
+	 * 
+	 * @param codViaje El código del viaje del cual se desean obtener las actividades.
+	 * @return Una lista de cadenas que representan las actividades asociadas al viaje.
+	 */
 
+	
 	private ArrayList<String> getActivitiesForTrip(String codViaje) {
 		ArrayList<String> activities = new ArrayList<>();
 		con = conController.openConnection();
@@ -339,7 +347,15 @@ public class TravelController implements ManageTravel {
 		}
 		return activities;
 	}
+	
+	/**
+	 * Elimina las actividades asociadas a un viaje especificado de la base de datos.
+	 * 
+	 * @param codViaje El código del viaje del cual se desean eliminar las actividades.
+	 * @return true si las actividades se eliminan correctamente, false si no.
+	 */
 
+	
 	public boolean deleteActivitiesForTrip(String codViaje) {
 		try {
 			PreparedStatement stmt = con.prepareStatement(ELIMINARACTIVIDADES);
@@ -354,7 +370,14 @@ public class TravelController implements ManageTravel {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Comprueba si un usuario tiene viajes registrados en la base de datos.
+	 * 
+	 * @param id El ID del usuario para el cual se realiza la comprobación.
+	 * @return true si el usuario tiene al menos un viaje registrado, false si no tiene ninguno.
+	 */
+	
 	@Override
 	public boolean checkTrips(String id) {
 		boolean hasTrips = false;
