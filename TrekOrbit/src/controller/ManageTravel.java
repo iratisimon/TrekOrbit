@@ -54,5 +54,5 @@ public interface ManageTravel {
 	 * @return un objeto Planet representando el planeta
 	 */
 	
-
+	public boolean checkTrips(String id);
 }

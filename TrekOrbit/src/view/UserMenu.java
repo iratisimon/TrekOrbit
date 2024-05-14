@@ -6,8 +6,10 @@ import javax.swing.border.EmptyBorder;
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
+import factory.TravelFactory;
 import model.Ser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -139,9 +141,15 @@ public class UserMenu extends JFrame implements ActionListener {
 			buy.setVisible(true);
 			dispose();
 		} else if (o == MisAventuras) {
-			SeeTrips see = new SeeTrips(controladorViaje,ser,controladorAcceso,controladorUsuario);
-			see.setVisible(true);
-			dispose();
+			if (TravelFactory.getManageTravel().checkTrips(ser.getId())) {
+				SeeTrips see = new SeeTrips(controladorViaje,ser,controladorAcceso,controladorUsuario);
+				see.setVisible(true);
+				dispose();
+			}else {
+				JOptionPane.showMessageDialog(this, "No tienes viajes disponibles.", "Información",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			
 		} else if (o == iconoPerfil) {
 			Profile p = new Profile (controladorAcceso,controladorUsuario, ser);
 			p.setVisible(true);
