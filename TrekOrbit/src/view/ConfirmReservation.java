@@ -14,7 +14,6 @@ import factory.TravelFactory;
 import model.Planet;
 import model.Ser;
 import model.Travel;
-import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -42,6 +41,7 @@ public class ConfirmReservation extends JFrame {
 
 	public ConfirmReservation(TravelController travelControl, Travel trip, Ser ser, Planet planet,
 			AccessController controladorAcceso, UserController controladorUsuario) {
+		MakeLessUgly.setDefaultCursor(this);
 		this.travelControl = travelControl;
 		this.travel = trip;
 		this.ser = ser;
@@ -131,7 +131,7 @@ public class ConfirmReservation extends JFrame {
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(getClass().getResource(imagePath)));
 		label.setBounds(x, y, width, height);
-		label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		MakeLessUgly.setAlienCursor(label);
 		label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

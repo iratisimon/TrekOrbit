@@ -3,7 +3,6 @@ package view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -13,9 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-
 import controller.AdminController;
 import model.Activity;
+import java.awt.Toolkit;
+import java.awt.Font;
+import java.awt.Color;
 
 public class AddActivityView extends JDialog implements ActionListener{
 
@@ -31,6 +32,7 @@ public class AddActivityView extends JDialog implements ActionListener{
 
     public AddActivityView(JFrame parent, AdminController controller, String planetName) {
         super(parent, "Add Activity", true);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(AddActivityView.class.getResource("/images/logotipo_trekorbit.png")));
         this.parent=(AdminView) parent;
         this.controladorAdmin = controller;
         this.planetName = planetName;
@@ -38,11 +40,17 @@ public class AddActivityView extends JDialog implements ActionListener{
     }
 
     private void initComponents() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
+    	
+    	JPanel mainPanel = new JPanel();
+    	mainPanel.setBackground(new Color(22, 15, 46));
+    	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    	MakeLessUgly.setDefaultCursor(this);
+    	    	
         JLabel label = new JLabel("Selecciona la actividad que quieras añadir:");
-        panel.add(label);
+        label.setAlignmentY(1.0f);
+        label.setForeground(new Color(255, 255, 255));
+        label.setFont(new Font("OCR A Extended", Font.PLAIN, 16));
+        mainPanel.add(label);
 
         ArrayList<Activity> availableActivities = controladorAdmin.getAvailableActivities(planetName);
 
@@ -51,18 +59,24 @@ public class AddActivityView extends JDialog implements ActionListener{
             for (Activity activity : availableActivities) {
                 JRadioButton radioButton = new JRadioButton(activity.getNombre());
                 radioButton.setActionCommand(activity.getNombre()); // Establecer el nombre de la actividad como comando de acción
+                radioButton.setBackground(new Color(22, 15, 46));
+                radioButton.setForeground(new Color(255, 255, 255));
                 group.add(radioButton);
-                panel.add(radioButton);
+                mainPanel.add(radioButton);
             }
 
             addButton = new JButton("Añadir");
+            addButton.setFont(new Font("OCR A Extended", Font.PLAIN, 16));
+            addButton.setBackground(new Color(255, 204, 255));
+            addButton.setForeground(new Color(0, 0, 128));
+        	MakeLessUgly.setAlienCursor(addButton);
             addButton.addActionListener(this);
-            panel.add(addButton);
+            mainPanel.add(addButton);
         } else {
-            panel.add(new JLabel("No hay más actividades disponibles."));
+        	mainPanel.add(new JLabel("No hay más actividades disponibles."));
         }
 
-        add(panel);
+        getContentPane().add(mainPanel);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);

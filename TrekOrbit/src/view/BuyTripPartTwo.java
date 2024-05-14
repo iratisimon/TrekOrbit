@@ -14,9 +14,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import com.toedter.calendar.JCalendar;
-
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
@@ -29,7 +27,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
@@ -58,6 +55,7 @@ public class BuyTripPartTwo extends JFrame {
 	public BuyTripPartTwo(String planetName, TravelController controlador, Ser ser, Planet planet,
 			AccessController controladorAcceso, UserController controladorUsuario) {
 
+		MakeLessUgly.setDefaultCursor(this);
 		this.travelControl = controlador;
 		this.ser = ser;
 		this.planeta = planet;
@@ -141,25 +139,27 @@ public class BuyTripPartTwo extends JFrame {
 
 		calendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
 
-		    @Override
-		    public void propertyChange(PropertyChangeEvent evt) {
-		        // Obtener la fecha seleccionada del JCalendar
-		    	java.util.Date selectedUtilDate = calendar.getDate();
-		        Instant instant = selectedUtilDate.toInstant();
-		        selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-		        
-		        // Obtener la fecha actual
-		        LocalDate currentDate = LocalDate.now();
-		        
-		        // Comparar la fecha seleccionada con la fecha actual
-		        if (selectedDate.isBefore(currentDate)) {
-		            // Si la fecha seleccionada es anterior a la fecha actual, mostrar un mensaje de error
-		        	MakeLessUgly.showMessageDialog("No se puede seleccionar una fecha anterior a la actual.", "Fecha Inválida", JOptionPane.PLAIN_MESSAGE);
-		            
-		            // Restaurar la fecha seleccionada al día actual
-		            calendar.setDate(java.sql.Date.valueOf(currentDate));
-		        }
-		    }
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				// Obtener la fecha seleccionada del JCalendar
+				java.util.Date selectedUtilDate = calendar.getDate();
+				Instant instant = selectedUtilDate.toInstant();
+				selectedDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+
+				// Obtener la fecha actual
+				LocalDate currentDate = LocalDate.now();
+
+				// Comparar la fecha seleccionada con la fecha actual
+				if (selectedDate.isBefore(currentDate)) {
+					// Si la fecha seleccionada es anterior a la fecha actual, mostrar un mensaje de
+					// error
+					MakeLessUgly.showMessageDialog("No se puede seleccionar una fecha anterior a la actual.",
+							"Fecha Inválida", JOptionPane.PLAIN_MESSAGE);
+
+					// Restaurar la fecha seleccionada al día actual
+					calendar.setDate(java.sql.Date.valueOf(currentDate));
+				}
+			}
 
 		});
 
@@ -226,8 +226,7 @@ public class BuyTripPartTwo extends JFrame {
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(getClass().getResource(imagePath)));
 		label.setBounds(x, y, width, height);
-		label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Cambiar el cursor al pasar por encima del
-																			// JLabel // Label
+		MakeLessUgly.setAlienCursor(label);
 		label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -273,5 +272,4 @@ public class BuyTripPartTwo extends JFrame {
 		return label;
 	}
 
-	
 }

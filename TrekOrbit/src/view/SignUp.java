@@ -46,6 +46,7 @@ public class SignUp extends JFrame implements ActionListener {
 	 * @param controladorAcesso
 	 */
 	public SignUp(AccessController controladorAcceso) {
+		MakeLessUgly.setDefaultCursor(this);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SignUp.class.getResource("/images/logotipo_trekorbit.png")));
 		setTitle("REGISTRO");
 		this.controladorAcceso = controladorAcceso;
@@ -90,7 +91,7 @@ public class SignUp extends JFrame implements ActionListener {
 		preguntaRegistradoLbl.setForeground(new Color(255, 255, 255));
 		preguntaRegistradoLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		preguntaRegistradoLbl.setFont(new Font("OCR A Extended", Font.BOLD, 15));
-		preguntaRegistradoLbl.setBounds(283, 534, 237, 30);
+		preguntaRegistradoLbl.setBounds(283, 534, 237, 56);
 		contentPane.add(preguntaRegistradoLbl);
 
 		JLabel razaLbl = new JLabel("Raza:");
@@ -157,7 +158,7 @@ public class SignUp extends JFrame implements ActionListener {
 		iniciarSesionBtn.setFocusPainted(true);
 		iniciarSesionBtn.setContentAreaFilled(false);
 		iniciarSesionBtn.setFont(new Font("OCR A Extended", Font.BOLD, 12));
-		iniciarSesionBtn.setBounds(508, 536, 153, 28);
+		iniciarSesionBtn.setBounds(508, 536, 153, 54);
 		contentPane.add(iniciarSesionBtn);
 
 		show = new JButton("") {
@@ -274,7 +275,13 @@ public class SignUp extends JFrame implements ActionListener {
 		fondo.setIcon(new ImageIcon(SignUp.class.getResource("/images/galaxy.jpg")));
 		fondo.setBounds(-13, 0, 1016, 601);
 		contentPane.add(fondo);
-
+		
+		MakeLessUgly.setAlienCursor(registrarseBtn);
+		MakeLessUgly.setAlienCursor(iniciarSesionBtn);
+		MakeLessUgly.setAlienCursor(show);
+		MakeLessUgly.setAlienCursor(show2);
+		MakeLessUgly.setAlienCursor(hide);
+		MakeLessUgly.setAlienCursor(hide2);
 		registrarseBtn.addActionListener(this);
 		iniciarSesionBtn.addActionListener(this);
 	}

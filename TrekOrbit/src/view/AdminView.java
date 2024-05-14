@@ -5,50 +5,43 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
-
 import controller.AccessController;
 import controller.AdminController;
 import factory.AdminFactory;
 import model.Planet;
 import model.Ser;
-
 import javax.swing.DefaultListModel;
-
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Color;
-import java.awt.Cursor;
 
 public class AdminView extends JFrame {
 	
 	private Planet planeta;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	//private JLabel availabilities;
 	private JList<String> activityList;
 	private DefaultListModel<String> activityListModel;
 	private JLabel lblVolver;
-	private JLabel botonAñadir;
+	private JLabel botonAdd;
 	private JLabel botonQuitar;
 	private JLabel botonDisp;
-
 	private String path = "/images/";
 	private String png = ".png";
 	private String imagePath;
-
 	private AccessController controladorAcceso;
 	private Ser admin;
 	private AdminController controladorAdmin;
 	
 
 	public AdminView(AccessController controladorAcceso, AdminController controladorAdmin, Ser administrador) {
+		MakeLessUgly.setDefaultCursor(this);
 		this.controladorAcceso = controladorAcceso;
 		this.admin = administrador;
 		this.controladorAdmin = controladorAdmin;
@@ -80,7 +73,7 @@ public class AdminView extends JFrame {
 		activityListModel = new DefaultListModel<>();
 		activityList = new JList<>(activityListModel);
 		activityList.setForeground(new Color(255, 255, 255));
-		activityList.setFont(new Font("Magneto", Font.PLAIN, 17));
+		activityList.setFont(new Font("OCR A Extended", Font.PLAIN, 17));
 		activityList.setBorder(null);
 		activityList.setBackground(new Color(22, 15, 46));
 		JScrollPane activityScrollPane = new JScrollPane(activityList);
@@ -105,31 +98,31 @@ public class AdminView extends JFrame {
 
 		// Botones para añadir y quitar actividades
 
-		botonAñadir = new JLabel("");
-        botonAñadir.setIcon(new ImageIcon(AdminView.class.getResource("/images/BotonActividad.png")));
-        botonAñadir.setBounds(40, 464, 150, 166);
-        botonAñadir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Agregamos un cursor de mano
-        contentPane.add(botonAñadir);
+		botonAdd = new JLabel("");
+        botonAdd.setIcon(new ImageIcon(AdminView.class.getResource("/images/BotonActividad.png")));
+        botonAdd.setBounds(40, 464, 150, 166);
+        botonAdd.setCursor(MakeLessUgly.setAlienCursor(botonAdd));
+        contentPane.add(botonAdd);
 
         botonQuitar = new JLabel("");
         botonQuitar.setIcon(new ImageIcon(AdminView.class.getResource("/images/BotonQuitarActividad.png")));
         botonQuitar.setBounds(243, 486, 150, 127);
-        botonQuitar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Cambiamos el cursor a mano
+        MakeLessUgly.setAlienCursor(botonQuitar);
         contentPane.add(botonQuitar);
 		
 		botonDisp = new JLabel("");
         botonDisp.setIcon(new ImageIcon(AdminView.class.getResource("/images/BotonDisp.png")));
         botonDisp.setBounds(554, 510, 356, 141);
-        botonDisp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Agregamos un cursor de mano
+        MakeLessUgly.setAlienCursor(botonDisp);
         contentPane.add(botonDisp);
         
         lblVolver = new JLabel("");
 		lblVolver.setIcon(new ImageIcon(AdminView.class.getResource("/images/CERRARSESION.png")));
 		lblVolver.setBounds(10, 22, 166, 92);
-		lblVolver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        MakeLessUgly.setAlienCursor(lblVolver);
 		contentPane.add(lblVolver);
 		
-		JLabel lblFondo = new JLabel("New label");
+		JLabel lblFondo = new JLabel("");
 		lblFondo.setBackground(new Color(255, 255, 255));
 		lblFondo.setBounds(0, 8, 1010, 633);
 		lblFondo.setIcon(new ImageIcon(AdminView.class.getResource("/images/galaxy.jpg")));
@@ -139,7 +132,7 @@ public class AdminView extends JFrame {
 		MouseAdapter mouseAdapter = new MouseAdapter() {
 	        @Override
 	        public void mouseClicked(MouseEvent e) {
-	            if (e.getSource() == botonAñadir) {
+	            if (e.getSource() == botonAdd) {
 	                AddActivityView NewActivities = new AddActivityView(AdminView.this, controladorAdmin, planeta.getNom_planeta().name());
 	            } else if (e.getSource() == botonQuitar) {
 	                String selectedActivity = activityList.getSelectedValue();
@@ -159,8 +152,6 @@ public class AdminView extends JFrame {
 	                }
 	            } else if (e.getSource() == botonDisp) {
 	            	// Lógica para cambiar la disponibilidad del planeta
-	            	
-	            	System.out.println("SOCORRO "+planeta.isDisponibilidad());
 	            	if (planeta.isDisponibilidad()) {
                         imagePath = path + planeta.getNom_planeta().name() + 400 + "B" + png; // Cambiar a la imagen de planeta no disponible
                     } else {
@@ -186,7 +177,7 @@ public class AdminView extends JFrame {
 	        }
 	    };
 	    
-	    botonAñadir.addMouseListener(mouseAdapter);
+	    botonAdd.addMouseListener(mouseAdapter);
 	    botonQuitar.addMouseListener(mouseAdapter);
 	    botonDisp.addMouseListener(mouseAdapter);
 	    lblVolver.addMouseListener(mouseAdapter);

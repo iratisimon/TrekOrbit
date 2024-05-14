@@ -43,9 +43,10 @@ public class LogIn extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public LogIn(AccessController controladorAcesso) {
+		
+		MakeLessUgly.setDefaultCursor(this);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LogIn.class.getResource("/images/logotipo_trekorbit.png")));
 		this.controladorAcceso = new AccessController();
-
 		setBackground(new Color(240, 240, 240));
 		setForeground(new Color(240, 240, 240));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,7 +64,6 @@ public class LogIn extends JFrame implements ActionListener {
 		titulo.setBackground(new Color(0, 0, 0));
 		titulo.setForeground(new Color(255, 255, 255));
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		titulo.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 60));
 		titulo.setBounds(0, 0, 992, 218);
 		contentPane.add(titulo);
 
@@ -149,7 +149,7 @@ public class LogIn extends JFrame implements ActionListener {
 		getContentPane().add(show);
 		getContentPane().add(show);
 
-		hide = new JButton("New button");
+		hide = new JButton("");
 		hide = new JButton("") {
 			/**
 			 * 
@@ -186,6 +186,10 @@ public class LogIn extends JFrame implements ActionListener {
 
 		inicio.addActionListener(this);
 		registro.addActionListener(this);
+		MakeLessUgly.setAlienCursor(inicio);
+		MakeLessUgly.setAlienCursor(registro);
+		MakeLessUgly.setAlienCursor(show);
+		MakeLessUgly.setAlienCursor(hide);
 	}
 
 	public void actionPerformed(ActionEvent e) {

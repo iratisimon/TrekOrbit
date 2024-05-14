@@ -10,7 +10,6 @@ import factory.TravelFactory;
 import model.Planet;
 import model.Ser;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -42,6 +41,7 @@ public class BuyTrip extends JFrame {
 
 	public BuyTrip(TravelController controlador, Ser ser, AccessController controladorAcceso,
 			UserController controladorUsuario) {
+		MakeLessUgly.setDefaultCursor(this);
 		this.travelControl = controlador;
 		this.ser = ser;
 		this.controladorAcceso = controladorAcceso;
@@ -119,7 +119,7 @@ public class BuyTrip extends JFrame {
 			label.setIcon(new ImageIcon(getClass().getResource(grayImagePath)));
 		} else {
 			label.setIcon(new ImageIcon(getClass().getResource(imagePath)));
-			label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			MakeLessUgly.setAlienCursor(label);
 			label.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {

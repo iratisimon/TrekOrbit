@@ -3,42 +3,35 @@ package view;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import controller.AccessController;
 import controller.TravelController;
 import controller.UserController;
 import factory.TravelFactory;
 import model.Ser;
 import model.Travel;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.awt.Color;
-import java.awt.Cursor;
+import java.awt.Toolkit;
 
 public class SeeTrips extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private TravelController controladorViaje;
 	private Ser ser;
-	private AccessController controladorAcceso;
-	private UserController controladorUsuario;
 	private JList<String> list;
 	private DefaultListModel<String> listModel;
 	private JLabel lblInfoViaje;
@@ -49,10 +42,10 @@ public class SeeTrips extends JFrame {
 
 	public SeeTrips(TravelController controlador, Ser ser, AccessController controladorAcceso,
 			UserController controladorUsuario) {
-		this.controladorViaje = controlador;
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SeeTrips.class.getResource("/images/logotipo_trekorbit.png")));
+		setTitle("MIS AVENTURAS");
+		MakeLessUgly.setDefaultCursor(this);
 		this.ser = ser;
-		this.controladorAcceso = controladorAcceso;
-		this.controladorUsuario = controladorUsuario;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 680);
@@ -67,7 +60,7 @@ public class SeeTrips extends JFrame {
 		list = new JList<>(listModel);
 		list.setBackground(new Color(22, 15, 46));
 		list.setForeground(new Color(255, 255, 255));
-		list.setFont(new Font("Magneto", Font.PLAIN, 15));
+		list.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
 		JScrollPane scrollPane = new JScrollPane(list);
 		scrollPane.setBounds(418, 53, 523, 514);
 		contentPane.add(scrollPane);
@@ -75,27 +68,27 @@ public class SeeTrips extends JFrame {
 		// Crear un JLabel para mostrar la información completa del viaje
 		lblInfoViaje = new JLabel("");
 		lblInfoViaje.setForeground(new Color(255, 255, 255));
-		lblInfoViaje.setFont(new Font("Magneto", Font.PLAIN, 15));
+		lblInfoViaje.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
 		lblInfoViaje.setBounds(50, 117, 300, 205);
 		contentPane.add(lblInfoViaje);
 
 		// Crear un JLabel para mostrar las actividades del viaje seleccionado
 		lblActividadesViaje = new JLabel("");
 		lblActividadesViaje.setForeground(new Color(255, 255, 255));
-		lblActividadesViaje.setFont(new Font("Magneto", Font.PLAIN, 15));
+		lblActividadesViaje.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
 		lblActividadesViaje.setBounds(50, 264, 300, 179);
 		contentPane.add(lblActividadesViaje);
 
 		lblVolver = new JLabel("");
 		lblVolver.setIcon(new ImageIcon(AdminView.class.getResource("/images/VolverBlanco.png")));
 		lblVolver.setBounds(0, 0, 266, 92);
-		lblVolver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		MakeLessUgly.setAlienCursor(lblVolver);
 		contentPane.add(lblVolver);
 
 		lblCancelarViaje = new JLabel("");
 		lblCancelarViaje.setIcon(new ImageIcon(SeeTrips.class.getResource("/images/BotonCancelarViaje.png")));
 		lblCancelarViaje.setBounds(123, 465, 163, 151);
-		lblCancelarViaje.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		MakeLessUgly.setAlienCursor(lblCancelarViaje);
 		contentPane.add(lblCancelarViaje);
 		lblCancelarViaje.setVisible(false);
 
@@ -162,7 +155,7 @@ public class SeeTrips extends JFrame {
 	private void updateTripsList() {
 		// TODO Auto-generated method stub
 		// Obtener los viajes del usuario
-		if(TravelFactory.getManageTravel().checkTrips(ser.getId())) {
+		if (TravelFactory.getManageTravel().checkTrips(ser.getId())) {
 			viajesUsuario = TravelFactory.getManageTravel().seeTrip(ser.getNick());
 
 			// Ordenar la lista de viajes por fecha de viaje (de más nueva a más antigua)
@@ -181,10 +174,10 @@ public class SeeTrips extends JFrame {
 				listModel.addElement(
 						viaje.getOrigen() + " - " + viaje.getNom_destino().name() + " / " + viaje.getFechaViaje());
 			}
-		}else {
+		} else {
 			listModel.clear();
 		}
-		
+
 	}
 
 	private void cancelSelectedTrip() {

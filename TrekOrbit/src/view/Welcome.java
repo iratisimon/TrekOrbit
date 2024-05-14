@@ -17,6 +17,7 @@ public class Welcome extends JFrame {
 	 * Create the frame.
 	 */
 	public Welcome() {
+		MakeLessUgly.setDefaultCursor(this);
 		setTitle("WELCOME");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Welcome.class.getResource("/images/logotipo_trekorbit.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,7 +33,7 @@ public class Welcome extends JFrame {
 		fondo.setIcon(new ImageIcon(Welcome.class.getResource("/images/AL INFINITO Y MAS ALLÁ.png")));
 		fondo.setBounds(0, 0, 992, 601);
 		contentPane.add(fondo);
-		
+
 		JLabel fondoAnimado = new JLabel("");
 		fondoAnimado.setFont(new Font("Verdana", Font.BOLD, 10));
 		fondoAnimado.setIcon(new ImageIcon(Welcome.class.getResource("/images/fondito.gif")));
