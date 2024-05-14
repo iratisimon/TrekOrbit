@@ -70,6 +70,7 @@ public class Profile extends JFrame implements ActionListener {
 		contentPane.add(lblNick);
 
 		txtNick = new JTextField();
+		txtNick.setFont(new Font("OCR A Extended", Font.PLAIN, 16));
 		txtNick.setBounds(679, 173, 262, 32);
 		txtNick.setEditable(false); // El campo no es editable, se actualizará con los datos del usuario
 		contentPane.add(txtNick);
@@ -82,6 +83,7 @@ public class Profile extends JFrame implements ActionListener {
 		contentPane.add(lblPasswd);
 
 		txtPasswd = new JPasswordField();
+		txtPasswd.setFont(new Font("OCR A Extended", Font.PLAIN, 16));
 		txtPasswd.setBounds(679, 236, 262, 32);
 		txtPasswd.setEditable(false); // El campo no es editable, se actualizará con los datos del usuario
 		contentPane.add(txtPasswd);

@@ -9,6 +9,7 @@ import com.toedter.calendar.JCalendar;
 public class MakeLessUgly {
 	
 	public static void showMessageDialog(String message, String title, int messageType) {
+		
 		// Establecer los colores de fondo para el JOptionPane
 		UIManager.put("OptionPane.background", new Color(23, 17, 39));
 		UIManager.put("Panel.background", new Color(23, 17, 39));
