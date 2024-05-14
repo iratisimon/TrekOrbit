@@ -162,24 +162,29 @@ public class SeeTrips extends JFrame {
 	private void updateTripsList() {
 		// TODO Auto-generated method stub
 		// Obtener los viajes del usuario
-		viajesUsuario = TravelFactory.getManageTravel().seeTrip(ser.getNick());
+		if(TravelFactory.getManageTravel().checkTrips(ser.getId())) {
+			viajesUsuario = TravelFactory.getManageTravel().seeTrip(ser.getNick());
 
-		// Ordenar la lista de viajes por fecha de viaje (de más nueva a más antigua)
-		Collections.sort(viajesUsuario, new Comparator<Travel>() {
-			@Override
-			public int compare(Travel viaje1, Travel viaje2) {
-				return viaje2.getFechaViaje().compareTo(viaje1.getFechaViaje());
+			// Ordenar la lista de viajes por fecha de viaje (de más nueva a más antigua)
+			Collections.sort(viajesUsuario, new Comparator<Travel>() {
+				@Override
+				public int compare(Travel viaje1, Travel viaje2) {
+					return viaje2.getFechaViaje().compareTo(viaje1.getFechaViaje());
+				}
+			});
+
+			// Limpiar el modelo de la lista
+			listModel.clear();
+
+			// Agregar los viajes al modelo de la lista
+			for (Travel viaje : viajesUsuario) {
+				listModel.addElement(
+						viaje.getOrigen() + " - " + viaje.getNom_destino().name() + " / " + viaje.getFechaViaje());
 			}
-		});
-
-		// Limpiar el modelo de la lista
-		listModel.clear();
-
-		// Agregar los viajes al modelo de la lista
-		for (Travel viaje : viajesUsuario) {
-			listModel.addElement(
-					viaje.getOrigen() + " - " + viaje.getNom_destino().name() + " / " + viaje.getFechaViaje());
+		}else {
+			listModel.clear();
 		}
+		
 	}
 
 	private void cancelSelectedTrip() {

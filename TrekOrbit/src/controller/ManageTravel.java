@@ -54,5 +54,12 @@ public interface ManageTravel {
 	 * @return un objeto Planet representando el planeta
 	 */
 	
+	public boolean checkTrips(String id);
+	/**
+	 * Verifica si un usuario tiene viajes registrados en la base de datos.
+	 * 
+	 * @param id El identificador del usuario del cual se desea verificar si tiene viajes.
+	 * @return true si el usuario tiene viajes registrados, false si no.
+	 */
 
 }
