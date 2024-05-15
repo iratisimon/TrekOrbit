@@ -166,8 +166,7 @@ public class AdminView extends JFrame {
                     	JOptionPane.showMessageDialog(AdminView.this, "Error cambiando la disponibilidad", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                     planeta = AdminFactory.getManageAdmin().getPlanetFromAdmin(admin.getNick());
-                    
-                    
+                             
                 } else if (e.getSource() == lblVolver) {
                 	LogIn login = new LogIn(controladorAcceso);
             		login.setVisible(true);

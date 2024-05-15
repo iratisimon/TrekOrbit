@@ -33,7 +33,7 @@ public class AdminController implements ManageAdmin{
      */
 	public ArrayList<Activity> getAvailableActivities(String planetName) {
         ArrayList<Activity> availableActivities = new ArrayList<>();
-		con = conController.openConnection();
+		    con = conController.openConnection();
         try {
             PreparedStatement stmt = con.prepareStatement(ACTIVIDADESDISPONIBLES);
             stmt.setString(1, planetName);
