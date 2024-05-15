@@ -17,7 +17,7 @@ public class UserController implements ManageUser {
 	private Connection con;
 	private PreparedStatement stmt;
 	private DBConnection conController = new DBConnection();
-	final String OBTENERUSUARIO = "SELECT S.Nick, S.Passwd, U.Nombre, U.Raza FROM SER S, USUARIO U WHERE S.ID = U.ID_Usuario AND S.Nick=? AND S.Passwd=?";
+	final String OBTENERUSUARIO = "SELECT S.Nick, S.Passwd, U.Nombre, U.Raza FROM SER S, USUARIO U WHERE S.ID = U.ID_Usuario AND S.ID=?";
 	final String MODIFICARUSUARIO = "UPDATE SER SET Nick=?, Passwd=? WHERE Nick=? AND Passwd=?";
 	
 	/**
@@ -33,8 +33,7 @@ public class UserController implements ManageUser {
 	    
 	    try {
 	        stmt = con.prepareStatement(OBTENERUSUARIO);
-	        stmt.setString(1, ser.getNick());
-	        stmt.setString(2, ser.getPasswd());
+	        stmt.setString(1, ser.getId());
 	        ResultSet resultSet = stmt.executeQuery();
 	        
 	        if (resultSet.next()) {

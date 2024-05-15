@@ -228,11 +228,12 @@ public class Profile extends JFrame implements ActionListener {
 	public void cargarDatosUsuario() {
 		// Obtener los datos del usuario utilizando el controlador de usuario
 		User datosUsuario = UserFactory.getManageUser().showUserData(ser);
+		System.out.println("Entra cargar profile");
 
 		if (datosUsuario != null) {
 			// Establecer los valores en los campos de texto
-			txtNick.setText(ser.getNick());
-			txtPasswd.setText(ser.getPasswd());
+			txtNick.setText(datosUsuario.getNick());
+			txtPasswd.setText(datosUsuario.getPasswd());
 			raza.setText(datosUsuario.getRaza());
 			nombre.setText(datosUsuario.getNombre());
 		} else {
@@ -290,5 +291,6 @@ public class Profile extends JFrame implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		//cargarDatosUsuario();
 	}
 }
